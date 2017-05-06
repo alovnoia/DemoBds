@@ -19,7 +19,7 @@
         android:layout_marginStart="16dp" />
 
     <TextView
-        android:id="@+id/tvMoTaLoaiSP"
+        android:id="@+id/tvDanhSachDiaChi"
         android:layout_width="wrap_content"
         android:layout_height="17dp"
         android:layout_marginLeft="16dp"

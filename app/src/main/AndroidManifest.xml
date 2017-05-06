@@ -14,15 +14,40 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".duan.DanhSachDuAn">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            c
         </activity>
-        <activity android:name=".duan.DanhSachDuAn" />
         <activity android:name=".loaisp.DanhSachLoaiSP" />
         <activity android:name=".loaisp.ThemLoaiSP" />
-        <activity android:name=".loaisp.CapNhatLoaiSP"></activity>
+        <activity android:name=".loaisp.CapNhatLoaiSP" />
+        <activity android:name=".duan.ThemDuAn" />
+        <activity android:name=".duan.CapNhatDuAn" />
+        <activity android:name=".hotro.menu.NavigationDrawer">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".loaikhachhang.DanhSachLoaiKhachHang" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".loaikhachhang.ThemLoaiKhachHang" />
+        <activity android:name=".loaikhachhang.ChiTietLoaiKhachHang"/>
     </application>
 
 </manifest>

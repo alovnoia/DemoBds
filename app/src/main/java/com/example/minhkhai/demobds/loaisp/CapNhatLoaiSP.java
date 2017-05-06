@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.minhkhai.demobds.R;
+import com.example.minhkhai.demobds.hotro.API;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,7 +88,7 @@ public class CapNhatLoaiSP extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                return GET_URL(params[0]);
+                return API.GET_URL(params[0]);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -123,46 +124,7 @@ public class CapNhatLoaiSP extends AppCompatActivity {
                 postDataParams.put("MoTa", moTa);
                 postDataParams.put("_method", "PUT");
 
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(15000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
-                conn.setRequestMethod("POST");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-                writer.write(getPostDataString(postDataParams));
-
-                writer.flush();
-                writer.close();
-                os.close();
-
-                int responseCode=conn.getResponseCode();
-
-                if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                    BufferedReader in=new BufferedReader(new
-                            InputStreamReader(
-                            conn.getInputStream()));
-
-                    StringBuffer sb = new StringBuffer("");
-                    String line="";
-
-                    while((line = in.readLine()) != null) {
-
-                        sb.append(line);
-                        break;
-                    }
-
-                    in.close();
-                    return sb.toString();
-
-                }
-                else {
-                    return new String("false : "+responseCode);
-                }
+                return API.POST_URL(url, postDataParams);
             }
             catch(Exception e){
                 return new String("Exception: " + e.getMessage());
@@ -172,9 +134,7 @@ public class CapNhatLoaiSP extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(CapNhatLoaiSP.this, "Đã câph nhật loại sản phẩm có id "+id, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(CapNhatLoaiSP.this, DanhSachLoaiSP.class);
-            startActivity(intent);
+            Toast.makeText(CapNhatLoaiSP.this, "Đã câp nhật loại sản phẩm có id "+id, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -189,46 +149,7 @@ public class CapNhatLoaiSP extends AppCompatActivity {
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("_method", "DELETE");
 
-                HttpURLConnection conn = (HttpURLConnection) myUrl.openConnection();
-                conn.setReadTimeout(15000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
-                conn.setRequestMethod("POST");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-                writer.write(getPostDataString(postDataParams));
-
-                writer.flush();
-                writer.close();
-                os.close();
-
-                int responseCode=conn.getResponseCode();
-
-                if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                    BufferedReader in=new BufferedReader(new
-                            InputStreamReader(
-                            conn.getInputStream()));
-
-                    StringBuffer sb = new StringBuffer("");
-                    String line="";
-
-                    while((line = in.readLine()) != null) {
-
-                        sb.append(line);
-                        break;
-                    }
-
-                    in.close();
-                    return sb.toString();
-
-                }
-                else {
-                    return new String("false : "+responseCode);
-                }
+                return API.POST_URL(myUrl, postDataParams);
             }
             catch(Exception e){
                 return new String("Exception: " + e.getMessage());
@@ -243,43 +164,5 @@ public class CapNhatLoaiSP extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
-    private  static String GET_URL(String theURL) throws IOException {
-        StringBuilder content = new StringBuilder();
-        URL url = new URL(theURL);
-        URLConnection urlConnection = url.openConnection();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-        String line;
-        while ((line = bufferedReader.readLine()) != null){
-            content.append(line + "\n");
-        }
-        bufferedReader.close();
-
-        return content.toString();
-    }
-
-    public String getPostDataString(JSONObject params) throws Exception {
-
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-
-        Iterator<String> itr = params.keys();
-
-        while(itr.hasNext()){
-
-            String key= itr.next();
-            Object value = params.get(key);
-
-            if (first)
-                first = false;
-            else
-                result.append("&");
-
-            result.append(URLEncoder.encode(key, "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(value.toString(), "UTF-8"));
-
-        }
-        return result.toString();
-    }
 }
+

@@ -1,11 +1,11 @@
-package com.example.minhkhai.demobds.loaisp;
+package com.example.minhkhai.demobds.hotro.menu;
 
 import android.content.Context;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.minhkhai.demobds.R;
@@ -13,24 +13,24 @@ import com.example.minhkhai.demobds.R;
 import java.util.List;
 
 /**
- * Created by minhkhai on 02/05/17.
+ * Created by minhkhai on 05/05/17.
  */
 
-public class LoaiSPAdapter extends BaseAdapter {
+public class DrawerAdapter extends BaseAdapter {
 
     Context myContext;
     int myLayout;
-    List<LoaiSP> arrayLoaiSP;
+    List<Drawer> arrayDrawer;
 
-    public LoaiSPAdapter(Context myContext, int myLayout, List<LoaiSP> arrayLoaiSP) {
+    public DrawerAdapter(Context myContext, int myLayout, List<Drawer> arrayDrawer) {
         this.myContext = myContext;
         this.myLayout = myLayout;
-        this.arrayLoaiSP = arrayLoaiSP;
+        this.arrayDrawer = arrayDrawer;
     }
 
     @Override
     public int getCount() {
-        return arrayLoaiSP.size();
+        return arrayDrawer.size();
     }
 
     @Override
@@ -48,12 +48,12 @@ public class LoaiSPAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(myLayout, null);
 
-        TextView tvTenLoaiSP = (TextView) convertView.findViewById(R.id.tvDanhSachTenDuAn);
-        tvTenLoaiSP.setText(String.valueOf(arrayLoaiSP.get(position).getMaLoaiSP())+". "+
-                arrayLoaiSP.get(position).getTenLoaiSP());
+        ImageView hinhAnh = (ImageView) convertView.findViewById(R.id.ivChucNang);
+        TextView noiDung = (TextView) convertView.findViewById(R.id.tvChucNang);
 
-        TextView tvMoTaLoaiSP = (TextView) convertView.findViewById(R.id.tvMoTaLoaiSP);
-        tvMoTaLoaiSP.setText(Html.fromHtml(arrayLoaiSP.get(position).getMoTaLoaiSP()));
+        Drawer item = arrayDrawer.get(position);
+        hinhAnh.setImageResource(item.getHinhAnh());
+        noiDung.setText(item.getTenMenu());
 
         return convertView;
     }

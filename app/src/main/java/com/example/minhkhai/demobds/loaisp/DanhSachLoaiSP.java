@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.minhkhai.demobds.R;
+import com.example.minhkhai.demobds.hotro.API;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -93,7 +94,7 @@ public class DanhSachLoaiSP extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                return GET_URL(params[0]);
+                return API.GET_URL(params[0]);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -125,18 +126,5 @@ public class DanhSachLoaiSP extends AppCompatActivity {
             }
 
         }
-    }
-    private  static String GET_URL(String theURL) throws IOException {
-        StringBuilder content = new StringBuilder();
-        URL url = new URL(theURL);
-        URLConnection urlConnection = url.openConnection();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-        String line;
-        while ((line = bufferedReader.readLine()) != null){
-            content.append(line + "\n");
-        }
-        bufferedReader.close();
-
-        return content.toString();
     }
 }
