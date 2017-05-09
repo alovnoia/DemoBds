@@ -52,7 +52,7 @@ public class ThemDuAn extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        new SaveDuAnMoi().execute("http://10.0.3.2:2347/bds_project/public/DuAn");
+                        new SaveDuAnMoi().execute("http://"+API.HOST+"/bds_project/public/DuAn");
                     }
                 });
             }
