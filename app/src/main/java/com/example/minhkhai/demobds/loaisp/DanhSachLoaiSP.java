@@ -44,7 +44,7 @@ public class DanhSachLoaiSP extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new LoadDanhSach().execute("http://10.0.3.2:2347/bds_project/public/LoaiSP");
+                new LoadDanhSach().execute("http://"+API.HOST+"/bds_project/public/LoaiSP");
             }
         });
 

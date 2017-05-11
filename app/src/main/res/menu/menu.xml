@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+    <!--<item
+        android:id="@+id/action_menu"
+        android:icon="@drawable/ic_menu_black_24dp"
+        app:showAsAction="ifRoom"
+        android:title="search"/>-->
+    <item android:title="Tài khoản"
+        android:id="@+id/taiKhoan"/>
+    <item android:title="Dự án"
+        android:id="@+id/duAn"/>
+    <item android:title="Sản phẩm"
+        android:id="@+id/sanPham"/>
+    <item android:title="Loại sản phẩm"
+        android:id="@+id/loaiSanPham"/>
+    <item android:title="Loại khách hàng"
+        android:id="@+id/loaiKH"/>
+    <item android:title="Khách hàng"
+        android:id="@+id/khachHang"/>
+    <item android:title="Ưu đãi"
+        android:id="@+id/uuDai"/>
+    <item android:title="Hợp đồng"
+        android:id="@+id/hopDong"/>
+    <item android:title="Nợ"
+        android:id="@+id/no"/>
+    <item android:title="Đăng xuất"
+        android:id="@+id/dangXuat"/>
 </menu>

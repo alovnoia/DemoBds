@@ -22,6 +22,10 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class API {
 
+    public static String HOST = "10.0.3.2:2347";
+
+    public static int idUser;
+
     public static String POST_URL(URL url, JSONObject object) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setReadTimeout(15000 /* milliseconds */);

@@ -3,13 +3,21 @@ package com.example.minhkhai.demobds.loaikhachhang;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
+import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.hotro.menu.NavigationDrawer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,19 +35,23 @@ public class DanhSachLoaiKhachHang extends AppCompatActivity {
     FloatingActionButton flAdd;
     ListView lvDanhSachLoaiKH;
     ArrayList<LoaiKhachHang> mangLoaiKH;
+
     //TextView test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danh_sach_loai_khach_hang);
         //test = (TextView) findViewById(R.id.TestTV);
+       /* FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().add(R.id.flDanhSachLoaiKH, new NavigationDrawer()).commit();*/
+
         lvDanhSachLoaiKH= (ListView) findViewById(R.id.lvDanhSachLoaiKH);
         mangLoaiKH = new ArrayList<LoaiKhachHang>();
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new LoadDanhSach().execute("http://10.0.3.2:2347/bds_project/public/LoaiKhachHang");
+                new LoadDanhSach().execute("http://"+API.HOST+"/bds_project/public/LoaiKhachHang");
             }
         });
 
@@ -60,7 +72,28 @@ public class DanhSachLoaiKhachHang extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /*Intent intent = new Intent(DanhSachLoaiKhachHang.this, MainActivity.class);
+        startActivity(intent);*/
+        switch (item.getItemId()) {
+            case R.id.duAn:
+                return true;
+            case R.id.loaiKH:
+                return true;
+            case R.id.loaiSanPham:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private class LoadDanhSach extends AsyncTask<String, Integer, String> {
@@ -68,7 +101,7 @@ public class DanhSachLoaiKhachHang extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                return GET_URL(params[0]);
+                return API.GET_URL(params[0]);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -100,17 +133,5 @@ public class DanhSachLoaiKhachHang extends AppCompatActivity {
     }
 
 
-    private  static String GET_URL(String theURL) throws IOException {
-        StringBuilder content = new StringBuilder();
-        URL url = new URL(theURL);
-        URLConnection urlConnection = url.openConnection();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-        String line;
-        while ((line = bufferedReader.readLine()) != null){
-            content.append(line + "\n");
-        }
-        bufferedReader.close();
 
-        return content.toString();
-    }
 }

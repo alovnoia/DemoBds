@@ -56,7 +56,7 @@ public class ThemLoaiSP extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                URL url = new URL("http://10.0.3.2:2347/bds_project/public/LoaiSP"); // here is your URL path
+                URL url = new URL("http://"+API.HOST+"/bds_project/public/LoaiSP"); // here is your URL path
 
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("TenLoaiSP", ten);

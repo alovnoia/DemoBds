@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.hotro.menu.NavigationDrawer;
 
 import org.json.JSONObject;
 
@@ -29,6 +31,9 @@ public class ThemDuAn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_du_an);
+
+        /*FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().add(R.id.flDanhSachLoaiKH, new NavigationDrawer()).commit();*/
 
         fabThemDuAn = (FloatingActionButton) findViewById(R.id.fabThemDuAn);
         edtThemTenDuAn = (EditText) findViewById(R.id.edtCapNhatTenDuAn);

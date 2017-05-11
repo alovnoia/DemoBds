@@ -1,32 +1,37 @@
 package com.example.minhkhai.demobds.hotro.menu;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.duan.DanhSachDuAn;
+import com.example.minhkhai.demobds.loaikhachhang.DanhSachLoaiKhachHang;
 import com.example.minhkhai.demobds.loaisp.DanhSachLoaiSP;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationDrawer extends AppCompatActivity {
+public class NavigationDrawer extends Fragment {
 
-    String itemDrawer[] = {"Dự án", "Loại Sản phẩm"};
-    int itemHinhAnh[] = {R.drawable.ic_add_black_24dp, R.drawable.ic_add_black_24dp};
+    String itemDrawer[] = {"Dự án", "Loại Sản phẩm", "Loại khách hàng"};
+    int itemHinhAnh[] = {R.drawable.ic_add_black_24dp, R.drawable.ic_add_black_24dp, R.drawable.ic_add_black_24dp};
     List<Drawer> mangDrawer;
-    ListView lvMenuDrawer;
+    ListView lvMenu;
+    String a[] = {"ascasc", "asfcasc"};
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigation_drawer);
-
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_navigation_drawer, container, false);
         mangDrawer = new ArrayList<Drawer>();
         for (int i = 0; i < itemDrawer.length; i++){
             Drawer item = new Drawer();
@@ -36,26 +41,30 @@ public class NavigationDrawer extends AppCompatActivity {
 
             mangDrawer.add(item);
         }
-        lvMenuDrawer = (ListView) findViewById(R.id.lvMenuDrawer);
-        DrawerAdapter adapter = new DrawerAdapter(this, R.layout.listview_drawer, mangDrawer);
-        lvMenuDrawer.setAdapter(adapter);
-
-        lvMenuDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvMenu = (ListView) view.findViewById(R.id.lvMenu);
+        DrawerAdapter adapter = new DrawerAdapter(getActivity(), R.layout.listview_drawer, mangDrawer);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, a);
+        lvMenu.setAdapter(adapter);
+        lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent;
                 switch (position){
                     case 0:
-                        intent = new Intent(NavigationDrawer.this, DanhSachDuAn.class);
+                        intent = new Intent(getActivity(), DanhSachDuAn.class);
                         break;
                     case 1:
-                        intent = new Intent(NavigationDrawer.this, DanhSachLoaiSP.class);
+                        intent = new Intent(getActivity(), DanhSachLoaiSP.class);
+                        break;
+                    case 2:
+                        intent = new Intent(getActivity(), DanhSachLoaiKhachHang.class);
                         break;
                     default:
-                        intent = new Intent(NavigationDrawer.this, NavigationDrawer.class);
+                        intent = new Intent(getActivity(), NavigationDrawer.class);
                 }
                 startActivity(intent);
             }
         });
+        return view;
     }
 }

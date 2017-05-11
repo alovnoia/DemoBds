@@ -53,7 +53,7 @@ public class CapNhatDuAn extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new LoadChiTietDuAn().execute("http://10.0.3.2:2347/bds_project/public/DuAn/"+id);
+                new LoadChiTietDuAn().execute("http://"+API.HOST+"/bds_project/public/DuAn/"+id);
             }
         });
 
@@ -70,7 +70,7 @@ public class CapNhatDuAn extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        new SaveEditDuAn().execute("http://10.0.3.2:2347/bds_project/public/DuAn/"+id);
+                        new SaveEditDuAn().execute("http://"+API.HOST+"/bds_project/public/DuAn/"+id);
                     }
                 });
             }

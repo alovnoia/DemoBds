@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,7 +40,6 @@ public class DanhSachDuAn extends AppCompatActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danh_sach_du_an);
-        new NavigationDrawer();
 
         mangDuAn = new ArrayList<DuAn>();
         lvDuAn = (ListView) findViewById(R.id.lvDuAn);
@@ -48,7 +48,7 @@ public class DanhSachDuAn extends AppCompatActivity{
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new LoadDanhSach().execute("http://10.0.3.2:2347/bds_project/public/DuAn");
+                new LoadDanhSach().execute("http://"+API.HOST+"/bds_project/public/DuAn");
             }
         });
 
@@ -69,6 +69,8 @@ public class DanhSachDuAn extends AppCompatActivity{
             }
         });
 
+        /*FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().add(R.id.flDanhSachDuAn, new NavigationDrawer()).commit();*/
     }
 
     private class LoadDanhSach extends AsyncTask<String, Integer, String> {
