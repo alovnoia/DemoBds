@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.minhkhai.demobds.R;
+import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.duan.DanhSachDuAn;
 import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.loaikhachhang.DanhSachLoaiKhachHang;
@@ -22,6 +23,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class DangNhap extends AppCompatActivity {
 
@@ -43,7 +46,7 @@ public class DangNhap extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        new KiemTraDangNhap().execute("http://"+API.HOST+"/bds_project/public/DangNhap");
+                        new KiemTraDangNhap().execute("http://"+API.HOST+"/bds_project/public/login");
                     }
                 });
             }
@@ -53,26 +56,42 @@ public class DangNhap extends AppCompatActivity {
 
     private class KiemTraDangNhap extends AsyncTask<String, String, String>{
 
+        String taiKhoan = edtTaiKhoan.getText().toString();
+        String matKhau = edtMatKhau.getText().toString();
+
         @Override
         protected String doInBackground(String... params) {
             try {
-                return API.GET_URL(params[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
+                URL myUrl = new URL(params[0]);
+
+                JSONObject postDataParams = new JSONObject();
+                postDataParams.put("TenTaiKhoan", taiKhoan);
+                postDataParams.put("MatKhau", matKhau);
+
+                return API.POST_URL(myUrl, postDataParams);
             }
-            return null;
+            catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            if (Integer.parseInt(s) != -1){
-                Intent intent = new Intent(DangNhap.this, DanhSachDuAn.class);
-                API.idUser = Integer.parseInt(s);
-                startActivity(intent);
-            } else {
-                Toast.makeText(DangNhap.this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
+            try {
+
+                if (s != ""){
+                    JSONObject obj = new JSONObject(s);
+
+                    Intent intent = new Intent(DangNhap.this, AppMenu.class);
+                    API.idUser = obj.getInt("MaTaiKhoan");
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(DangNhap.this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
         }
