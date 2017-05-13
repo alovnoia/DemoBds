@@ -12,12 +12,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
+import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.hotro.menu.NavigationDrawer;
+import com.example.minhkhai.demobds.khachhang.ThemKhachHang;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -82,18 +85,9 @@ public class DanhSachLoaiKhachHang extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*Intent intent = new Intent(DanhSachLoaiKhachHang.this, MainActivity.class);
-        startActivity(intent);*/
-        switch (item.getItemId()) {
-            case R.id.duAn:
-                return true;
-            case R.id.loaiKH:
-                return true;
-            case R.id.loaiSanPham:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        Intent intent = new Intent(DanhSachLoaiKhachHang.this, AppMenu.class);
+        startActivity(intent);
+        return true;
     }
 
     private class LoadDanhSach extends AsyncTask<String, Integer, String> {

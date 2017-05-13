@@ -4,17 +4,19 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.minhkhai.demobds.R;
+import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
-import com.example.minhkhai.demobds.hotro.menu.NavigationDrawer;
+import com.example.minhkhai.demobds.loaikhachhang.ThemLoaiKhachHang;
 
 import org.json.JSONObject;
 
@@ -36,13 +38,13 @@ public class ThemDuAn extends AppCompatActivity {
         fm.beginTransaction().add(R.id.flDanhSachLoaiKH, new NavigationDrawer()).commit();*/
 
         fabThemDuAn = (FloatingActionButton) findViewById(R.id.fabThemDuAn);
-        edtThemTenDuAn = (EditText) findViewById(R.id.edtCapNhatTenDuAn);
-        edtThemDiaChi = (EditText) findViewById(R.id.edtCapNhatDiaChi);
-        edtThemDienTich = (EditText) findViewById(R.id.edtCapNhatDienTich);
-        edtThemGiayPhep = (EditText) findViewById(R.id.edtCapNhatGiayPhep);
-        edtThemSoLuongSP = (EditText) findViewById(R.id.edtCapNhatSoLuongSP);
+        edtThemTenDuAn = (EditText) findViewById(R.id.edtThemTenDuAn);
+        edtThemDiaChi = (EditText) findViewById(R.id.edtThemDiaChi);
+        edtThemDienTich = (EditText) findViewById(R.id.edtThemDienTich);
+        edtThemGiayPhep = (EditText) findViewById(R.id.edtThemGiayPhep);
+        edtThemSoLuongSP = (EditText) findViewById(R.id.edtThemSoLuongSP);
         edtThemMoTaDuAn = (EditText) findViewById(R.id.edtThemMoTaDuAn);
-        edtThemNgayCap = (EditText) findViewById(R.id.edtCapNhatNgayCap);
+        edtThemNgayCap = (EditText) findViewById(R.id.edtThemNgayCap);
 
         edtThemNgayCap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +99,7 @@ public class ThemDuAn extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(ThemDuAn.this, "Đã thêm dự án "+tenDuAn, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ThemDuAn.this, s, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(ThemDuAn.this, DanhSachDuAn.class);
             startActivity(intent);
         }
@@ -117,4 +119,18 @@ public class ThemDuAn extends AppCompatActivity {
             ngayGioHienTai.get(Calendar.DAY_OF_MONTH));
         date.show();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(ThemDuAn.this, AppMenu.class);
+        startActivity(intent);
+        return true;
+    }
+
 }

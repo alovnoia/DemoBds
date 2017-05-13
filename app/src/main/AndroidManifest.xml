@@ -32,13 +32,13 @@
         <activity android:name=".loaisp.CapNhatLoaiSP" />
         <activity android:name=".duan.ThemDuAn" />
         <activity android:name=".duan.CapNhatDuAn" />
-        <activity android:name=".hotro.menu.NavigationDrawer">
+        <!--<activity android:name=".hotro.menu.NavigationDrawer">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
+        </activity>-->
         <activity android:name=".loaikhachhang.DanhSachLoaiKhachHang">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -56,7 +56,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".khachhang.ThemKhachHang"></activity>
+        <activity android:name=".khachhang.ThemKhachHang" />
+        <activity android:name=".khachhang.CapNhatKhachHang" />
+        <activity android:name=".appmenu.AppMenu">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

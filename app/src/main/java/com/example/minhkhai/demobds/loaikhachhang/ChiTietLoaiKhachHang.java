@@ -5,12 +5,15 @@ import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.minhkhai.demobds.R;
+import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
 
 import org.json.JSONException;
@@ -169,4 +172,18 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Đã xóa SP có id "+id, Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(ChiTietLoaiKhachHang.this, AppMenu.class);
+        startActivity(intent);
+        return true;
+    }
+
 }

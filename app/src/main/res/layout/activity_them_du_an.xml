@@ -35,7 +35,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvCapNhatDuAn" />
 
                 <EditText
-                    android:id="@+id/edtCapNhatTenDuAn"
+                    android:id="@+id/edtThemTenDuAn"
                     android:layout_width="357dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -55,11 +55,11 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="8dp"
                     android:text="Địa chỉ"
-                    app:layout_constraintLeft_toLeftOf="@+id/edtCapNhatTenDuAn"
-                    app:layout_constraintTop_toBottomOf="@+id/edtCapNhatTenDuAn" />
+                    app:layout_constraintLeft_toLeftOf="@+id/edtThemTenDuAn"
+                    app:layout_constraintTop_toBottomOf="@+id/edtThemTenDuAn" />
 
                 <EditText
-                    android:id="@+id/edtCapNhatDiaChi"
+                    android:id="@+id/edtThemDiaChi"
                     android:layout_width="357dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -79,11 +79,11 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="8dp"
                     android:text="Tổng diện tích"
-                    app:layout_constraintLeft_toLeftOf="@+id/edtCapNhatDiaChi"
-                    app:layout_constraintTop_toBottomOf="@+id/edtCapNhatDiaChi" />
+                    app:layout_constraintLeft_toLeftOf="@+id/edtThemDiaChi"
+                    app:layout_constraintTop_toBottomOf="@+id/edtThemDiaChi" />
 
                 <EditText
-                    android:id="@+id/edtCapNhatDienTich"
+                    android:id="@+id/edtThemDienTich"
                     android:layout_width="357dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -103,11 +103,11 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="8dp"
                     android:text="Giấy phép"
-                    app:layout_constraintLeft_toLeftOf="@+id/edtCapNhatDienTich"
-                    app:layout_constraintTop_toBottomOf="@+id/edtCapNhatDienTich" />
+                    app:layout_constraintLeft_toLeftOf="@+id/edtThemDienTich"
+                    app:layout_constraintTop_toBottomOf="@+id/edtThemDienTich" />
 
                 <EditText
-                    android:id="@+id/edtCapNhatGiayPhep"
+                    android:id="@+id/edtThemGiayPhep"
                     android:layout_width="357dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -127,11 +127,11 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="8dp"
                     android:text="Ngày cấp"
-                    app:layout_constraintLeft_toLeftOf="@+id/edtCapNhatGiayPhep"
-                    app:layout_constraintTop_toBottomOf="@+id/edtCapNhatGiayPhep" />
+                    app:layout_constraintLeft_toLeftOf="@+id/edtThemGiayPhep"
+                    app:layout_constraintTop_toBottomOf="@+id/edtThemGiayPhep" />
 
                 <EditText
-                    android:id="@+id/edtCapNhatNgayCap"
+                    android:id="@+id/edtThemNgayCap"
                     android:layout_width="357dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -150,13 +150,13 @@
                     android:layout_height="wrap_content"
                     android:text="Số lượng sản phẩm"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@+id/edtCapNhatNgayCap"
+                    app:layout_constraintTop_toBottomOf="@+id/edtThemNgayCap"
                     android:layout_marginLeft="0dp"
-                    app:layout_constraintLeft_toLeftOf="@+id/edtCapNhatNgayCap"
+                    app:layout_constraintLeft_toLeftOf="@+id/edtThemNgayCap"
                     android:id="@+id/textView10" />
 
                 <EditText
-                    android:id="@+id/edtCapNhatSoLuongSP"
+                    android:id="@+id/edtThemSoLuongSP"
                     android:layout_width="357dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -174,9 +174,9 @@
                     android:layout_height="wrap_content"
                     android:text="Mô tả"
                     android:layout_marginTop="0dp"
-                    app:layout_constraintTop_toBottomOf="@+id/edtCapNhatSoLuongSP"
+                    app:layout_constraintTop_toBottomOf="@+id/edtThemSoLuongSP"
                     android:layout_marginLeft="0dp"
-                    app:layout_constraintLeft_toLeftOf="@+id/edtCapNhatSoLuongSP" />
+                    app:layout_constraintLeft_toLeftOf="@+id/edtThemSoLuongSP" />
 
                 <EditText
                     android:id="@+id/edtThemMoTaDuAn"

@@ -1,6 +1,7 @@
 package com.example.minhkhai.demobds.loaikhachhang;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ public class LoaiKhachHangAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

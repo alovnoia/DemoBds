@@ -6,4 +6,32 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string-array name="app_menu">
+        <item>Tài khoản</item>
+        <item> Dự án </item>
+        <item> phẩm </item>
+        <item> Loại sản phẩm </item>
+        <item> Loại khách hàng </item>
+        <item> Khách hàng </item>
+        <item> Ưu đãi </item>
+        <item> Hợp đồng </item>
+        <item> Nợ </item>
+        <item> Đăng xuất </item>
+        <!--<item android:title="Sản phẩm"
+            android:id="@+id/sanPham"/>
+        <item android:title="Loại sản phẩm"
+            android:id="@+id/loaiSanPham"/>
+        <item android:title="Loại khách hàng"
+            android:id="@+id/loaiKH"/>
+        <item android:title="Khách hàng"
+            android:id="@+id/khachHang"/>
+        <item android:title="Ưu đãi"
+            android:id="@+id/uuDai"/>
+        <item android:title="Hợp đồng"
+            android:id="@+id/hopDong"/>
+        <item android:title="Nợ"
+            android:id="@+id/no"/>
+        <item android:title="Đăng xuất"
+            android:id="@+id/dangXuat"/>-->
+    </string-array>
 </resources>
