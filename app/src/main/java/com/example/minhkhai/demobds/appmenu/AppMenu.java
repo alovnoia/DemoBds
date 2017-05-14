@@ -15,6 +15,8 @@ import com.example.minhkhai.demobds.hotro.menu.NavigationDrawer;
 import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
 import com.example.minhkhai.demobds.loaikhachhang.DanhSachLoaiKhachHang;
 import com.example.minhkhai.demobds.loaisp.DanhSachLoaiSP;
+import com.example.minhkhai.demobds.taikhoan.DanhSachTaiKhoan;
+import com.example.minhkhai.demobds.tongtincanhan.ThongTinCaNhan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +24,13 @@ import java.util.List;
 public class AppMenu extends AppCompatActivity {
 
     String itemTen[] = {"Tài khoản", "Dự án", "Loại sản phẩm", "Sản phẩm", "Loại khách hàng", "Khách hàng",
-            "Ưu đãi", "Hợp đồng", "Nợ", "Đăng xuất"};
-    int itemAnh[] = {R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp};
+            "Ưu đãi", "Hợp đồng", "Nợ", "Thông tin cá nhân", "Đăng xuất"};
+    int itemAnh[] = {R.drawable.ic_add_black_24dp, R.drawable.ic_add_black_24dp,
+            R.drawable.ic_add_black_24dp, R.drawable.ic_add_black_24dp,
+            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
+            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
+            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
+            R.drawable.ic_add_black_24dp};
     List<MenuItem> arrItem;
     ListView lvAppMenu;
 
@@ -52,7 +57,7 @@ public class AppMenu extends AppCompatActivity {
                 Intent intent;
                 switch (position){
                     case 0:
-                        intent = new Intent(AppMenu.this, DanhSachDuAn.class);
+                        intent = new Intent(AppMenu.this, DanhSachTaiKhoan.class);
                         break;
                     case 1:
                         intent = new Intent(AppMenu.this, DanhSachDuAn.class);
@@ -79,7 +84,8 @@ public class AppMenu extends AppCompatActivity {
                         intent = new Intent(AppMenu.this, DanhSachLoaiSP.class);
                         break;
                     case 9:
-                        intent = new Intent(AppMenu.this, DanhSachLoaiKhachHang.class);
+                        intent = new Intent(AppMenu.this, ThongTinCaNhan.class);
+                        intent.putExtra("id", "15");
                         break;
                     case 10:
                         intent = new Intent(AppMenu.this, DanhSachKhachHang.class);
