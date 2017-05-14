@@ -64,7 +64,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
         spnChucVu = (Spinner) findViewById(R.id.spnChucVuChiTietTK);
         fab_Save = (FloatingActionButton) findViewById(R.id.fab_SaveCapNhatTK);
         fab_Xoa = (FloatingActionButton) findViewById(R.id.fab_XoaTaiKhoan);
-
+        //Test de push
         Intent myIntent = getIntent();
         id = myIntent.getIntExtra("id", 0);
 
