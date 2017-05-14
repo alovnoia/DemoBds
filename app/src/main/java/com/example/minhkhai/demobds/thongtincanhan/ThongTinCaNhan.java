@@ -1,4 +1,4 @@
-package com.example.minhkhai.demobds.tongtincanhan;
+package com.example.minhkhai.demobds.thongtincanhan;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -18,24 +18,15 @@ import android.widget.Toast;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
-import com.example.minhkhai.demobds.taikhoan.DanhSachTaiKhoan;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class ThongTinCaNhan extends AppCompatActivity {
     TextView txtTaiKhoan, txtChucVu;

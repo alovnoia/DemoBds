@@ -76,7 +76,13 @@
         <activity android:name=".taikhoan.DanhSachTaiKhoan" />
         <activity android:name=".taikhoan.ThemTaiKhoan" />
         <activity android:name=".taikhoan.ChiTietTaiKhoan" />
-        <activity android:name=".tongtincanhan.ThongTinCaNhan"></activity>
+        <activity android:name=".thongtincanhan.ThongTinCaNhan">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

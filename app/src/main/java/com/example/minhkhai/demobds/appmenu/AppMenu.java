@@ -16,7 +16,8 @@ import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
 import com.example.minhkhai.demobds.loaikhachhang.DanhSachLoaiKhachHang;
 import com.example.minhkhai.demobds.loaisp.DanhSachLoaiSP;
 import com.example.minhkhai.demobds.taikhoan.DanhSachTaiKhoan;
-import com.example.minhkhai.demobds.tongtincanhan.ThongTinCaNhan;
+import com.example.minhkhai.demobds.thongtincanhan.ThongTinCaNhan;
+
 
 import java.util.ArrayList;
 import java.util.List;
