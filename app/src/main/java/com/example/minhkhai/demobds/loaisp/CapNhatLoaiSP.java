@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.khachhang.CapNhatKhachHang;
+import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -179,6 +181,13 @@ public class CapNhatLoaiSP extends AppCompatActivity {
         Intent intent = new Intent(this, AppMenu.class);
         startActivity(intent);
         return true;
+    }
+
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(CapNhatLoaiSP.this, DanhSachLoaiSP.class);
+        startActivity(intent);
     }
 
 }

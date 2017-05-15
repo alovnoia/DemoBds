@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.minhkhai.demobds.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class TaiKhoanAdapter extends BaseAdapter {
         tvChucVu.setText(arrayTaiKhoan.get(position).chucVu);
 
         ImageView imgAnh = (ImageView) convertView.findViewById(R.id.imgAnhTaiKhoanOnList);
-       /* Picasso.with(this)
+        /*Picasso.with(DanhSachTaiKhoan.this)
                 .load("http://10.0.3.2:2347/bds_project/img/Layout_4.png"+ arrayTaiKhoan.get(position).anh)
                 .into(imgAnh);*/
 

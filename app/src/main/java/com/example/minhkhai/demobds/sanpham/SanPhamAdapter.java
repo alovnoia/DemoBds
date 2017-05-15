@@ -63,7 +63,7 @@ public class SanPhamAdapter extends BaseAdapter{
         TextView tvGiaSP = (TextView) convertView.findViewById(R.id.tvDanhSachSPGia);
 
         //Bo sung anh sau
-        try {
+        /*try {
             URL urlAnh = new URL("http://xemanh.net/wp-content/uploads/2015/03/14548862185_6b22d16a64_b.jpg");
             Bitmap bmp;
             HttpURLConnection conn = (HttpURLConnection) urlAnh.openConnection();
@@ -74,7 +74,7 @@ public class SanPhamAdapter extends BaseAdapter{
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         tvTenSP.setText(arrSanPham.get(position).getTenSP() + " - Mã " +
                 String.valueOf(arrSanPham.get(position).getMaSP()));
         tvLoaiSP.setText(arrSanPham.get(position).getLoaiSP());

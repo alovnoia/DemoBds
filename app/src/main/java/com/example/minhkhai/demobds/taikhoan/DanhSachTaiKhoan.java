@@ -13,7 +13,6 @@ import android.widget.ListView;
 
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
-import com.example.minhkhai.demobds.duan.DanhSachDuAn;
 import com.example.minhkhai.demobds.hotro.API;
 
 import org.json.JSONArray;

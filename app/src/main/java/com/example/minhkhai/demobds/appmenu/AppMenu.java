@@ -9,12 +9,14 @@ import android.widget.ListView;
 
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.duan.DanhSachDuAn;
+import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.hotro.menu.Drawer;
 import com.example.minhkhai.demobds.hotro.menu.DrawerAdapter;
 import com.example.minhkhai.demobds.hotro.menu.NavigationDrawer;
 import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
 import com.example.minhkhai.demobds.loaikhachhang.DanhSachLoaiKhachHang;
 import com.example.minhkhai.demobds.loaisp.DanhSachLoaiSP;
+import com.example.minhkhai.demobds.sanpham.DanhSachSanPham;
 import com.example.minhkhai.demobds.taikhoan.DanhSachTaiKhoan;
 import com.example.minhkhai.demobds.thongtincanhan.ThongTinCaNhan;
 
@@ -67,7 +69,7 @@ public class AppMenu extends AppCompatActivity {
                         intent = new Intent(AppMenu.this, DanhSachLoaiSP.class);
                         break;
                     case 3:
-                        intent = new Intent(AppMenu.this, DanhSachLoaiSP.class);
+                        intent = new Intent(AppMenu.this, DanhSachSanPham.class);
                         break;
                     case 4:
                         intent = new Intent(AppMenu.this, DanhSachLoaiKhachHang.class);
@@ -86,7 +88,7 @@ public class AppMenu extends AppCompatActivity {
                         break;
                     case 9:
                         intent = new Intent(AppMenu.this, ThongTinCaNhan.class);
-                        intent.putExtra("id", "15");
+                        intent.putExtra("id", API.idUser);
                         break;
                     case 10:
                         intent = new Intent(AppMenu.this, DanhSachKhachHang.class);
