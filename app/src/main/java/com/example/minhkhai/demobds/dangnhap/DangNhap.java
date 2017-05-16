@@ -86,6 +86,7 @@ public class DangNhap extends AppCompatActivity {
 
                     Intent intent = new Intent(DangNhap.this, AppMenu.class);
                     API.idUser = obj.getString("MaTaiKhoan");
+                    API.quyen = obj.getString("ChucVu");
                     startActivity(intent);
                 } else {
                     Toast.makeText(DangNhap.this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();

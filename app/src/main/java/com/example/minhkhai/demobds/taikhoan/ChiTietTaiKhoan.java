@@ -88,7 +88,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new LayThongTinTK().execute("http://10.0.3.2:2347/bds_project/public/TaiKhoan/"+id);
+                new LayThongTinTK().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
             }
         });
 
@@ -98,7 +98,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        new SaveUpdate().execute("http://10.0.3.2:2347/bds_project/public/TaiKhoan/"+id);
+                        new SaveUpdate().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
                         Intent i = new Intent(ChiTietTaiKhoan.this, DanhSachTaiKhoan.class);
                         startActivity(i);
                     }
@@ -112,7 +112,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        new XoaTaiKhoan().execute("http://10.0.3.2:2347/bds_project/public/TaiKhoan/"+id);
+                        new XoaTaiKhoan().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
                         Intent i = new Intent(ChiTietTaiKhoan.this, DanhSachTaiKhoan.class);
                         startActivity(i);
                     }
@@ -166,7 +166,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
             try {
                 object = new JSONObject(s);
                 String tenHinh = object.getString("Anh");
-                Picasso.with(ChiTietTaiKhoan.this).load("http://10.0.3.2:2347/bds_project/img/"+ tenHinh).into(imgAnh);
+                Picasso.with(ChiTietTaiKhoan.this).load("http://"+API.HOST+"/bds_project/img/"+ tenHinh).into(imgAnh);
 
                 edtTen.setText(object.getString("HoTen"));
                 tvUsername.setText(object.getString("TenTaiKhoan"));

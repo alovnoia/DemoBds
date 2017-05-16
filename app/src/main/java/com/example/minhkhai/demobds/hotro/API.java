@@ -26,6 +26,8 @@ public class API {
 
     public static String idUser;
 
+    public static String quyen;
+
     public static String POST_URL(URL url, JSONObject object) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setReadTimeout(15000 /* milliseconds */);

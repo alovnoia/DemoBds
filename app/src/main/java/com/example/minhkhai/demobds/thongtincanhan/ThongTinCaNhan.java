@@ -61,13 +61,12 @@ public class ThongTinCaNhan extends AppCompatActivity {
         imgAnh = (ImageView) findViewById(R.id.imgAnhTTCN);
         fab_Save = (FloatingActionButton) findViewById(R.id.fab_SaveTTCN);
 
-        Bundle extras = getIntent().getExtras();
-        id = extras.getString("id");
+        id = API.idUser;
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new LoadTTCN().execute("http://10.0.3.2:2347/bds_project/public/TaiKhoan/"+id);
+                new LoadTTCN().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
             }
         });
 
@@ -77,7 +76,7 @@ public class ThongTinCaNhan extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        new CapNhatTTCN().execute("http://10.0.3.2:2347/bds_project/public/TaiKhoan/"+id);
+                        new CapNhatTTCN().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
                     }
                 });
             }
@@ -146,7 +145,7 @@ public class ThongTinCaNhan extends AppCompatActivity {
                 JSONObject object = new JSONObject(s);
 
                 String tenHinh = object.getString("Anh");
-                Picasso.with(ThongTinCaNhan.this).load("http://10.0.3.2:2347/bds_project/img/"+ tenHinh).into(imgAnh);
+                Picasso.with(ThongTinCaNhan.this).load("http://"+API.HOST+"/bds_project/img/"+ tenHinh).into(imgAnh);
 
                 txtTaiKhoan.setText(object.getString("TenTaiKhoan"));
                 txtChucVu.setText(object.getString("ChucVu"));

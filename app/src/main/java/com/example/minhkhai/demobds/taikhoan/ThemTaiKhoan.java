@@ -68,7 +68,7 @@ public class ThemTaiKhoan extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        new LuuThemTaiKhoan().execute("http://10.0.3.2:2347/bds_project/public/TaiKhoan");
+                        new LuuThemTaiKhoan().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan");
                         Intent i = new Intent(ThemTaiKhoan.this, DanhSachTaiKhoan.class);
                         startActivity(i);
                     }
@@ -109,7 +109,7 @@ public class ThemTaiKhoan extends AppCompatActivity {
                 JSONObject post = new JSONObject();
 
                 post.put("TenTaiKhoan", taiKhoan);
-                post.put("MatKhau", "123415");
+                post.put("MatKhau", "123");
                 post.put("HoTen", hoTen);
                 post.put("DiaChi", diaChi);
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

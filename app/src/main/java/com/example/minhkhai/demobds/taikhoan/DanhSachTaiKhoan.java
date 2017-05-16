@@ -38,7 +38,7 @@ public class DanhSachTaiKhoan extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new LoadDanhSachTK().execute("http://10.0.3.2:2347/bds_project/public/TaiKhoan");
+                new LoadDanhSachTK().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan");
             }
         });
 
