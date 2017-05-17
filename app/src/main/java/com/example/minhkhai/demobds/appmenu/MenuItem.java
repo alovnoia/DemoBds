@@ -9,10 +9,14 @@ public class MenuItem {
     String tenChucNang;
     int anh;
 
-    /*public MenuItem(String tenChucNang, int anh) {
-        this.tenChucNang = tenChucNang;
+    public MenuItem(String tenChucNang, int anh) {
         this.anh = anh;
-    }*/
+        this.tenChucNang = tenChucNang;
+    }
+
+    public MenuItem(String tenChucNang) {
+        this.tenChucNang = tenChucNang;
+    }
 
     public String getTenChucNang() {
         return tenChucNang;
