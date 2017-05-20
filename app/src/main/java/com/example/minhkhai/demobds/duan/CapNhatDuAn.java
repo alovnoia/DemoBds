@@ -199,6 +199,7 @@ public class CapNhatDuAn extends AppCompatActivity {
             super.onPostExecute(s);
             Toast.makeText(CapNhatDuAn.this, "Đã xóa dự án có id "+id, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(CapNhatDuAn.this, DanhSachDuAn.class);
+            intent.putExtra("key", "DuAn");
             startActivity(intent);
         }
     }

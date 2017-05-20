@@ -12,22 +12,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".duan.DanhSachDuAn">
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            c
         </activity>
-        <activity android:name=".loaisp.DanhSachLoaiSP" />
+        <!--<activity android:name=".duan.DanhSachDuAn">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+        <activity android:name=".loaikhachhang.ThemLoaiKhachHang">
+
+        </activity>
         <activity android:name=".loaisp.ThemLoaiSP" />
         <activity android:name=".loaisp.CapNhatLoaiSP" />
         <activity android:name=".duan.ThemDuAn" />
@@ -41,48 +43,11 @@
             </intent-filter>
         </activity>
         -->
-        <activity android:name=".loaikhachhang.DanhSachLoaiKhachHang">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".loaikhachhang.ThemLoaiKhachHang" />
-        <activity android:name=".loaikhachhang.ChiTietLoaiKhachHang" />
-        <activity android:name=".dangnhap.DangNhap">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".khachhang.DanhSachKhachHang">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".khachhang.ThemKhachHang" />
-        <activity android:name=".khachhang.CapNhatKhachHang" />
-        <activity android:name=".appmenu.AppMenu">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".taikhoan.DanhSachTaiKhoan" />
-        <activity android:name=".taikhoan.ThemTaiKhoan" />
-        <activity android:name=".taikhoan.ChiTietTaiKhoan" />
-        <activity android:name=".thongtincanhan.ThongTinCaNhan">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+    <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

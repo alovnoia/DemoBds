@@ -22,7 +22,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class API {
 
-    public static String HOST = "10.0.3.2:2347";
+    public static String HOST = "10.0.3.2:8080";
 
     public static String idUser;
 

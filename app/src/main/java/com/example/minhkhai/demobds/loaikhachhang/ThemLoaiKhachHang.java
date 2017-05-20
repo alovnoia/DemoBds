@@ -1,8 +1,11 @@
 package com.example.minhkhai.demobds.loaikhachhang;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
@@ -32,6 +36,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class ThemLoaiKhachHang extends AppCompatActivity {
     EditText edtTenLoaiKH, edtMoTa;
     FloatingActionButton flSave;
+    FragmentManager fragmentManager = getFragmentManager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +54,10 @@ public class ThemLoaiKhachHang extends AppCompatActivity {
                     @Override
                     public void run() {
                         new ThemLoaiKH().execute();
-                        Intent i = new Intent(ThemLoaiKhachHang.this, DanhSachLoaiKhachHang.class);
-                        startActivity(i);
+                        Intent intent = new Intent(ThemLoaiKhachHang.this, MainActivity.class);
+                        intent.putExtra("key", "LoaiKhachHang");
+                        startActivity(intent);
+
                     }
                 });
             }

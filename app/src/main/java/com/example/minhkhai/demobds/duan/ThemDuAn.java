@@ -101,6 +101,7 @@ public class ThemDuAn extends AppCompatActivity {
             super.onPostExecute(s);
             Toast.makeText(ThemDuAn.this, s, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(ThemDuAn.this, DanhSachDuAn.class);
+            intent.putExtra("key", "DuAn");
             startActivity(intent);
         }
     }

@@ -1,15 +1,18 @@
 package com.example.minhkhai.demobds.loaisp;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -30,22 +33,22 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class DanhSachLoaiSP extends AppCompatActivity {
+public class DanhSachLoaiSP extends Fragment {
 
     ListView lvLoaiSP;
     ArrayList<LoaiSP> mangLoaiSanPham;
     FloatingActionButton fab_add;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_danh_sach_loai_sp);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_danh_sach_loai_sp,container,false);
 
-        fab_add = (FloatingActionButton) findViewById(R.id.fab_add);
-        lvLoaiSP = (ListView) findViewById(R.id.lvDanhSachLoaiSP);
+        fab_add = (FloatingActionButton) view.findViewById(R.id.fab_add);
+        lvLoaiSP = (ListView) view.findViewById(R.id.lvDanhSachLoaiSP);
         mangLoaiSanPham = new ArrayList<LoaiSP>();
 
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 new LoadDanhSach().execute("http://"+API.HOST+"/bds_project/public/LoaiSP");
@@ -55,7 +58,7 @@ public class DanhSachLoaiSP extends AppCompatActivity {
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DanhSachLoaiSP.this, ThemLoaiSP.class);
+                Intent intent = new Intent(getActivity(), ThemLoaiSP.class);
                 startActivity(intent);
             }
         });
@@ -63,7 +66,7 @@ public class DanhSachLoaiSP extends AppCompatActivity {
         lvLoaiSP.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(DanhSachLoaiSP.this, CapNhatLoaiSP.class);
+                Intent intent = new Intent(getActivity(), CapNhatLoaiSP.class);
                 intent.putExtra("id", mangLoaiSanPham.get(position).getMaLoaiSP());
                 startActivity(intent);
             }
@@ -90,6 +93,7 @@ public class DanhSachLoaiSP extends AppCompatActivity {
                 return true;
             }
         });*/
+        return view;
 
     }
 
@@ -121,7 +125,7 @@ public class DanhSachLoaiSP extends AppCompatActivity {
                     ));
                 }
 
-                LoaiSPAdapter adapter = new LoaiSPAdapter(DanhSachLoaiSP.this, R.layout.item_loai_sp, mangLoaiSanPham);
+                LoaiSPAdapter adapter = new LoaiSPAdapter(getActivity(), R.layout.item_loai_sp, mangLoaiSanPham);
 
                 lvLoaiSP.setAdapter(adapter);
 
@@ -132,17 +136,17 @@ public class DanhSachLoaiSP extends AppCompatActivity {
         }
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
-
-    @Override
+*/
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(this, AppMenu.class);
         startActivity(intent);
         return true;
-    }
+    }*/
 
 }

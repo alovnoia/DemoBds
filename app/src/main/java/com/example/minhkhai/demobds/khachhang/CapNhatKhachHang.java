@@ -262,6 +262,7 @@ public class CapNhatKhachHang extends AppCompatActivity {
             super.onPostExecute(s);
             Toast.makeText(CapNhatKhachHang.this, "Đã xóa khách có id "+id, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(CapNhatKhachHang.this, DanhSachKhachHang.class);
+            intent.putExtra("key", "KhachHang");
             startActivity(intent);
         }
     }

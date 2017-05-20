@@ -43,6 +43,7 @@ public class ThemLoaiSP extends AppCompatActivity {
                     public void run() {
                         new LuuLoaiSP().execute();
                         Intent intent = new Intent(ThemLoaiSP.this, DanhSachLoaiSP.class);
+                        intent.putExtra("key", "LoaiSP");
                         startActivity(intent);
                     }
                 });

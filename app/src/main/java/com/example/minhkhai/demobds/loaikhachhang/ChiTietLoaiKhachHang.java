@@ -84,6 +84,7 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
                     public void run() {
                         new XoaLoaiKH().execute();
                         Intent i = new Intent(ChiTietLoaiKhachHang.this, DanhSachLoaiKhachHang.class);
+                        i.putExtra("key", "LoaiKhachHang");
                         startActivity(i);
                     }
                 });

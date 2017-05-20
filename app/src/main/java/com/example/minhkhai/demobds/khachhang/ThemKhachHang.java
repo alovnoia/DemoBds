@@ -157,6 +157,7 @@ public class ThemKhachHang extends AppCompatActivity {
 
             Toast.makeText(ThemKhachHang.this, "Đã thêm khách hàng "+tenKH, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(ThemKhachHang.this, DanhSachKhachHang.class);
+            intent.putExtra("key", "KhachHang");
             startActivity(intent);
         }
     }

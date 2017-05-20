@@ -166,6 +166,7 @@ public class CapNhatLoaiSP extends AppCompatActivity {
             super.onPostExecute(s);
             Toast.makeText(CapNhatLoaiSP.this, "Đã xóa SP có id "+id, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(CapNhatLoaiSP.this, DanhSachLoaiSP.class);
+            intent.putExtra("key", "LoaiSP");
             startActivity(intent);
         }
     }

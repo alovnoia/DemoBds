@@ -1,5 +1,6 @@
 package com.example.minhkhai.demobds.loaikhachhang;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
@@ -8,9 +9,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -33,7 +36,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class DanhSachLoaiKhachHang extends AppCompatActivity {
+public class DanhSachLoaiKhachHang extends Fragment {
 
     FloatingActionButton flAdd;
     ListView lvDanhSachLoaiKH;
@@ -41,28 +44,28 @@ public class DanhSachLoaiKhachHang extends AppCompatActivity {
 
     //TextView test;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_danh_sach_loai_khach_hang);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_danh_sach_loai_khach_hang,container,false);
         //test = (TextView) findViewById(R.id.TestTV);
        /* FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.flDanhSachLoaiKH, new NavigationDrawer()).commit();*/
 
-        lvDanhSachLoaiKH= (ListView) findViewById(R.id.lvDanhSachLoaiKH);
+        lvDanhSachLoaiKH= (ListView) view.findViewById(R.id.lvDanhSachLoaiKH);
         mangLoaiKH = new ArrayList<LoaiKhachHang>();
 
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 new LoadDanhSach().execute("http://"+API.HOST+"/bds_project/public/LoaiKhachHang");
             }
         });
 
-        flAdd = (FloatingActionButton) findViewById(R.id.fab_add);
+        flAdd = (FloatingActionButton) view.findViewById(R.id.fab_add);
         flAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i= new Intent(DanhSachLoaiKhachHang.this, ThemLoaiKhachHang.class);
+                Intent i= new Intent(getActivity(), ThemLoaiKhachHang.class);
                 startActivity(i);
             }
         });
@@ -70,22 +73,18 @@ public class DanhSachLoaiKhachHang extends AppCompatActivity {
         lvDanhSachLoaiKH.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i =new Intent(DanhSachLoaiKhachHang.this, ChiTietLoaiKhachHang.class);
+                Intent i =new Intent(getActivity(), ChiTietLoaiKhachHang.class);
                 i.putExtra("maLoaiKH", mangLoaiKH.get(position).maLoai);
                 startActivity(i);
             }
         });
+        return view;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(DanhSachLoaiKhachHang.this, AppMenu.class);
+        Intent intent = new Intent(getActivity(), AppMenu.class);
         startActivity(intent);
         return true;
     }
@@ -117,7 +116,7 @@ public class DanhSachLoaiKhachHang extends AppCompatActivity {
 
                     ));
                 }
-                LoaiKhachHangAdapter adapter= new LoaiKhachHangAdapter(DanhSachLoaiKhachHang.this,
+                LoaiKhachHangAdapter adapter= new LoaiKhachHangAdapter(getActivity(),
                         R.layout.item_loai_khach_hang, mangLoaiKH);
                 lvDanhSachLoaiKH.setAdapter(adapter);
             } catch (JSONException e) {

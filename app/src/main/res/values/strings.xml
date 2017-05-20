@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DemoBds</string>
+    <string name="app_name">Quản lý bất động sản</string>
     <string name="title_activity_menu">MenuActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

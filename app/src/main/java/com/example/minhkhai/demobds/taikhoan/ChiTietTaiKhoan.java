@@ -99,8 +99,6 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
                     @Override
                     public void run() {
                         new SaveUpdate().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
-                        Intent i = new Intent(ChiTietTaiKhoan.this, DanhSachTaiKhoan.class);
-                        startActivity(i);
                     }
                 });
             }
@@ -114,6 +112,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
                     public void run() {
                         new XoaTaiKhoan().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
                         Intent i = new Intent(ChiTietTaiKhoan.this, DanhSachTaiKhoan.class);
+                        i.putExtra("key", "TaiKhoan");
                         startActivity(i);
                     }
                 });
