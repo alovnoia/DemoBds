@@ -157,20 +157,20 @@ public class AppMenu extends AppCompatActivity {
 
 /*String itemTenNVQL[] = {"Tài khoản", "Dự án", "Loại sản phẩm", "Sản phẩm", "Loại khách hàng", "Khách hàng",
             "Ưu đãi", "Hợp đồng", "Nợ", "Thông tin cá nhân", "Đăng xuất"};
-    int itemAnhNVQL[] = {R.drawable.ic_add_black_24dp, R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp, R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp};
+    int itemAnhNVQL[] = {R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round};
     String itemTenNVBH[] = {"Dự án", "Loại sản phẩm", "Sản phẩm", "Loại khách hàng", "Khách hàng",
             "Ưu đãi", "Hợp đồng", "Nợ", "Thông tin cá nhân", "Đăng xuất"};
-    int itemAnhNVBH[] = {R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp, R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp};
+    int itemAnhNVBH[] = {R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round};
     String[] itemTen;
     int[] itemAnh;
     List<MenuItem> arrItem;

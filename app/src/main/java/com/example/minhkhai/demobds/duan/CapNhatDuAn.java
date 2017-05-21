@@ -219,17 +219,17 @@ public class CapNhatDuAn extends AppCompatActivity {
         date.show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    /*@Override
+    *//*public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(CapNhatDuAn.this, AppMenu.class);
         startActivity(intent);
         return true;
-    }
+    }*/
 
 }

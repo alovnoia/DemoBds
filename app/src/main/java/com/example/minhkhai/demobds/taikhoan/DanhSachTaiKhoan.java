@@ -107,16 +107,16 @@ public class DanhSachTaiKhoan extends AppCompatActivity {
             }
         }
     }
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
-    }
+    }*/
 
-    @Override
+   /* @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(DanhSachTaiKhoan.this, AppMenu.class);
         startActivity(intent);
         return true;
-    }
+    }*/
 }

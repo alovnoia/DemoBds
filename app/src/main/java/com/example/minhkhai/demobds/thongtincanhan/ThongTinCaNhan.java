@@ -178,16 +178,16 @@ public class ThongTinCaNhan extends AppCompatActivity {
         date.show();
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(ThongTinCaNhan.this, AppMenu.class);
         startActivity(intent);
         return true;
-    }
+    }*/
 }

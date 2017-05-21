@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.minhkhai.demobds.R;
+import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
 import com.squareup.picasso.Picasso;
 
@@ -257,4 +260,17 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
                 ngayGioHienTai.get(Calendar.DAY_OF_MONTH));
         date.show();
     }
+
+    /*@Override
+    *//*public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }*//*
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(ChiTietTaiKhoan.this, AppMenu.class);
+        startActivity(intent);
+        return true;
+    }*/
 }

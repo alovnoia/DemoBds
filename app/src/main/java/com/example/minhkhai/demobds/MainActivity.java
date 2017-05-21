@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity
                 toggle.setDrawerIndicatorEnabled(true);
                 break;
             default:
-                fragment = new DanhSachLoaiKhachHang();
+                fragment = new DanhSachDuAn();
                 fragmentManager.beginTransaction()
                         .replace(R.id.framelayout, fragment).commit();
                 toggle.setDrawerIndicatorEnabled(true);
@@ -172,8 +172,6 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.framelayout, fragment).commit();
 
             toggle.setDrawerIndicatorEnabled(true);
-        } else if (id == R.id.lo) {
-
         } else if (id == R.id.loaiSP) {
             Fragment fragment = new DanhSachLoaiSP();
             fragmentManager.beginTransaction()
@@ -181,24 +179,7 @@ public class MainActivity extends AppCompatActivity
 
             toggle.setDrawerIndicatorEnabled(true);
 
-        } else if (id == R.id.sanPham) {
-
-        } else if (id == R.id.loaiSP) {
-
-        } else if (id == R.id.uuDai) {
-
-        } else if (id == R.id.hopDong) {
-
-        } else if (id == R.id.no) {
-
-        } else if (id == R.id.qlTaiKhoan) {
-
-        } else if (id == R.id.tkCaNhan) {
-
-        } else if (id == R.id.dangXuat) {
-
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

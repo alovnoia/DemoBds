@@ -91,17 +91,17 @@ public class ThemLoaiKhachHang extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    /*@Override
+    *//*public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(ThemLoaiKhachHang.this, AppMenu.class);
         startActivity(intent);
         return true;
-    }
+    }*/
 
 }
