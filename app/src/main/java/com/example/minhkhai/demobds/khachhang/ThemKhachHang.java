@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
@@ -156,7 +157,7 @@ public class ThemKhachHang extends AppCompatActivity {
             super.onPostExecute(s);
 
             Toast.makeText(ThemKhachHang.this, "Đã thêm khách hàng "+tenKH, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(ThemKhachHang.this, DanhSachKhachHang.class);
+            Intent intent = new Intent(ThemKhachHang.this, MainActivity.class);
             intent.putExtra("key", "KhachHang");
             startActivity(intent);
         }

@@ -4,11 +4,14 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,7 +31,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class ThongTinCaNhan extends AppCompatActivity {
+public class ThongTinCaNhan extends Fragment {
     TextView txtTaiKhoan, txtChucVu;
     EditText edtTen, edtPass, edtNgay, edtDienThoai, edtDiaChi, edtCMT, edtThongTin;
     ImageView imgAnh;
@@ -36,17 +39,17 @@ public class ThongTinCaNhan extends AppCompatActivity {
     Calendar ngayGioHienTai = Calendar.getInstance();
     String id;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_thong_tin_ca_nhan);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_thong_tin_ca_nhan,container,false);
 
-        txtTaiKhoan = (TextView) findViewById(R.id.tvTaiKhoanTTCN);
-        txtChucVu = (TextView) findViewById(R.id.tvChucVuTTCN);
-        edtTen = (EditText) findViewById(R.id.edtHoTenTTCN);
-        edtPass = (EditText) findViewById(R.id.edtMatKhauTTCN);
+        txtTaiKhoan = (TextView) view.findViewById(R.id.tvTaiKhoanTTCN);
+        txtChucVu = (TextView) view.findViewById(R.id.tvChucVuTTCN);
+        edtTen = (EditText) view.findViewById(R.id.edtHoTenTTCN);
+        edtPass = (EditText) view.findViewById(R.id.edtMatKhauTTCN);
 
 
-        edtNgay = (EditText) findViewById(R.id.edtNgaySinhTTCN);
+        edtNgay = (EditText) view.findViewById(R.id.edtNgaySinhTTCN);
         edtNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,16 +57,16 @@ public class ThongTinCaNhan extends AppCompatActivity {
             }
         });
 
-        edtDienThoai = (EditText) findViewById(R.id.edtDienThoaiTTCN);
-        edtDiaChi = (EditText) findViewById(R.id.edtDiaChiTTCN);
-        edtCMT = (EditText) findViewById(R.id.edtCMTTTCN);
-        edtThongTin = (EditText) findViewById(R.id.edtThongTinKhacTTCN);
-        imgAnh = (ImageView) findViewById(R.id.imgAnhTTCN);
-        fab_Save = (FloatingActionButton) findViewById(R.id.fab_SaveTTCN);
+        edtDienThoai = (EditText) view.findViewById(R.id.edtDienThoaiTTCN);
+        edtDiaChi = (EditText) view.findViewById(R.id.edtDiaChiTTCN);
+        edtCMT = (EditText) view.findViewById(R.id.edtCMTTTCN);
+        edtThongTin = (EditText) view.findViewById(R.id.edtThongTinKhacTTCN);
+        imgAnh = (ImageView) view.findViewById(R.id.imgAnhTTCN);
+        fab_Save = (FloatingActionButton) view.findViewById(R.id.fab_SaveTTCN);
 
         id = API.idUser;
 
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 new LoadTTCN().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
@@ -73,7 +76,7 @@ public class ThongTinCaNhan extends AppCompatActivity {
         fab_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                runOnUiThread(new Runnable() {
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         new CapNhatTTCN().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
@@ -81,6 +84,7 @@ public class ThongTinCaNhan extends AppCompatActivity {
                 });
             }
         });
+        return view;
     }
 
     private class CapNhatTTCN extends AsyncTask<String, Integer, String> {
@@ -123,7 +127,7 @@ public class ThongTinCaNhan extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getApplicationContext(), "Đã sửa", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Đã cập nhật thông tin mới", Toast.LENGTH_SHORT).show();
         }
     }
     private class LoadTTCN extends AsyncTask<String, Integer, String>{
@@ -145,7 +149,7 @@ public class ThongTinCaNhan extends AppCompatActivity {
                 JSONObject object = new JSONObject(s);
 
                 String tenHinh = object.getString("Anh");
-                Picasso.with(ThongTinCaNhan.this).load("http://"+API.HOST+"/bds_project/img/"+ tenHinh).into(imgAnh);
+                Picasso.with(getActivity()).load("http://"+API.HOST+"/bds_project/img/"+ tenHinh).into(imgAnh);
 
                 txtTaiKhoan.setText(object.getString("TenTaiKhoan"));
                 txtChucVu.setText(object.getString("ChucVu"));
@@ -165,7 +169,7 @@ public class ThongTinCaNhan extends AppCompatActivity {
         }
     }
     public void datePicker(){
-        DatePickerDialog date = new DatePickerDialog(ThongTinCaNhan.this,
+        DatePickerDialog date = new DatePickerDialog(getActivity(),
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

@@ -5,11 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.minhkhai.demobds.R;
@@ -29,22 +32,22 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class DanhSachSanPham extends AppCompatActivity {
+public class DanhSachSanPham extends Fragment {
 
     ListView lvSanPham;
     ArrayList<SanPham> arrSanPham;
     FloatingActionButton fabThemSP;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_danh_sach_san_pham);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_danh_sach_san_pham,container,false);
 
         arrSanPham = new ArrayList<>();
-        lvSanPham = (ListView) findViewById(R.id.lvSanPham);
-        fabThemSP = (FloatingActionButton) findViewById(R.id.fabThemSP);
+        lvSanPham = (ListView) view.findViewById(R.id.lvSanPham);
+        fabThemSP = (FloatingActionButton) view.findViewById(R.id.fabThemSP);
 
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 new LoadDanhSachSP().execute("http://"+API.HOST+"/bds_project/public/SanPham");
@@ -54,11 +57,11 @@ public class DanhSachSanPham extends AppCompatActivity {
         fabThemSP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DanhSachSanPham.this, ThemSanPham.class);
-                startActivity(intent);
+                //Intent intent = new Intent(DanhSachSanPham.this, ThemSanPham.class);
+                //startActivity(intent);
             }
         });
-
+        return view;
     }
 
     private class LoadDanhSachSP extends AsyncTask<String, String, String>{
@@ -90,7 +93,7 @@ public class DanhSachSanPham extends AppCompatActivity {
                     ));
                 }
 
-                SanPhamAdapter adapter = new SanPhamAdapter(DanhSachSanPham.this, R.layout.item_sp, arrSanPham);
+                SanPhamAdapter adapter = new SanPhamAdapter(getActivity(), R.layout.item_sp, arrSanPham);
 
                 lvSanPham.setAdapter(adapter);
 

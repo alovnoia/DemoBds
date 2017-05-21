@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
@@ -114,7 +115,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
                     @Override
                     public void run() {
                         new XoaTaiKhoan().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
-                        Intent i = new Intent(ChiTietTaiKhoan.this, DanhSachTaiKhoan.class);
+                        Intent i = new Intent(ChiTietTaiKhoan.this, MainActivity.class);
                         i.putExtra("key", "TaiKhoan");
                         startActivity(i);
                     }

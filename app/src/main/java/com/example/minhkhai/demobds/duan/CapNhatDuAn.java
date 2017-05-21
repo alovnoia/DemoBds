@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
@@ -198,7 +199,7 @@ public class CapNhatDuAn extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Toast.makeText(CapNhatDuAn.this, "Đã xóa dự án có id "+id, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(CapNhatDuAn.this, DanhSachDuAn.class);
+            Intent intent = new Intent(CapNhatDuAn.this, MainActivity.class);
             intent.putExtra("key", "DuAn");
             startActivity(intent);
         }

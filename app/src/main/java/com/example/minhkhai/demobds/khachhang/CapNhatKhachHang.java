@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.duan.CapNhatDuAn;
@@ -261,7 +262,7 @@ public class CapNhatKhachHang extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Toast.makeText(CapNhatKhachHang.this, "Đã xóa khách có id "+id, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(CapNhatKhachHang.this, DanhSachKhachHang.class);
+            Intent intent = new Intent(CapNhatKhachHang.this, MainActivity.class);
             intent.putExtra("key", "KhachHang");
             startActivity(intent);
         }

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
@@ -44,8 +45,8 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_loai_khach_hang);
 
-        Intent i = getIntent();
-        id = i.getIntExtra("maLoaiKH", 0);
+        Bundle i = getIntent().getExtras();
+        id = i.getInt("maLoaiKH");
 
 
         flEdit = (FloatingActionButton) findViewById(R.id.fab_edit_LoaiSP_ChiTiet);
@@ -69,8 +70,6 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
                     @Override
                     public void run() {
                         new UpdateThongTin().execute();
-                        Intent i = new Intent(ChiTietLoaiKhachHang.this, DanhSachLoaiKhachHang.class);
-                        startActivity(i);
                     }
                 });
             }
@@ -83,7 +82,7 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
                     @Override
                     public void run() {
                         new XoaLoaiKH().execute();
-                        Intent i = new Intent(ChiTietLoaiKhachHang.this, DanhSachLoaiKhachHang.class);
+                        Intent i = new Intent(ChiTietLoaiKhachHang.this, MainActivity.class);
                         i.putExtra("key", "LoaiKhachHang");
                         startActivity(i);
                     }
@@ -170,7 +169,12 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getApplicationContext(), "Đã xóa SP có id "+id, Toast.LENGTH_SHORT).show();
+            try {
+                JSONObject postDataParams = new JSONObject(s);
+                Toast.makeText(getApplicationContext(), "Đã xóa loại khách hàng id " + id, Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -27,8 +27,17 @@
         <!--<category android:name="android.intent.category.LAUNCHER" />-->
         <!--</intent-filter>-->
         <!--</activity>-->
+        <activity android:name=".loaikhachhang.ChiTietLoaiKhachHang"/>
         <activity android:name=".loaikhachhang.ThemLoaiKhachHang">
+        </activity>
+        <activity android:name=".khachhang.CapNhatKhachHang"/>
+        <activity android:name=".khachhang.ThemKhachHang"/>
+        <activity android:name=".dangnhap.DangNhap" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name=".loaisp.ThemLoaiSP" />
         <activity android:name=".loaisp.CapNhatLoaiSP" />

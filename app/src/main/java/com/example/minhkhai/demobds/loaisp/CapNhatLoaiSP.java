@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
@@ -165,7 +166,7 @@ public class CapNhatLoaiSP extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Toast.makeText(CapNhatLoaiSP.this, "Đã xóa SP có id "+id, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(CapNhatLoaiSP.this, DanhSachLoaiSP.class);
+            Intent intent = new Intent(CapNhatLoaiSP.this, MainActivity.class);
             intent.putExtra("key", "LoaiSP");
             startActivity(intent);
         }

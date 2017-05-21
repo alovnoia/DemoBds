@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
@@ -100,7 +101,7 @@ public class ThemDuAn extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Toast.makeText(ThemDuAn.this, s, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(ThemDuAn.this, DanhSachDuAn.class);
+            Intent intent = new Intent(ThemDuAn.this, MainActivity.class);
             intent.putExtra("key", "DuAn");
             startActivity(intent);
         }

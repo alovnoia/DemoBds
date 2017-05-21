@@ -3,11 +3,14 @@ package com.example.minhkhai.demobds.taikhoan;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -22,31 +25,31 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DanhSachTaiKhoan extends AppCompatActivity {
+public class DanhSachTaiKhoan extends Fragment {
 
     ListView lvList;
     ArrayList<TaiKhoan> mangTaiKhoan;
     FloatingActionButton fab_Them;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_danh_sach_tai_khoan);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_danh_sach_tai_khoan,container,false);
 
-        lvList = (ListView) findViewById(R.id.lvDanhSachTaiKhoan);
+        lvList = (ListView) view.findViewById(R.id.lvDanhSachTaiKhoan);
         mangTaiKhoan = new ArrayList<TaiKhoan>();
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 new LoadDanhSachTK().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan");
             }
         });
 
-        fab_Them = (FloatingActionButton) findViewById(R.id.fab_ThemTaiKhoan);
+        fab_Them = (FloatingActionButton) view.findViewById(R.id.fab_ThemTaiKhoan);
         fab_Them.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DanhSachTaiKhoan.this, ThemTaiKhoan.class);
+                Intent intent = new Intent(getActivity(), ThemTaiKhoan.class);
                 startActivity(intent);
             }
         });
@@ -54,13 +57,14 @@ public class DanhSachTaiKhoan extends AppCompatActivity {
         lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(DanhSachTaiKhoan.this, ChiTietTaiKhoan.class);
+                Intent intent = new Intent(getActivity(), ChiTietTaiKhoan.class);
 
                 intent.putExtra("id", mangTaiKhoan.get(position).maTaiKhoan);
 
                 startActivity(intent);
             }
         });
+        return view;
     }
 
     private class LoadDanhSachTK extends AsyncTask<String, Integer, String> {
@@ -99,7 +103,7 @@ public class DanhSachTaiKhoan extends AppCompatActivity {
                     ));
                 }
 
-                TaiKhoanAdapter adapter =new TaiKhoanAdapter(DanhSachTaiKhoan.this, R.layout.item_taikhoan, mangTaiKhoan);
+                TaiKhoanAdapter adapter =new TaiKhoanAdapter(getActivity(), R.layout.item_taikhoan, mangTaiKhoan);
                 lvList.setAdapter(adapter);
 
             } catch (JSONException e) {

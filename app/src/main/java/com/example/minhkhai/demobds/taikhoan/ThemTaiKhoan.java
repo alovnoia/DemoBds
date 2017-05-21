@@ -72,9 +72,6 @@ public class ThemTaiKhoan extends AppCompatActivity {
                     @Override
                     public void run() {
                         new LuuThemTaiKhoan().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan");
-                        Intent i = new Intent(ThemTaiKhoan.this, DanhSachTaiKhoan.class);
-                        i.putExtra("key", "TaiKhoan");
-                        startActivity(i);
                     }
                 });
             }
