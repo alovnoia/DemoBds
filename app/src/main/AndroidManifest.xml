@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,19 +21,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".duan.DanhSachDuAn">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.MAIN" />-->
+        <!-- <activity android:name=".duan.DanhSachDuAn"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
 
-        <!--<category android:name="android.intent.category.LAUNCHER" />-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
-        <activity android:name=".loaikhachhang.ChiTietLoaiKhachHang"/>
-        <activity android:name=".loaikhachhang.ThemLoaiKhachHang">
-        </activity>
-        <activity android:name=".khachhang.CapNhatKhachHang"/>
-        <activity android:name=".khachhang.ThemKhachHang"/>
-        <activity android:name=".dangnhap.DangNhap" >
+
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <activity android:name=".loaikhachhang.ChiTietLoaiKhachHang" />
+        <activity android:name=".loaikhachhang.ThemLoaiKhachHang" />
+        <activity android:name=".khachhang.CapNhatKhachHang" />
+        <activity android:name=".khachhang.ThemKhachHang" />
+        <activity android:name=".dangnhap.DangNhap">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -52,12 +53,16 @@
             </intent-filter>
         </activity>
         -->
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-         App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <!--
+         ATTENTION: This was auto-generated to add Google Play services to your project for
+         App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-    </application>
 
+        <activity android:name=".lo.ThemLo" />
+        <activity android:name=".lo.ChiTietLo"></activity>
+    </application>
 
 </manifest>

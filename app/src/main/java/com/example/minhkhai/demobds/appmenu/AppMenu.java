@@ -17,6 +17,7 @@ import com.example.minhkhai.demobds.duan.DanhSachDuAn;
 import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.hotro.menu.NavigationDrawer;
 import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
+import com.example.minhkhai.demobds.lo.DanhSachLo;
 import com.example.minhkhai.demobds.loaikhachhang.DanhSachLoaiKhachHang;
 import com.example.minhkhai.demobds.loaikhachhang.LoaiKhachHang;
 import com.example.minhkhai.demobds.loaisp.DanhSachLoaiSP;
@@ -95,7 +96,7 @@ public class AppMenu extends AppCompatActivity {
                         if (childPosition == 0) {
                             intent = new Intent(AppMenu.this, DanhSachDuAn.class);
                         } else if (childPosition == 1) {
-                            intent = new Intent(AppMenu.this, DanhSachDuAn.class);
+                            intent = new Intent(AppMenu.this, DanhSachLo.class);
                         } else if (childPosition == 2) {
                             intent = new Intent(AppMenu.this, DanhSachLoaiSP.class);
                         } else if (childPosition == 3) {

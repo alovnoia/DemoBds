@@ -81,4 +81,8 @@ public class DuAn {
     public void setMoTa(String moTa) {
         this.moTa = moTa;
     }
+
+    public String toString() {
+        return this.tenDuAn;            // What to display in the Spinner list.
+    }
 }

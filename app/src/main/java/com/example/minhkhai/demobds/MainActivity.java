@@ -20,6 +20,7 @@ import android.view.View;
 import com.example.minhkhai.demobds.duan.DanhSachDuAn;
 import com.example.minhkhai.demobds.duan.DuAn;
 import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
+import com.example.minhkhai.demobds.lo.DanhSachLo;
 import com.example.minhkhai.demobds.loaikhachhang.DanhSachLoaiKhachHang;
 import com.example.minhkhai.demobds.loaisp.DanhSachLoaiSP;
 import com.example.minhkhai.demobds.taikhoan.ChiTietTaiKhoan;
@@ -100,6 +101,12 @@ public class MainActivity extends AppCompatActivity
                         .replace(R.id.framelayout, fragment).commit();
                 toggle.setDrawerIndicatorEnabled(true);
                 break;
+            case "Lo":
+                fragment = new DanhSachLo();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.framelayout, fragment).commit();
+                toggle.setDrawerIndicatorEnabled(true);
+                break;
             default:
                 fragment = new DanhSachDuAn();
                 fragmentManager.beginTransaction()
@@ -174,6 +181,13 @@ public class MainActivity extends AppCompatActivity
             toggle.setDrawerIndicatorEnabled(true);
         } else if (id == R.id.loaiSP) {
             Fragment fragment = new DanhSachLoaiSP();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.framelayout, fragment).commit();
+
+            toggle.setDrawerIndicatorEnabled(true);
+
+        }else if (id == R.id.lo) {
+            Fragment fragment = new DanhSachLo();
             fragmentManager.beginTransaction()
                     .replace(R.id.framelayout, fragment).commit();
 

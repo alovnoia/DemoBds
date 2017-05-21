@@ -77,7 +77,7 @@ public class DanhSachDuAn extends Fragment{
         fm.beginTransaction().add(R.id.flDanhSachDuAn, new NavigationDrawer()).commit();*/
     }
 
-    private class LoadDanhSach extends AsyncTask<String, Integer, String> {
+    public class LoadDanhSach extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... params) {
