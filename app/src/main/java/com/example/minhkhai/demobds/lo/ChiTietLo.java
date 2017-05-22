@@ -35,6 +35,7 @@ public class ChiTietLo extends AppCompatActivity {
     Button btnXoa;
     FloatingActionButton fab_Save;
     int id;
+    String tenChiTietLo, tenDuAnChiTietLo;
     ArrayAdapter<DuAn> adapter;
     ArrayList<DuAn> mangDuAn = new ArrayList<>();
 
@@ -49,15 +50,17 @@ public class ChiTietLo extends AppCompatActivity {
         btnXoa = (Button) findViewById(R.id.btnXoaLo);
         fab_Save = (FloatingActionButton) findViewById(R.id.fab_SaveChiTietLo);
 
-        Bundle bundle = getIntent().getExtras();
-        id= bundle.getInt("id");
+        Bundle extras = getIntent().getExtras();
+        id= extras.getInt("id");
+        tenChiTietLo = extras.getString("TenLo");
+        tenDuAnChiTietLo = extras.getString("TenDuAn");
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 tvMa.setText(id+"");
+                edtTen.setText(tenChiTietLo);
                 new LoadDuAn().execute("http://"+API.HOST+"/bds_project/public/DuAn");
-                new LoadLo().execute("http://"+API.HOST+"/bds_project/public/Lo/"+id);
             }
         });
 
@@ -115,41 +118,16 @@ public class ChiTietLo extends AppCompatActivity {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spnDuAn.setAdapter(adapter);
 
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private class LoadLo extends AsyncTask<String, Integer, String>{
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                return API.GET_URL(params[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            try {
-                JSONObject object = new JSONObject(s);
-                edtTen.setText(object.getString("TenLo"));
-                for (int i =0; i< mangDuAn.size(); i++){
-                    if (object.getInt("DuAn") == adapter.getItem(i).getMaDuAn()){
+                for (int i =0; i < mangDuAn.size(); i++){
+                    if (tenDuAnChiTietLo.equals(adapter.getItem(i).getTenDuAn())){
                         spnDuAn.setSelection(i);
                         break;
                     }
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -157,6 +135,7 @@ public class ChiTietLo extends AppCompatActivity {
         String ten= edtTen.getText().toString();
         DuAn duAn = (DuAn) spnDuAn.getSelectedItem();
         int maDuAn = duAn.getMaDuAn();
+        String tenDuAnSave = duAn.getTenDuAn();
         @Override
         protected String doInBackground(String... params) {
             try {
@@ -180,11 +159,13 @@ public class ChiTietLo extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Đã sửa lô có tên: "+ten, Toast.LENGTH_SHORT).show();
             Intent i = new Intent(ChiTietLo.this, MainActivity.class);
             i.putExtra("key", "Lo");
+            i.putExtra("TenDuAn", tenDuAnSave);
             startActivity(i);
         }
     }
 
     private class Xoa extends AsyncTask<String, Integer, String>{
+
         @Override
         protected String doInBackground(String... params) {
             try {
@@ -204,6 +185,7 @@ public class ChiTietLo extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Bạn vừa xóa lô có id = "+id, Toast.LENGTH_SHORT).show();
             Intent i = new Intent(ChiTietLo.this, MainActivity.class);
             i.putExtra("key", "Lo");
+            i.putExtra("TenDuAn", tenDuAnChiTietLo);
             startActivity(i);
         }
     }

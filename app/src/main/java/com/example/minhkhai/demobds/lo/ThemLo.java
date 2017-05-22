@@ -88,12 +88,20 @@ public class ThemLo extends AppCompatActivity {
 
             if (!s.equals("0"))
             {
-                id = Integer.parseInt(s);
+                try {
+                    object = new JSONObject(s);
+                    id = object.getInt("MaLo");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Toast.makeText(getApplicationContext(),
                         "Đã thêm lô "+tenLo+" mới trong dự án "+ tenDuAn, Toast.LENGTH_LONG).show();
 
                 Intent i = new Intent(ThemLo.this, ChiTietLo.class);
                 i.putExtra("id", id);
+                i.putExtra("TenLo", tenLo);
+                i.putExtra("TenDuAn", tenDuAn);
                 startActivity(i);
             }
 

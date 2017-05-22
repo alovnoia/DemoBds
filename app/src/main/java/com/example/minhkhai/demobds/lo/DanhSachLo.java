@@ -37,7 +37,7 @@ public class DanhSachLo extends Fragment {
     Spinner spnDuAnOnLo;
     ArrayList<DuAn> mangDuAn = new ArrayList<>();
     DuAn duAn;
-
+    String tenDuAn;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,6 +49,12 @@ public class DanhSachLo extends Fragment {
         lvLo = (ListView) view.findViewById(R.id.lvDanhSachLo);
         fab_Them = (FloatingActionButton) view.findViewById(R.id.fab_ThemLo);
         spnDuAnOnLo = (Spinner) view.findViewById(R.id.spnDuAnOnDSLo);
+
+        Bundle extras = getActivity().getIntent().getExtras();
+        if (extras!=null)
+        {
+            tenDuAn = extras.getString("TenDuAn");
+        }
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -83,6 +89,8 @@ public class DanhSachLo extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getActivity(), ChiTietLo.class);
                 i.putExtra("id", mangLo.get(position).maLo);
+                i.putExtra("TenLo", mangLo.get(position).tenLo);
+                i.putExtra("TenDuAn", mangLo.get(position).tenDuAn);
                 startActivity(i);
             }
         });
@@ -123,6 +131,16 @@ public class DanhSachLo extends Fragment {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spnDuAnOnLo.setAdapter(adapter);
 
+                if (tenDuAn!= null){
+                    for (int i =0; i< mangDuAn.size(); i++){
+                        if (tenDuAn.equals(adapter.getItem(i).getTenDuAn())){
+                            spnDuAnOnLo.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -157,8 +175,6 @@ public class DanhSachLo extends Fragment {
                                 object.getString("TenDuAn")
                         ));
                     }
-
-
                 }
                 LoAdapter adapter = new LoAdapter(getActivity(), R.layout.item_lo, mangLo);
                 lvLo.setAdapter(adapter);
