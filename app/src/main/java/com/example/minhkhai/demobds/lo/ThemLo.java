@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.minhkhai.demobds.MainActivity;
@@ -27,8 +28,11 @@ import java.util.ArrayList;
 public class ThemLo extends AppCompatActivity {
 
     EditText edtTen;
-    Spinner spnDuAn;
+    TextView tvTenDuAn;
     FloatingActionButton fab_Save;
+    int id =0;
+    String tenDuAn;
+    int maDuAn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +40,14 @@ public class ThemLo extends AppCompatActivity {
         setContentView(R.layout.activity_them_lo);
 
         edtTen = (EditText) findViewById(R.id.edtTenThemLo);
-        spnDuAn = (Spinner) findViewById(R.id.spnDuAnThemLo);
+        tvTenDuAn = (TextView) findViewById(R.id.tvTenDuAnThemLo);
         fab_Save = (FloatingActionButton) findViewById(R.id.fab_SaveThemLo);
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                new LoadDuAn().execute("http://"+ API.HOST+"/bds_project/public/DuAn");
-            }
-        });
+        Bundle extras = getIntent().getExtras();
+        tenDuAn = extras.getString("TenDuAn");
+        maDuAn = extras.getInt("MaDuAn");
+        tvTenDuAn.setText(tenDuAn);
+
 
         fab_Save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,61 +56,15 @@ public class ThemLo extends AppCompatActivity {
                     @Override
                     public void run() {
                         new Save().execute("http://"+API.HOST+"/bds_project/public/Lo");
-                        Intent i = new Intent(ThemLo.this, MainActivity.class);
-                        i.putExtra("key", "Lo");
-                        startActivity(i);
                     }
                 });
             }
         });
     }
 
-    public class LoadDuAn extends AsyncTask<String, Integer, String>{
-        ArrayList<DuAn> mangDuAn = new ArrayList<>();
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                return API.GET_URL(params[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            try {
-                JSONArray array = new JSONArray(s);
-
-                for (int i=0; i<array.length(); i++){
-                    JSONObject object = array.getJSONObject(i);
-                    mangDuAn.add(new DuAn(
-                            object.getInt("MaDuAn"),
-                            object.getString("TenDuAn"),
-                            object.getString("DiaChi")
-                    ));
-                }
-
-                final ArrayAdapter<DuAn> adapter = new ArrayAdapter(ThemLo.this,
-                        android.R.layout.simple_spinner_item, mangDuAn);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spnDuAn.setAdapter(adapter);
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private class Save extends AsyncTask<String, Integer, String>{
 
         String tenLo = edtTen.getText().toString();
-        DuAn duAn = (DuAn) spnDuAn.getSelectedItem();
-        int maDuAn = duAn.getMaDuAn();
-        String tenDuAn = duAn.getTenDuAn();
         @Override
         protected String doInBackground(String... params) {
             try {
@@ -126,8 +83,20 @@ public class ThemLo extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getApplicationContext(),
-                    "Đã thêm lô "+tenLo+" mới trong dự án "+ tenDuAn, Toast.LENGTH_LONG).show();
+
+            JSONObject object = null;
+
+            if (!s.equals("0"))
+            {
+                id = Integer.parseInt(s);
+                Toast.makeText(getApplicationContext(),
+                        "Đã thêm lô "+tenLo+" mới trong dự án "+ tenDuAn, Toast.LENGTH_LONG).show();
+
+                Intent i = new Intent(ThemLo.this, ChiTietLo.class);
+                i.putExtra("id", id);
+                startActivity(i);
+            }
+
         }
     }
 }

@@ -68,9 +68,6 @@ public class ChiTietLo extends AppCompatActivity {
                     @Override
                     public void run() {
                         new Xoa().execute("http://"+API.HOST+"/bds_project/public/Lo/"+id);
-                        Intent i = new Intent(ChiTietLo.this, MainActivity.class);
-                        i.putExtra("key", "Lo");
-                        startActivity(i);
                     }
                 });
             }
@@ -80,9 +77,7 @@ public class ChiTietLo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new Save().execute("http://"+API.HOST+"/bds_project/public/Lo/"+id);
-                Intent i = new Intent(ChiTietLo.this, MainActivity.class);
-                i.putExtra("key", "Lo");
-                startActivity(i);
+
             }
         });
     }
@@ -183,6 +178,9 @@ public class ChiTietLo extends AppCompatActivity {
             super.onPostExecute(s);
 
             Toast.makeText(getApplicationContext(), "Đã sửa lô có tên: "+ten, Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(ChiTietLo.this, MainActivity.class);
+            i.putExtra("key", "Lo");
+            startActivity(i);
         }
     }
 
@@ -203,7 +201,10 @@ public class ChiTietLo extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getApplicationContext(), "Bạn vừa xóa lô có id = "+id, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Bạn vừa xóa lô có id = "+id, Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(ChiTietLo.this, MainActivity.class);
+            i.putExtra("key", "Lo");
+            startActivity(i);
         }
     }
 }
