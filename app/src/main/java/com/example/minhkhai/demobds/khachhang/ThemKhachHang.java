@@ -152,9 +152,17 @@ public class ThemKhachHang extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
+            int idChiTiet = 0;
+            try {
+                JSONObject object = new JSONObject(s);
+                idChiTiet = object.getInt("MaKhachHang");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             Toast.makeText(ThemKhachHang.this, "Đã thêm khách hàng "+tenKH, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(ThemKhachHang.this, MainActivity.class);
-            intent.putExtra("key", "KhachHang");
+            Intent intent = new Intent(ThemKhachHang.this, CapNhatKhachHang.class);
+            intent.putExtra("id", idChiTiet);
             startActivity(intent);
         }
     }

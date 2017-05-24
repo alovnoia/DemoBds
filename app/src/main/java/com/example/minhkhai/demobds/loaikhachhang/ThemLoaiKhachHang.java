@@ -18,7 +18,10 @@ import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.lo.ChiTietLo;
+import com.example.minhkhai.demobds.lo.ThemLo;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -54,9 +57,6 @@ public class ThemLoaiKhachHang extends AppCompatActivity {
                     @Override
                     public void run() {
                         new ThemLoaiKH().execute();
-                        Intent intent = new Intent(ThemLoaiKhachHang.this, MainActivity.class);
-                        intent.putExtra("key", "LoaiKhachHang");
-                        startActivity(intent);
 
                     }
                 });
@@ -87,7 +87,18 @@ public class ThemLoaiKhachHang extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            int idChiTiet = 0;
+            try {
+                JSONObject object = new JSONObject(s);
+                idChiTiet = object.getInt("MaLoaiKH");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             Toast.makeText(ThemLoaiKhachHang.this, "Đã thêm loại khách hàng", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(ThemLoaiKhachHang.this, ChiTietLoaiKhachHang.class);
+            i.putExtra("maLoaiKH", idChiTiet);
+            startActivity(i);
         }
     }
 

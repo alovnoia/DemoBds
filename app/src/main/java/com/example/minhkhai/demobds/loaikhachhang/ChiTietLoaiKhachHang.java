@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
     FloatingActionButton flEdit;
     TextView tvID;
     EditText edtTen, edtMoTa;
+    Button btnXoa;
     int id = 0;
 
     @Override
@@ -74,8 +76,8 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
                 });
             }
         });
-        FloatingActionButton flDel = (FloatingActionButton) findViewById(R.id.fab_del_LoaiSP_ChiTiet);
-        flDel.setOnClickListener(new View.OnClickListener() {
+        btnXoa = (Button) findViewById(R.id.btnXoa);
+        btnXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runOnUiThread(new Runnable() {

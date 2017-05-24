@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
@@ -42,7 +43,7 @@ public class ThemLoaiSP extends AppCompatActivity {
                     @Override
                     public void run() {
                         new LuuLoaiSP().execute();
-                        Intent intent = new Intent(ThemLoaiSP.this, DanhSachLoaiSP.class);
+                        Intent intent = new Intent(ThemLoaiSP.this, MainActivity.class);
                         intent.putExtra("key", "LoaiSP");
                         startActivity(intent);
                     }
