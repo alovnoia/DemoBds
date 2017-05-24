@@ -1,32 +1,43 @@
 package com.example.minhkhai.demobds.sanpham;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.khachhang.ThemKhachHang;
+import com.example.minhkhai.demobds.lo.Lo;
 import com.example.minhkhai.demobds.loaikhachhang.LoaiKhachHang;
+import com.example.minhkhai.demobds.loaisp.LoaiSP;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ThemSanPham extends AppCompatActivity {
 
     private ImageView ivAnh;
-    private EditText edtTen, edtSo, edtDienTich, edtGiaBan, edtMoTa;
-    private Spinner spLoai, spDuAn;
+    private EditText edtSo, edtDienTich, edtGiaBan, edtMoTa;
+    private Spinner spLoai, spLo;
     private FloatingActionButton fabSave;
+    private TextView tvDuAn;
+    String tenDuAn;
+    int idDuAn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,25 +45,43 @@ public class ThemSanPham extends AppCompatActivity {
         setContentView(R.layout.activity_them_san_pham);
 
         ivAnh = (ImageView) findViewById(R.id.ivThemSPAnh);
-        edtTen = (EditText) findViewById(R.id.edtThemSPTen);
-        edtSo = (EditText) findViewById(R.id.edtThemSPTen);
-        edtDienTich = (EditText) findViewById(R.id.edtThemSPTen);
-        edtGiaBan = (EditText) findViewById(R.id.edtThemSPTen);
-        edtMoTa = (EditText) findViewById(R.id.edtThemSPTen);
+        edtSo = (EditText) findViewById(R.id.edtThemSPSoNha);
+        edtDienTich = (EditText) findViewById(R.id.edtThemSPDienTich);
+        edtGiaBan = (EditText) findViewById(R.id.edtThemSPGia);
+        edtMoTa = (EditText) findViewById(R.id.edtThemSPMoTa);
         spLoai = (Spinner) findViewById(R.id.spThemSPLoai);
-        spDuAn = (Spinner) findViewById(R.id.spThemSPDuAn);
+        spLo = (Spinner) findViewById(R.id.spThemSPLo);
         fabSave = (FloatingActionButton) findViewById(R.id.fabThemSPSave);
+        tvDuAn = (TextView) findViewById(R.id.tvThemSPDuAn);
+
+        Bundle extras = getIntent().getExtras();
+        tenDuAn = extras.getString("TenDuAn");
+        tvDuAn.setText(tenDuAn);
+        idDuAn = extras.getInt("MaDuAn");
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new LoadLoaiKH().execute("http://"+API.HOST+"/bds_project/public/LoaiKhachHang");
+                new LoadLoaiSP().execute("http://"+API.HOST+"/bds_project/public/LoaiSP");
+                new LoadLo().execute("http://"+API.HOST+"/bds_project/public/getlo/"+idDuAn);
+            }
+        });
+
+        fabSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new SaveSanPham().execute("http://"+API.HOST+"/bds_project/public/SanPham");
+                    }
+                });
             }
         });
     }
 
-    private class LoadLoaiKH extends AsyncTask<String, String, String> {
-        ArrayList<LoaiKhachHang> arrLoaiKH = new ArrayList<>();
+    private class LoadLoaiSP extends AsyncTask<String, String, String> {
+        ArrayList<LoaiSP> arrLoaiKH = new ArrayList<>();
         @Override
         protected String doInBackground(String... params) {
             try {
@@ -71,21 +100,102 @@ public class ThemSanPham extends AppCompatActivity {
                 JSONArray array= new JSONArray(s);
                 for (int i = 0; i < array.length(); i++){
                     JSONObject object = array.getJSONObject(i);
-                    arrLoaiKH.add(new LoaiKhachHang(
-                            object.getString("TenLoaiKH"),
-                            object.getString("MoTa"),
-                            object.getInt("MaLoaiKH")
+                    arrLoaiKH.add(new LoaiSP(
+                            object.getInt("MaLoaiSP"),
+                            object.getString("TenLoaiSP")
 
                     ));
                     //arrLoaiKH.add(String.valueOf(object.getInt("MaLoaiKH")) + ". " + object.getString("TenLoaiKH"));
                 }
-                final ArrayAdapter<LoaiKhachHang> adapter = new ArrayAdapter(ThemSanPham.this,
+                final ArrayAdapter<LoaiSP> adapter = new ArrayAdapter(ThemSanPham.this,
                         android.R.layout.simple_spinner_item, arrLoaiKH);
                 adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
                 spLoai.setAdapter(adapter);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private class LoadLo extends AsyncTask<String, String, String>{
+        ArrayList<Lo> arrLo = new ArrayList<>();
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                return API.GET_URL(params[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            try {
+                JSONArray array= new JSONArray(s);
+                for (int i = 0; i < array.length(); i++){
+                    JSONObject object = array.getJSONObject(i);
+                    arrLo.add(new Lo(
+                            object.getInt("MaLo"),
+                            object.getString("TenLo"),
+                            tenDuAn
+
+                    ));
+                }
+                final ArrayAdapter<Lo> adapter = new ArrayAdapter(ThemSanPham.this,
+                        android.R.layout.simple_spinner_item, arrLo);
+                adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                spLo.setAdapter(adapter);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private class SaveSanPham extends AsyncTask<String, String, String>{
+
+        LoaiSP loaiSP = (LoaiSP) spLoai.getSelectedItem();
+        int maLoai = loaiSP.getMaLoaiSP();
+        Lo lo = (Lo) spLo.getSelectedItem();
+        int maLo = lo.maLo;
+        String soNha = edtSo.getText().toString();
+        Float dienTich = Float.parseFloat(edtDienTich.getText().toString());
+        int giaBan = Integer.parseInt(edtGiaBan.getText().toString());
+        String moTa = edtMoTa.getText().toString();
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                URL url = new URL(params[0]); // here is your URL path
+
+                JSONObject postDataParams = new JSONObject();
+                postDataParams.put("SoNha", soNha);
+                postDataParams.put("Anh", "s");
+                postDataParams.put("LoaiSP", maLoai);
+                postDataParams.put("DuAn", idDuAn);
+                postDataParams.put("Lo", maLo);
+                postDataParams.put("DienTich", dienTich);
+                postDataParams.put("GiaBan", giaBan);
+                postDataParams.put("TinhTrang", "ChuaBan");
+                postDataParams.put("MoTa", moTa);
+
+                return API.POST_URL(url, postDataParams);
+            }
+            catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Toast.makeText(ThemSanPham.this, "Đã thêm sản phẩm số "+soNha, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ThemSanPham.this, MainActivity.class);
+            intent.putExtra("key", "SanPham");
+            startActivity(intent);
         }
     }
 }

@@ -62,7 +62,16 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".lo.ThemLo" />
-        <activity android:name=".lo.ChiTietLo"></activity>
+        <activity android:name=".lo.ChiTietLo" />
+        <activity android:name=".sanpham.ChonDuAn" />
+        <activity android:name=".sanpham.ThemSanPham" />
+        <activity android:name=".sanpham.CapNhatSanPham">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

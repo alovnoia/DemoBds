@@ -172,7 +172,8 @@ public class DanhSachLo extends Fragment {
                         mangLo.add(new Lo(
                                 object.getInt("MaLo"),
                                 object.getString("TenLo"),
-                                object.getString("TenDuAn")
+                                object.getString("TenDuAn"),
+                                object.getInt("DuAn")
                         ));
                     }
                 }

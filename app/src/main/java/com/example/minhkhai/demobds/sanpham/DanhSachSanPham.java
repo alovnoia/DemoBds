@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.minhkhai.demobds.R;
@@ -57,8 +58,18 @@ public class DanhSachSanPham extends Fragment {
         fabThemSP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(DanhSachSanPham.this, ThemSanPham.class);
-                //startActivity(intent);
+                Intent intent = new Intent(getActivity(), ChonDuAn.class);
+                startActivity(intent);
+            }
+        });
+
+        lvSanPham.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), CapNhatSanPham.class);
+                intent.putExtra("MaSP", arrSanPham.get(position).getMaSP());
+                intent.putExtra("MaDuAn", arrSanPham.get(position).getDuAn());
+                startActivity(intent);
             }
         });
         return view;
@@ -89,7 +100,8 @@ public class DanhSachSanPham extends Fragment {
                             //object.getString("TenSP"),
                             "Sản phẩm",
                             object.getString("TenLoaiSP"),
-                            object.getLong("GiaBan")
+                            object.getInt("GiaBan"),
+                            object.getInt("DuAn")
                     ));
                 }
 

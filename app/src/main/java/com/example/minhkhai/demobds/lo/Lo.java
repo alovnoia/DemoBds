@@ -8,10 +8,28 @@ public class Lo {
     public int maLo;
     public String tenLo;
     public String tenDuAn;
+    public int maDuAn;
+
+    public Lo(int maLo, String tenLo, String tenDuAn, int maDuAn) {
+        this.maLo = maLo;
+        this.tenLo = tenLo;
+        this.tenDuAn = tenDuAn;
+        this.maDuAn = maDuAn;
+    }
 
     public Lo(int maLo, String tenLo, String tenDuAn) {
         this.maLo = maLo;
         this.tenLo = tenLo;
         this.tenDuAn = tenDuAn;
+    }
+
+    public Lo(int maLo, String tenLo, int maDuAn) {
+        this.maLo = maLo;
+        this.tenLo = tenLo;
+        this.maDuAn = maDuAn;
+    }
+
+    public String toString() {
+        return this.tenLo;            // What to display in the Spinner list.
     }
 }

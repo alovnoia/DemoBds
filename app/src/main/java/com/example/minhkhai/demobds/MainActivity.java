@@ -23,6 +23,7 @@ import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
 import com.example.minhkhai.demobds.lo.DanhSachLo;
 import com.example.minhkhai.demobds.loaikhachhang.DanhSachLoaiKhachHang;
 import com.example.minhkhai.demobds.loaisp.DanhSachLoaiSP;
+import com.example.minhkhai.demobds.sanpham.DanhSachSanPham;
 import com.example.minhkhai.demobds.taikhoan.ChiTietTaiKhoan;
 import com.example.minhkhai.demobds.thongtincanhan.ThongTinCaNhan;
 import com.google.android.gms.appindexing.Action;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity
                 toggle.setDrawerIndicatorEnabled(true);
                 break;
             case "SanPham":
-                fragment = new DanhSachLoaiSP();
+                fragment = new DanhSachSanPham();
                 fragmentManager.beginTransaction()
                         .replace(R.id.framelayout, fragment).commit();
                 toggle.setDrawerIndicatorEnabled(true);
@@ -186,8 +187,15 @@ public class MainActivity extends AppCompatActivity
 
             toggle.setDrawerIndicatorEnabled(true);
 
-        }else if (id == R.id.lo) {
+        } else if (id == R.id.lo) {
             Fragment fragment = new DanhSachLo();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.framelayout, fragment).commit();
+
+            toggle.setDrawerIndicatorEnabled(true);
+
+        } else if (id == R.id.sanPham) {
+            Fragment fragment = new DanhSachSanPham();
             fragmentManager.beginTransaction()
                     .replace(R.id.framelayout, fragment).commit();
 
