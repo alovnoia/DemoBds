@@ -40,6 +40,10 @@ public class ThemTaiKhoan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_tai_khoan);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         imgAnh = (ImageView) findViewById(R.id.imgAnhThemTK);
         edtTen = (EditText) findViewById(R.id.edtTenThemTK);
         edtUsername = (EditText) findViewById(R.id.edtUsernameThemTK);
@@ -139,16 +143,11 @@ public class ThemTaiKhoan extends AppCompatActivity {
         }
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }*/
-
-    /*@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ThemTaiKhoan.this, AppMenu.class);
-        startActivity(intent);
-        return true;
-    }*/
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

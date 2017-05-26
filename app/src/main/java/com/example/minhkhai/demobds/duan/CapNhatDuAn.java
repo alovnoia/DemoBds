@@ -44,6 +44,10 @@ public class CapNhatDuAn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cap_nhat_du_an);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
 
@@ -58,6 +62,11 @@ public class CapNhatDuAn extends AppCompatActivity {
         btnXoaDuAn = (Button) findViewById(R.id.btnXoaDuAn);
         tvCapNhatDuAn = (TextView) findViewById(R.id.tvCapNhatDuAn);
         tvCapNhatDuAn.setText("Cập nhật dự án "+id);
+
+        if (API.quyen.equals("NVBH")) {
+            btnXoaDuAn.setVisibility(View.GONE);
+            fabCapNhatDuAn.setVisibility(View.GONE);
+        }
 
         runOnUiThread(new Runnable() {
             @Override
@@ -220,17 +229,12 @@ public class CapNhatDuAn extends AppCompatActivity {
         date.show();
     }
 
-    /*@Override
-    *//*public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }*/
-
-    /*@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(CapNhatDuAn.this, AppMenu.class);
-        startActivity(intent);
-        return true;
-    }*/
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

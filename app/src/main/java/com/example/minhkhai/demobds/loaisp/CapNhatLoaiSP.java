@@ -49,6 +49,10 @@ public class CapNhatLoaiSP extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cap_nhat_loai_sp);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         edtCapNhatTenLoaiSP = (EditText) findViewById(R.id.edtCapNhatTenLoaiSP);
         edtCapNhatMoTaLoaiSP = (EditText) findViewById(R.id.edtCapNhatMoTaLoaiSP);
         btnXoaLoaiSP = (Button) findViewById(R.id.btnXoaLoaiSP);
@@ -56,6 +60,11 @@ public class CapNhatLoaiSP extends AppCompatActivity {
 
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
+
+        if (API.quyen.equals("NVBH")) {
+            btnXoaLoaiSP.setVisibility(View.GONE);
+            fabSaveLoaiSP.setVisibility(View.GONE);
+        }
 
         runOnUiThread(new Runnable() {
             @Override
@@ -178,19 +187,14 @@ public class CapNhatLoaiSP extends AppCompatActivity {
         return true;
     }*/
 
-    /*@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, AppMenu.class);
-        startActivity(intent);
-        return true;
-    }*/
-
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        Intent intent = new Intent(CapNhatLoaiSP.this, DanhSachLoaiSP.class);
-        startActivity(intent);
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
+
 
 }
 

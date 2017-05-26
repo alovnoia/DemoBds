@@ -51,7 +51,7 @@ public class LoAdapter extends BaseAdapter {
         convertView = inflater.inflate(myLayout, null);
 
         TextView tvLo = (TextView) convertView.findViewById(R.id.tvItemLo);
-        tvLo.setText(arrayLo.get(position).tenLo);
+        tvLo.setText(arrayLo.get(position).tenLo + " - Mã " + arrayLo.get(position).maLo);
 
         TextView tvDuAn = (TextView) convertView.findViewById(R.id.tvItemLoTenDuAn);
         tvDuAn.setText(arrayLo.get(position).tenDuAn);

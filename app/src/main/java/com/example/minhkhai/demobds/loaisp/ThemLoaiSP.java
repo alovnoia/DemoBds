@@ -32,6 +32,10 @@ public class ThemLoaiSP extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_loai_sp);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         edtThemTenLoaiSP = (EditText) findViewById(R.id.edtCapNhatTenLoaiSP);
         edtThemMoTaSP = (EditText) findViewById(R.id.edtThemMoTaLoaiSP);
         fabSaveLoaiSP = (FloatingActionButton) findViewById(R.id.fab_save_LoaiSP);
@@ -81,17 +85,12 @@ public class ThemLoaiSP extends AppCompatActivity {
         }
     }
 
-    /*@Override
-    *//*public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }*/
-
-    /*@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, AppMenu.class);
-        startActivity(intent);
-        return true;
-    }*/
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

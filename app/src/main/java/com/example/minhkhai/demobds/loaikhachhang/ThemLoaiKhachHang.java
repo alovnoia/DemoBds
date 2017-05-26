@@ -45,6 +45,10 @@ public class ThemLoaiKhachHang extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_loai_khach_hang);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         edtTenLoaiKH = (EditText) findViewById(R.id.edtThemTenLoaiKH);
         edtMoTa = (EditText) findViewById(R.id.edtThemMoTaLoaiKH);
         flSave = (FloatingActionButton) findViewById(R.id.fab_save_LoaiSP);
@@ -102,17 +106,12 @@ public class ThemLoaiKhachHang extends AppCompatActivity {
         }
     }
 
-    /*@Override
-    *//*public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }*/
-
-    /*@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ThemLoaiKhachHang.this, AppMenu.class);
-        startActivity(intent);
-        return true;
-    }*/
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

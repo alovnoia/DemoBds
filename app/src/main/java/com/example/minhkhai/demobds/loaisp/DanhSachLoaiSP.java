@@ -48,6 +48,10 @@ public class DanhSachLoaiSP extends Fragment {
         lvLoaiSP = (ListView) view.findViewById(R.id.lvDanhSachLoaiSP);
         mangLoaiSanPham = new ArrayList<LoaiSP>();
 
+        if (API.quyen.equals("NVBH")) {
+            fab_add.setVisibility(View.GONE);
+        }
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

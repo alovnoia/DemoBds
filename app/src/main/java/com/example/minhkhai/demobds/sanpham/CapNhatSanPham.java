@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -64,6 +65,9 @@ public class CapNhatSanPham extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
         fragmentTransaction.add(R.id.flLo, new FragmentCapNhatLo()).commit();*/
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         Bundle extras = getIntent().getExtras();
         id = extras.getInt("MaSP");
@@ -80,6 +84,11 @@ public class CapNhatSanPham extends AppCompatActivity {
         fabSave = (FloatingActionButton) findViewById(R.id.fabCNSave);
         btnXoa = (Button) findViewById(R.id.btnXoaSP);
         tvMaSP = (TextView) findViewById(R.id.tvCNMaSP);
+
+        if (API.quyen.equals("NVBH")) {
+            btnXoa.setVisibility(View.GONE);
+            fabSave.setVisibility(View.GONE);
+        }
 
         runOnUiThread(new Runnable() {
             @Override
@@ -356,5 +365,12 @@ public class CapNhatSanPham extends AppCompatActivity {
             intent.putExtra("key", "SanPham");
             startActivity(intent);
         }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

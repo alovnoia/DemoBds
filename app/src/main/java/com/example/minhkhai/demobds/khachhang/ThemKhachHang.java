@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -35,6 +36,10 @@ public class ThemKhachHang extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_khach_hang);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         edtThemKHTen = (EditText) findViewById(R.id.edtThemKHTenKH);
         edtThemKHNghe = (EditText) findViewById(R.id.edtThemKHNghe);
@@ -167,17 +172,12 @@ public class ThemKhachHang extends AppCompatActivity {
         }
     }
 
-    /*@Override
-    *//*public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }*/
-
-    /*@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ThemKhachHang.this, AppMenu.class);
-        startActivity(intent);
-        return true;
-    }*/
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

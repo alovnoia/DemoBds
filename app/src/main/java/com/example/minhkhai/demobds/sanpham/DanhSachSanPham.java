@@ -48,6 +48,10 @@ public class DanhSachSanPham extends Fragment {
         lvSanPham = (ListView) view.findViewById(R.id.lvSanPham);
         fabThemSP = (FloatingActionButton) view.findViewById(R.id.fabThemSP);
 
+        if (API.quyen.equals("NVBH")) {
+            fabThemSP.setVisibility(View.GONE);
+        }
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

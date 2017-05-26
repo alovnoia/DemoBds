@@ -50,6 +50,10 @@ public class DanhSachLo extends Fragment {
         fab_Them = (FloatingActionButton) view.findViewById(R.id.fab_ThemLo);
         spnDuAnOnLo = (Spinner) view.findViewById(R.id.spnDuAnOnDSLo);
 
+        if (API.quyen.equals("NVBH")) {
+            fab_Them.setVisibility(View.GONE);
+        }
+
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras!=null)
         {

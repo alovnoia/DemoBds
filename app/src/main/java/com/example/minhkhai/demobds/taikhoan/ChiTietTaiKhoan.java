@@ -57,6 +57,10 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_tai_khoan);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         tvID = (TextView) findViewById(R.id.tvIDTaiKhoan);
         tvUsername = (TextView) findViewById(R.id.tvTenDangNhapChiTietTK);
         imgAnh = (ImageView) findViewById(R.id.imgAnhChiTietTK);
@@ -67,7 +71,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
         edtThongtin = (EditText) findViewById(R.id.edtThongTinKhacChiTietTk);
         spnChucVu = (Spinner) findViewById(R.id.spnChucVuChiTietTK);
         fab_Save = (FloatingActionButton) findViewById(R.id.fab_SaveCapNhatTK);
-        fab_Xoa = (FloatingActionButton) findViewById(R.id.fab_XoaTaiKhoan);
+        //fab_Xoa = (FloatingActionButton) findViewById(R.id.fab_XoaTaiKhoan);
 
         Intent myIntent = getIntent();
         id = myIntent.getIntExtra("id", 0);
@@ -108,7 +112,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
             }
         });
 
-        fab_Xoa.setOnClickListener(new View.OnClickListener() {
+        /*fab_Xoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runOnUiThread(new Runnable() {
@@ -121,7 +125,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });*/
 
 
     }
@@ -262,16 +266,11 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
         date.show();
     }
 
-    /*@Override
-    *//*public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }*//*
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ChiTietTaiKhoan.this, AppMenu.class);
-        startActivity(intent);
-        return true;
-    }*/
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

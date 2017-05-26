@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -44,6 +45,10 @@ public class ChiTietLo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_lo);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         tvMa = (TextView) findViewById(R.id.tvMaLoChiTiet);
         edtTen = (EditText) findViewById(R.id.edtTenChiTietLo);
         spnDuAn = (Spinner) findViewById(R.id.spnDuAnChiTietLo);
@@ -54,6 +59,11 @@ public class ChiTietLo extends AppCompatActivity {
         id= extras.getInt("id");
         tenChiTietLo = extras.getString("TenLo");
         tenDuAnChiTietLo = extras.getString("TenDuAn");
+
+        if (API.quyen.equals("NVBH")) {
+            btnXoa.setVisibility(View.GONE);
+            fab_Save.setVisibility(View.GONE);
+        }
 
         runOnUiThread(new Runnable() {
             @Override
@@ -188,5 +198,13 @@ public class ChiTietLo extends AppCompatActivity {
             i.putExtra("TenDuAn", tenDuAnChiTietLo);
             startActivity(i);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

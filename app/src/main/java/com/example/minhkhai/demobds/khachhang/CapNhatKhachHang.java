@@ -52,6 +52,10 @@ public class CapNhatKhachHang extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cap_nhat_khach_hang);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         Bundle extras = getIntent().getExtras();
         id = extras.getInt("id");
 
@@ -142,13 +146,6 @@ public class CapNhatKhachHang extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        Intent intent = new Intent(CapNhatKhachHang.this, DanhSachKhachHang.class);
-        startActivity(intent);
     }
 
     private class LoadChiTietKhachHang extends AsyncTask<String, String, String>{
@@ -268,17 +265,12 @@ public class CapNhatKhachHang extends AppCompatActivity {
         }
     }
 
-    /*@Override
-    *//*public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }*/
-
-    /*@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(CapNhatKhachHang.this, AppMenu.class);
-        startActivity(intent);
-        return true;
-    }*/
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

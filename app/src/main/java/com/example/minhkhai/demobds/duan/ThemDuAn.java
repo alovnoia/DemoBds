@@ -38,6 +38,10 @@ public class ThemDuAn extends AppCompatActivity {
         /*FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.flDanhSachLoaiKH, new NavigationDrawer()).commit();*/
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         fabThemDuAn = (FloatingActionButton) findViewById(R.id.fabThemDuAn);
         edtThemTenDuAn = (EditText) findViewById(R.id.edtThemTenDuAn);
         edtThemDiaChi = (EditText) findViewById(R.id.edtThemDiaChi);
@@ -122,17 +126,12 @@ public class ThemDuAn extends AppCompatActivity {
         date.show();
     }
 
-    /*@Override
-    *//*public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }*//*
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ThemDuAn.this, AppMenu.class);
-        startActivity(intent);
-        return true;
-    }*/
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

@@ -65,6 +65,8 @@
         <activity android:name=".lo.ChiTietLo" />
         <activity android:name=".sanpham.ChonDuAn" />
         <activity android:name=".sanpham.ThemSanPham" />
+        <activity android:name=".taikhoan.ChiTietTaiKhoan" />
+        <activity android:name=".taikhoan.ThemTaiKhoan" />
         <activity android:name=".sanpham.CapNhatSanPham">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

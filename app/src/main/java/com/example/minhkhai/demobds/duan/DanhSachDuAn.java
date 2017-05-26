@@ -49,6 +49,10 @@ public class DanhSachDuAn extends Fragment{
         lvDuAn = (ListView) view.findViewById(R.id.lvDuAn);
         fabThemDuAn = (FloatingActionButton) view.findViewById(R.id.fabThemDuAn);
 
+        if (API.quyen.equals("NVBH")) {
+            fabThemDuAn.setVisibility(View.GONE);
+        }
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
