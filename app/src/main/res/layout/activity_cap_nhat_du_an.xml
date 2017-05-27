@@ -152,7 +152,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp" />
 
-            <TextView
+            <!--<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Số lượng sản phẩm"
@@ -174,15 +174,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView10"
                 app:layout_constraintHorizontal_bias="0.4"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp" />
+                android:layout_marginEnd="16dp" />-->
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="Mô tả"
-                app:layout_constraintTop_toBottomOf="@+id/edtCNSoLuongSP"
-                app:layout_constraintLeft_toLeftOf="@+id/edtCNSoLuongSP" />
+                app:layout_constraintTop_toBottomOf="@+id/edtCNNgayCap"
+                app:layout_constraintLeft_toLeftOf="@+id/edtCNNgayCap" />
 
             <EditText
                 android:id="@+id/edtCNMoTaDuAn"

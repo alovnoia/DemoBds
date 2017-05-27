@@ -18,7 +18,9 @@ import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.khachhang.ThemKhachHang;
+import com.example.minhkhai.demobds.lo.ChiTietLo;
 import com.example.minhkhai.demobds.lo.Lo;
+import com.example.minhkhai.demobds.lo.ThemLo;
 import com.example.minhkhai.demobds.loaikhachhang.LoaiKhachHang;
 import com.example.minhkhai.demobds.loaisp.LoaiSP;
 
@@ -79,6 +81,7 @@ public class ThemSanPham extends AppCompatActivity {
                     @Override
                     public void run() {
                         new SaveSanPham().execute("http://"+API.HOST+"/bds_project/public/SanPham");
+                        API.change = true;
                     }
                 });
             }
@@ -196,11 +199,24 @@ public class ThemSanPham extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            JSONObject object = null;
+            int idChiTiet = 0;
+            if (!s.equals("0"))
+            {
+                try {
+                    object = new JSONObject(s);
+                    idChiTiet = object.getInt("MaSP");
 
-            Toast.makeText(ThemSanPham.this, "Đã thêm sản phẩm số "+soNha, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(ThemSanPham.this, MainActivity.class);
-            intent.putExtra("key", "SanPham");
-            startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(getApplicationContext(),
+                        "Đã thêm sản phẩm số "+soNha+" trong lô "+lo.tenLo+" của dự án "+ tenDuAn, Toast.LENGTH_LONG).show();
+
+                Intent i = new Intent(ThemSanPham.this, CapNhatSanPham.class);
+                i.putExtra("MaSP", idChiTiet);
+                startActivity(i);
+            }
         }
     }
 

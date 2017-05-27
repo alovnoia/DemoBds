@@ -15,7 +15,9 @@ import android.widget.Toast;
 import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.loaikhachhang.ChiTietLoaiKhachHang;
 import com.example.minhkhai.demobds.loaikhachhang.LoaiKhachHang;
+import com.example.minhkhai.demobds.loaikhachhang.ThemLoaiKhachHang;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,6 +70,7 @@ public class ThemKhachHang extends AppCompatActivity {
                     @Override
                     public void run() {
                         new SaveThongTin().execute("http://"+API.HOST+"/bds_project/public/KhachHang");
+                        API.change = true;
                     }
                 });
             }
@@ -158,17 +161,21 @@ public class ThemKhachHang extends AppCompatActivity {
             super.onPostExecute(s);
 
             int idChiTiet = 0;
-            try {
-                JSONObject object = new JSONObject(s);
-                idChiTiet = object.getInt("MaKhachHang");
+            if (!s.equals("0"))
+            {
+                try {
+                    JSONObject object = new JSONObject(s);
+                    idChiTiet = object.getInt("MaKhachHang");
 
-            } catch (JSONException e) {
-                e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(ThemKhachHang.this, "Đã thêm khách hàng " + tenKH, Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(ThemKhachHang.this, CapNhatKhachHang.class);
+                i.putExtra("id", idChiTiet);
+                startActivity(i);
             }
-            Toast.makeText(ThemKhachHang.this, "Đã thêm khách hàng "+tenKH, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(ThemKhachHang.this, CapNhatKhachHang.class);
-            intent.putExtra("id", idChiTiet);
-            startActivity(intent);
         }
     }
 

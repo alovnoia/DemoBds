@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Quản lý khách hàng">
+    <item android:title="Quản lý khách hàng"
+        android:icon="@drawable/ic_customer">
         <menu>
             <item
                 android:id="@+id/loaiKhachHang"
@@ -11,7 +12,8 @@
                 android:title="Khách hàng" />
         </menu>
     </item>
-    <item android:title="Quản lý sản phẩm">
+    <item android:title="Quản lý sản phẩm"
+        android:icon="@drawable/ic_house">
         <menu>
             <item
                 android:id="@+id/duAn"
@@ -27,7 +29,8 @@
                 android:title="Sản phẩm" />
         </menu>
     </item>
-    <item android:title="Quản lý hợp đồng">
+    <item android:title="Quản lý hợp đồng"
+        android:icon="@drawable/ic_contract">
         <menu>
             <item
                 android:id="@+id/uuDai"
@@ -40,7 +43,8 @@
                 android:title="Nợ" />
         </menu>
     </item>
-    <item android:title="Quản lý tài khoản">
+    <item android:title="Quản lý tài khoản"
+        android:icon="@drawable/ic_users">
         <menu>
             <item
                 android:id="@+id/danhSachTaiKhoan"

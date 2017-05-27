@@ -18,6 +18,7 @@ import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.khachhang.CapNhatKhachHang;
 import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
+import com.example.minhkhai.demobds.lo.ChiTietLo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,6 +83,7 @@ public class CapNhatLoaiSP extends AppCompatActivity {
                         new CapNhatSuaLoaiSP().execute();
                     }
                 });
+                API.change = true;
             }
         });
 
@@ -190,7 +192,14 @@ public class CapNhatLoaiSP extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            if (API.change) {
+                Intent i = new Intent(CapNhatLoaiSP.this, MainActivity.class);
+                i.putExtra("key", "LoaiSP");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
         }
         return super.onOptionsItemSelected(item);
     }

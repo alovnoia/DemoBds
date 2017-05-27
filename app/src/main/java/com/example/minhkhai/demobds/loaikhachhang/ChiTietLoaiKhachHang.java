@@ -17,6 +17,7 @@ import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.loaisp.CapNhatLoaiSP;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,6 +76,7 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
                     @Override
                     public void run() {
                         new UpdateThongTin().execute();
+                        API.change = true;
                     }
                 });
             }
@@ -148,7 +150,7 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getApplicationContext(), "Đã sửa loại khách hàng có id = "+id, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Đã sửa loại khách hàng có id "+id, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -186,7 +188,14 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            if (API.change) {
+                Intent i = new Intent(ChiTietLoaiKhachHang.this, MainActivity.class);
+                i.putExtra("key", "LoaiKhachHang");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
