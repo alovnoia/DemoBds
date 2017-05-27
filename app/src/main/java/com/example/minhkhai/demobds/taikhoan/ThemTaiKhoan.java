@@ -14,11 +14,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.khachhang.CapNhatKhachHang;
+import com.example.minhkhai.demobds.khachhang.ThemKhachHang;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URL;
@@ -76,6 +80,7 @@ public class ThemTaiKhoan extends AppCompatActivity {
                     @Override
                     public void run() {
                         new LuuThemTaiKhoan().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan");
+                        API.change = true;
                     }
                 });
             }
@@ -140,6 +145,23 @@ public class ThemTaiKhoan extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
+            int idChiTiet = 0;
+            if (!s.equals("0"))
+            {
+                try {
+                    JSONObject object = new JSONObject(s);
+                    idChiTiet = object.getInt("MaTaiKhoan");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(ThemTaiKhoan.this, "Đã thêm khách hàng " + hoTen, Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(ThemTaiKhoan.this, ChiTietTaiKhoan.class);
+                i.putExtra("id", idChiTiet);
+                startActivity(i);
+            }
         }
     }
 

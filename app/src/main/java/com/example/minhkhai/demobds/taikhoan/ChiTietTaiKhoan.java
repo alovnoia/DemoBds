@@ -21,6 +21,7 @@ import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.khachhang.CapNhatKhachHang;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -107,6 +108,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
                     @Override
                     public void run() {
                         new SaveUpdate().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
+                        API.change = true;
                     }
                 });
             }
@@ -248,7 +250,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getApplicationContext(), "Đã sửa tài khoản có id = " + id, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Đã sửa tài khoản có id " + id, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -269,7 +271,14 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            if (API.change) {
+                Intent i = new Intent(ChiTietTaiKhoan.this, MainActivity.class);
+                i.putExtra("key", "TaiKhoan");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
         }
         return super.onOptionsItemSelected(item);
     }

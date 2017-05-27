@@ -61,6 +61,7 @@ public class ThemLo extends AppCompatActivity {
                     @Override
                     public void run() {
                         new Save().execute("http://"+API.HOST+"/bds_project/public/Lo");
+                        API.change = true;
                     }
                 });
             }

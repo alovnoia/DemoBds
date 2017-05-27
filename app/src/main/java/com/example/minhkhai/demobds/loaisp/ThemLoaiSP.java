@@ -15,7 +15,10 @@ import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.lo.ChiTietLo;
+import com.example.minhkhai.demobds.lo.ThemLo;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URL;
@@ -47,9 +50,7 @@ public class ThemLoaiSP extends AppCompatActivity {
                     @Override
                     public void run() {
                         new LuuLoaiSP().execute();
-                        Intent intent = new Intent(ThemLoaiSP.this, MainActivity.class);
-                        intent.putExtra("key", "LoaiSP");
-                        startActivity(intent);
+                        API.change = true;
                     }
                 });
             }
@@ -81,7 +82,27 @@ public class ThemLoaiSP extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(ThemLoaiSP.this, "Đã thêm loại sản phẩm", Toast.LENGTH_SHORT).show();
+
+            JSONObject object = null;
+            int idChiTiet = 0;
+            String tenLoMoi = "";
+
+            if (!s.equals("0"))
+            {
+                try {
+                    object = new JSONObject(s);
+                    idChiTiet = object.getInt("MaLoaiSP");
+                    tenLoMoi = object.getString("TenLoaiSP");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(ThemLoaiSP.this, "Đã thêm loại sản phẩm " + tenLoMoi, Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(ThemLoaiSP.this, CapNhatLoaiSP.class);
+                i.putExtra("id", idChiTiet);
+                startActivity(i);
+            }
         }
     }
 

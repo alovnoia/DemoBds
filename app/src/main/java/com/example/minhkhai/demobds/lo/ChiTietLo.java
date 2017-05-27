@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
+import com.example.minhkhai.demobds.duan.CapNhatDuAn;
 import com.example.minhkhai.demobds.duan.DuAn;
 import com.example.minhkhai.demobds.hotro.API;
 
@@ -90,7 +91,7 @@ public class ChiTietLo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new Save().execute("http://"+API.HOST+"/bds_project/public/Lo/"+id);
-
+                API.change = true;
             }
         });
     }
@@ -167,10 +168,6 @@ public class ChiTietLo extends AppCompatActivity {
             super.onPostExecute(s);
 
             Toast.makeText(getApplicationContext(), "Đã sửa lô có tên: "+ten, Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(ChiTietLo.this, MainActivity.class);
-            i.putExtra("key", "Lo");
-            i.putExtra("TenDuAn", tenDuAnSave);
-            startActivity(i);
         }
     }
 
@@ -192,7 +189,7 @@ public class ChiTietLo extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getApplicationContext(), "Bạn vừa xóa lô có id = "+id, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Bạn vừa xóa lô có id "+id, Toast.LENGTH_SHORT).show();
             Intent i = new Intent(ChiTietLo.this, MainActivity.class);
             i.putExtra("key", "Lo");
             i.putExtra("TenDuAn", tenDuAnChiTietLo);
@@ -203,7 +200,14 @@ public class ChiTietLo extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            if (API.change) {
+                Intent i = new Intent(ChiTietLo.this, MainActivity.class);
+                i.putExtra("key", "Lo");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
         }
         return super.onOptionsItemSelected(item);
     }

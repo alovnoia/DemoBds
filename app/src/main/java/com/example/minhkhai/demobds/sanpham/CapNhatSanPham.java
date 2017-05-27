@@ -119,6 +119,7 @@ public class CapNhatSanPham extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new SaveCapNhat().execute("http://"+ API.HOST+"/bds_project/public/SanPham/"+id);
+                API.change = true;
             }
         });
 
@@ -369,7 +370,14 @@ public class CapNhatSanPham extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            if (API.change) {
+                Intent i = new Intent(CapNhatSanPham.this, MainActivity.class);
+                i.putExtra("key", "SanPham");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
