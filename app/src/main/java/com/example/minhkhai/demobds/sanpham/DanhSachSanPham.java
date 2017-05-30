@@ -105,7 +105,8 @@ public class DanhSachSanPham extends Fragment {
                             "Sản phẩm",
                             object.getString("TenLoaiSP"),
                             object.getInt("GiaBan"),
-                            object.getInt("DuAn")
+                            object.getInt("DuAn"),
+                            object.getString("TenDuAn")
                     ));
                 }
 

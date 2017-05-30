@@ -74,6 +74,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".uudai.ThemUuDai" />
+        <activity android:name=".uudai.CapNhatUuDai" />
     </application>
 
 </manifest>

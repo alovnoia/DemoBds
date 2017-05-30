@@ -5,8 +5,26 @@ package com.example.minhkhai.demobds.loaikhachhang;
  */
 
 public class LoaiKhachHang {
+    public  int maLoaiKH;
     public String ten;
     public String moTa;
+    public boolean check;
+
+    public int getMaLoaiKH() {
+        return maLoaiKH;
+    }
+
+    public void setMaLoaiKH(int maLoaiKH) {
+        this.maLoaiKH = maLoaiKH;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
 
     public String getTen() {
         return ten;
@@ -33,6 +51,12 @@ public class LoaiKhachHang {
     }
 
     public int maLoai;
+
+    public LoaiKhachHang(int maLoaiKH, String ten, boolean check) {
+        this.maLoaiKH = maLoaiKH;
+        this.ten = ten;
+        this.check = check;
+    }
 
     public LoaiKhachHang(String ten, String moTa, int maLoai) {
         this.ten = ten;

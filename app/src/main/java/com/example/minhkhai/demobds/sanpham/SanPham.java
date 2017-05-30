@@ -10,14 +10,15 @@ public class SanPham {
     int maSP;
     String tenSP, loaiSP;
     int giaSP, duAn;
-    String anhSP;
+    String anhSP, tenDuAn;
 
-    public SanPham(int maSP, String tenSP, String loaiSP, int giaSP, int duAn) {
+    public SanPham(int maSP, String tenSP, String loaiSP, int giaSP, int duAn, String tenDuAn) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.loaiSP = loaiSP;
         this.giaSP = giaSP;
         this.duAn = duAn;
+        this.tenDuAn = tenDuAn;
     }
 
     public SanPham(int maSP, String tenSP, String loaiSP, int giaSP) {
@@ -33,6 +34,14 @@ public class SanPham {
         this.loaiSP = loaiSP;
         this.giaSP = giaSP;
         this.anhSP = anhSP;
+    }
+
+    public String getTenDuAn() {
+        return tenDuAn;
+    }
+
+    public void setTenDuAn(String tenDuAn) {
+        this.tenDuAn = tenDuAn;
     }
 
     public String getAnhSP() {

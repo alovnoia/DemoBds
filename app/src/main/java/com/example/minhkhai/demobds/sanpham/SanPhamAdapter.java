@@ -76,7 +76,7 @@ public class SanPhamAdapter extends BaseAdapter{
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-        tvTenSP.setText(arrSanPham.get(position).getTenSP() + " - Mã " +
+        tvTenSP.setText(arrSanPham.get(position).getTenDuAn() + " - Mã " +
                 String.valueOf(arrSanPham.get(position).getMaSP()));
         tvLoaiSP.setText(arrSanPham.get(position).getLoaiSP());
         DecimalFormat formatter = new DecimalFormat("###,###,###");

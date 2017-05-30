@@ -115,4 +115,9 @@ public class API {
 
         return content.toString();
     }
+
+    public static String convertDate(String date){
+        String[] ngay = date.split("-");
+        return ngay[2] + "/" + ngay[1] + "/" + ngay[0];
+    }
 }

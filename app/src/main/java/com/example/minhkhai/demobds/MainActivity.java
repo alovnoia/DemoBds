@@ -30,6 +30,7 @@ import com.example.minhkhai.demobds.sanpham.DanhSachSanPham;
 import com.example.minhkhai.demobds.taikhoan.ChiTietTaiKhoan;
 import com.example.minhkhai.demobds.taikhoan.DanhSachTaiKhoan;
 import com.example.minhkhai.demobds.thongtincanhan.ThongTinCaNhan;
+import com.example.minhkhai.demobds.uudai.DanhSachUuDai;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -108,6 +109,12 @@ public class MainActivity extends AppCompatActivity
                 break;
             case "Lo":
                 fragment = new DanhSachLo();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.framelayout, fragment).commit();
+                toggle.setDrawerIndicatorEnabled(true);
+                break;
+            case "uuDai":
+                fragment = new DanhSachUuDai();
                 fragmentManager.beginTransaction()
                         .replace(R.id.framelayout, fragment).commit();
                 toggle.setDrawerIndicatorEnabled(true);
@@ -215,6 +222,13 @@ public class MainActivity extends AppCompatActivity
 
                 toggle.setDrawerIndicatorEnabled(true);
             }
+
+        }  else if (id == R.id.uuDai) {
+            Fragment fragment = new DanhSachUuDai();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.framelayout, fragment).commit();
+
+            toggle.setDrawerIndicatorEnabled(true);
 
         } else if (id == R.id.tkCaNhan) {
             Fragment fragment = new ThongTinCaNhan();
