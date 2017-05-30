@@ -1,9 +1,17 @@
 package com.example.minhkhai.demobds.hotro;
 
+import android.util.Log;
+import android.widget.Toast;
+
+import com.example.minhkhai.demobds.hotro.upanh.ApiClient;
+import com.example.minhkhai.demobds.hotro.upanh.ApiService;
+import com.example.minhkhai.demobds.hotro.upanh.ServerResponse;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -16,6 +24,13 @@ import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Created by minhkhai on 05/05/17.
  */
@@ -23,10 +38,11 @@ import javax.net.ssl.HttpsURLConnection;
 public class API {
 
     public static String HOST = "10.0.3.2:2347";
+    //public static String HOST = "10.0.3.2:8080";
 
     public static String idUser;
 
-    public static String quyen;
+    public static String quyen="";
 
     public static boolean change = false;
 
@@ -115,9 +131,75 @@ public class API {
 
         return content.toString();
     }
+<<<<<<< .mine
 
     public static String convertDate(String date){
         String[] ngay = date.split("-");
         return ngay[2] + "/" + ngay[1] + "/" + ngay[0];
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
+
+
+    public static void uploadFile(File file) {
+        // Map is used to multipart the file using okhttp3.RequestBody
+        // Parsing any Media type file
+        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+
+
+        ApiService getResponse = ApiClient.getClient().create(ApiService.class);
+        Call<ServerResponse> call = getResponse.uploadFile(fileToUpload, filename);
+        call.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                ServerResponse serverResponse = response.body();
+                /*if (serverResponse != null) {
+                    if (serverResponse.getSuccess()) {
+                        Toast.makeText(getApplicationContext(), serverResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), serverResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    assert serverResponse != null;
+                    Log.v("Response", serverResponse.toString());
+                }*/
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+
+            }
+        });
+    }
+>>>>>>> .theirs
 }

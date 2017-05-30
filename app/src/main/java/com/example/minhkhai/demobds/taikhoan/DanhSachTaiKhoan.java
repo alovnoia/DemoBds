@@ -107,16 +107,4 @@ public class DanhSachTaiKhoan extends Fragment {
             }
         }
     }
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }*/
-
-   /* @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(DanhSachTaiKhoan.this, AppMenu.class);
-        startActivity(intent);
-        return true;
-    }*/
 }
