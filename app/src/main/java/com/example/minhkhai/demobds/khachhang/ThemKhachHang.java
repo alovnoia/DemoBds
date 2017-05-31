@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,9 +12,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
-import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.loaikhachhang.ChiTietLoaiKhachHang;
 import com.example.minhkhai.demobds.loaikhachhang.LoaiKhachHang;
 import com.example.minhkhai.demobds.loaikhachhang.ThemLoaiKhachHang;
 
@@ -38,6 +38,10 @@ public class ThemKhachHang extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_khach_hang);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         edtThemKHTen = (EditText) findViewById(R.id.edtThemKHTenKH);
         edtThemKHNghe = (EditText) findViewById(R.id.edtThemKHNghe);
@@ -66,6 +70,7 @@ public class ThemKhachHang extends AppCompatActivity {
                     @Override
                     public void run() {
                         new SaveThongTin().execute("http://"+API.HOST+"/bds_project/public/KhachHang");
+                        API.change = true;
                     }
                 });
             }
@@ -103,7 +108,7 @@ public class ThemKhachHang extends AppCompatActivity {
                 }
                 final ArrayAdapter<LoaiKhachHang> adapter = new ArrayAdapter(ThemKhachHang.this,
                         android.R.layout.simple_spinner_item, arrLoaiKH);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
                 spThemKHLoai.setAdapter(adapter);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -155,23 +160,31 @@ public class ThemKhachHang extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Toast.makeText(ThemKhachHang.this, "Đã thêm khách hàng "+tenKH, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(ThemKhachHang.this, DanhSachKhachHang.class);
-            startActivity(intent);
+            int idChiTiet = 0;
+            if (!s.equals("0"))
+            {
+                try {
+                    JSONObject object = new JSONObject(s);
+                    idChiTiet = object.getInt("MaKhachHang");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(ThemKhachHang.this, "Đã thêm khách hàng " + tenKH, Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(ThemKhachHang.this, CapNhatKhachHang.class);
+                i.putExtra("id", idChiTiet);
+                startActivity(i);
+            }
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ThemKhachHang.this, AppMenu.class);
-        startActivity(intent);
-        return true;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

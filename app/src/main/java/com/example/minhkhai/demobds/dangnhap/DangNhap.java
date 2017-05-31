@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.duan.DanhSachDuAn;
@@ -84,9 +85,10 @@ public class DangNhap extends AppCompatActivity {
                 if (s != ""){
                     JSONObject obj = new JSONObject(s);
 
-                    Intent intent = new Intent(DangNhap.this, AppMenu.class);
+                    Intent intent = new Intent(DangNhap.this, MainActivity.class);
                     API.idUser = obj.getString("MaTaiKhoan");
                     API.quyen = obj.getString("ChucVu");
+                    intent.putExtra("key", "TaiKhoanCaNhan");
                     startActivity(intent);
                 } else {
                     Toast.makeText(DangNhap.this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();

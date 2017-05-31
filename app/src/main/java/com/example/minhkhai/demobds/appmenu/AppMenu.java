@@ -17,6 +17,7 @@ import com.example.minhkhai.demobds.duan.DanhSachDuAn;
 import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.hotro.menu.NavigationDrawer;
 import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
+import com.example.minhkhai.demobds.lo.DanhSachLo;
 import com.example.minhkhai.demobds.loaikhachhang.DanhSachLoaiKhachHang;
 import com.example.minhkhai.demobds.loaikhachhang.LoaiKhachHang;
 import com.example.minhkhai.demobds.loaisp.DanhSachLoaiSP;
@@ -95,7 +96,7 @@ public class AppMenu extends AppCompatActivity {
                         if (childPosition == 0) {
                             intent = new Intent(AppMenu.this, DanhSachDuAn.class);
                         } else if (childPosition == 1) {
-                            intent = new Intent(AppMenu.this, DanhSachDuAn.class);
+                            intent = new Intent(AppMenu.this, DanhSachLo.class);
                         } else if (childPosition == 2) {
                             intent = new Intent(AppMenu.this, DanhSachLoaiSP.class);
                         } else if (childPosition == 3) {
@@ -157,20 +158,20 @@ public class AppMenu extends AppCompatActivity {
 
 /*String itemTenNVQL[] = {"Tài khoản", "Dự án", "Loại sản phẩm", "Sản phẩm", "Loại khách hàng", "Khách hàng",
             "Ưu đãi", "Hợp đồng", "Nợ", "Thông tin cá nhân", "Đăng xuất"};
-    int itemAnhNVQL[] = {R.drawable.ic_add_black_24dp, R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp, R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp};
+    int itemAnhNVQL[] = {R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round};
     String itemTenNVBH[] = {"Dự án", "Loại sản phẩm", "Sản phẩm", "Loại khách hàng", "Khách hàng",
             "Ưu đãi", "Hợp đồng", "Nợ", "Thông tin cá nhân", "Đăng xuất"};
-    int itemAnhNVBH[] = {R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp, R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp,R.drawable.ic_add_black_24dp,
-            R.drawable.ic_add_black_24dp};
+    int itemAnhNVBH[] = {R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round,
+            R.mipmap.ic_launcher_round};
     String[] itemTen;
     int[] itemAnh;
     List<MenuItem> arrItem;

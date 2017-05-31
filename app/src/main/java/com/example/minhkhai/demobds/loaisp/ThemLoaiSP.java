@@ -11,10 +11,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.lo.ChiTietLo;
+import com.example.minhkhai.demobds.lo.ThemLo;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URL;
@@ -31,6 +35,10 @@ public class ThemLoaiSP extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_loai_sp);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         edtThemTenLoaiSP = (EditText) findViewById(R.id.edtCapNhatTenLoaiSP);
         edtThemMoTaSP = (EditText) findViewById(R.id.edtThemMoTaLoaiSP);
         fabSaveLoaiSP = (FloatingActionButton) findViewById(R.id.fab_save_LoaiSP);
@@ -42,8 +50,7 @@ public class ThemLoaiSP extends AppCompatActivity {
                     @Override
                     public void run() {
                         new LuuLoaiSP().execute();
-                        Intent intent = new Intent(ThemLoaiSP.this, DanhSachLoaiSP.class);
-                        startActivity(intent);
+                        API.change = true;
                     }
                 });
             }
@@ -75,21 +82,36 @@ public class ThemLoaiSP extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(ThemLoaiSP.this, "Đã thêm loại sản phẩm", Toast.LENGTH_SHORT).show();
+
+            JSONObject object = null;
+            int idChiTiet = 0;
+            String tenLoMoi = "";
+
+            if (!s.equals("0"))
+            {
+                try {
+                    object = new JSONObject(s);
+                    idChiTiet = object.getInt("MaLoaiSP");
+                    tenLoMoi = object.getString("TenLoaiSP");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(ThemLoaiSP.this, "Đã thêm loại sản phẩm " + tenLoMoi, Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(ThemLoaiSP.this, CapNhatLoaiSP.class);
+                i.putExtra("id", idChiTiet);
+                startActivity(i);
+            }
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, AppMenu.class);
-        startActivity(intent);
-        return true;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

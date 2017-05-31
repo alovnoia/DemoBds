@@ -15,11 +15,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.duan.CapNhatDuAn;
 import com.example.minhkhai.demobds.duan.DanhSachDuAn;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.loaikhachhang.ChiTietLoaiKhachHang;
 import com.example.minhkhai.demobds.loaikhachhang.LoaiKhachHang;
 import com.example.minhkhai.demobds.loaikhachhang.ThemLoaiKhachHang;
 import com.example.minhkhai.demobds.loaisp.CapNhatLoaiSP;
@@ -50,6 +52,10 @@ public class CapNhatKhachHang extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cap_nhat_khach_hang);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         Bundle extras = getIntent().getExtras();
         id = extras.getInt("id");
@@ -87,6 +93,7 @@ public class CapNhatKhachHang extends AppCompatActivity {
                     @Override
                     public void run() {
                         new SaveCapNhat().execute("http://"+API.HOST+"/bds_project/public/KhachHang/"+id);
+                        API.change = true;
                     }
                 });
             }
@@ -141,13 +148,6 @@ public class CapNhatKhachHang extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        Intent intent = new Intent(CapNhatKhachHang.this, DanhSachKhachHang.class);
-        startActivity(intent);
     }
 
     private class LoadChiTietKhachHang extends AsyncTask<String, String, String>{
@@ -261,22 +261,25 @@ public class CapNhatKhachHang extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Toast.makeText(CapNhatKhachHang.this, "Đã xóa khách có id "+id, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(CapNhatKhachHang.this, DanhSachKhachHang.class);
+            Intent intent = new Intent(CapNhatKhachHang.this, MainActivity.class);
+            intent.putExtra("key", "KhachHang");
             startActivity(intent);
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(CapNhatKhachHang.this, AppMenu.class);
-        startActivity(intent);
-        return true;
+        if (item.getItemId() == android.R.id.home) {
+            if (API.change) {
+                Intent i = new Intent(CapNhatKhachHang.this, MainActivity.class);
+                i.putExtra("key", "KhachHang");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

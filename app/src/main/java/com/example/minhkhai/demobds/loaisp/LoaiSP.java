@@ -16,6 +16,11 @@ public class LoaiSP {
         this.moTaLoaiSP = moTaLoaiSP;
     }
 
+    public LoaiSP(int maLoaiSP, String tenLoaiSP) {
+        MaLoaiSP = maLoaiSP;
+        this.tenLoaiSP = tenLoaiSP;
+    }
+
     public int getMaLoaiSP() {
         return MaLoaiSP;
     }
@@ -38,6 +43,10 @@ public class LoaiSP {
 
     public void setMoTaLoaiSP(String moTaLoaiSP) {
         this.moTaLoaiSP = moTaLoaiSP;
+    }
+
+    public String toString() {
+        return this.tenLoaiSP;            // What to display in the Spinner list.
     }
 
 }

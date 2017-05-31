@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -75,10 +76,13 @@ public class SanPhamAdapter extends BaseAdapter{
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-        tvTenSP.setText(arrSanPham.get(position).getTenSP() + " - Mã " +
+        tvTenSP.setText(arrSanPham.get(position).getTenDuAn() + " - Mã " +
                 String.valueOf(arrSanPham.get(position).getMaSP()));
         tvLoaiSP.setText(arrSanPham.get(position).getLoaiSP());
-        tvGiaSP.setText(String.valueOf(arrSanPham.get(position).getGiaSP()));
+        DecimalFormat formatter = new DecimalFormat("###,###,###");
+
+        System.out.println(formatter.format(1000000)+" VNĐ");
+        tvGiaSP.setText(String.valueOf(formatter.format(arrSanPham.get(position).getGiaSP()))+" VNĐ");
 
         return convertView;
     }

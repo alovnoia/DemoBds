@@ -2,10 +2,16 @@ package com.example.minhkhai.demobds.taikhoan;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -15,8 +21,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
+import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.khachhang.CapNhatKhachHang;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -24,6 +33,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -48,10 +58,20 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
     int id = 0;
     List<String> listChucVu = new ArrayList<>();
     ArrayAdapter<String> adapter;
+
+    String mediaPath = "";
+    File file;
+    String tenHinh;
+    String pass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_tai_khoan);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         tvID = (TextView) findViewById(R.id.tvIDTaiKhoan);
         tvUsername = (TextView) findViewById(R.id.tvTenDangNhapChiTietTK);
@@ -63,7 +83,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
         edtThongtin = (EditText) findViewById(R.id.edtThongTinKhacChiTietTk);
         spnChucVu = (Spinner) findViewById(R.id.spnChucVuChiTietTK);
         fab_Save = (FloatingActionButton) findViewById(R.id.fab_SaveCapNhatTK);
-        fab_Xoa = (FloatingActionButton) findViewById(R.id.fab_XoaTaiKhoan);
+        //fab_Xoa = (FloatingActionButton) findViewById(R.id.fab_XoaTaiKhoan);
 
         Intent myIntent = getIntent();
         id = myIntent.getIntExtra("id", 0);
@@ -92,34 +112,78 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
             }
         });
 
+        imgAnh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, 0);
+            }
+        });
+
         fab_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        file = new File(mediaPath);
+                        if (file != null)
+                        {
+                            tenHinh = file.getName();
+                        }
                         new SaveUpdate().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
-                        Intent i = new Intent(ChiTietTaiKhoan.this, DanhSachTaiKhoan.class);
-                        startActivity(i);
+                        API.change = true;
                     }
                 });
             }
         });
 
-        fab_Xoa.setOnClickListener(new View.OnClickListener() {
+        /*fab_Xoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         new XoaTaiKhoan().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
-                        Intent i = new Intent(ChiTietTaiKhoan.this, DanhSachTaiKhoan.class);
+                        Intent i = new Intent(ChiTietTaiKhoan.this, MainActivity.class);
+                        i.putExtra("key", "TaiKhoan");
                         startActivity(i);
                     }
                 });
             }
-        });
+        });*/
 
+
+    }
+
+    //Hiển thị ảnh khi chọn
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
+
+                // Get the Image from data
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                assert cursor != null;
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                mediaPath = cursor.getString(columnIndex);
+                // Set the Image in ImageView for Previewing the Media
+                imgAnh.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                cursor.close();
+
+            } else {
+                Toast.makeText(this, "Bạn chưa chọn ảnh", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Đã xảy ra lỗi!", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -146,6 +210,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
         }
     }
 
+
     private class LayThongTinTK extends AsyncTask<String, String, String>{
 
         @Override
@@ -165,11 +230,17 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
             JSONObject object = null;
             try {
                 object = new JSONObject(s);
-                String tenHinh = object.getString("Anh");
-                Picasso.with(ChiTietTaiKhoan.this).load("http://"+API.HOST+"/bds_project/img/"+ tenHinh).into(imgAnh);
+
+                tenHinh = object.getString("Anh");
+                Picasso.with(ChiTietTaiKhoan.this)
+                        .load("http://"+API.HOST+"/bds_project/data/"+ tenHinh)
+                        .placeholder(R.drawable.ic_users)
+                        .error(R.drawable.ic_error_img)
+                        .into(imgAnh);
 
                 edtTen.setText(object.getString("HoTen"));
                 tvUsername.setText(object.getString("TenTaiKhoan"));
+                pass = object.getString("MatKhau");
 
                 String[] ngay = object.get("NgaySinh").toString().split("-");
                 edtNgaySinh.setText(ngay[2]+"/"+ngay[1]+"/"+ngay[0]);
@@ -202,8 +273,8 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
     }
 
     private class SaveUpdate extends AsyncTask<String, String, String>{
+        String tenDangNhap = tvUsername.getText().toString();
         String hoTen = edtTen.getText().toString();
-        String anh = "Hình ảnh";
         String[] ngaySinh = edtNgaySinh.getText().toString().split("/");
         String sDT = edtDienThoai.getText().toString();
         String diaChi = edtDiaChi.getText().toString();
@@ -216,20 +287,21 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
                 URL url = new URL(params[0]);
 
                 JSONObject object = new JSONObject();
-                object.put("Anh", anh);
+                object.put("Anh", tenHinh);
+                object.put("TenTaiKhoan", tenDangNhap);
+                object.put("MatKhau", pass);
                 object.put("HoTen", hoTen);
                 object.put("DiaChi", diaChi);
-                object.put("SoDienThoai", sDT);
-                if (chucVu.equals("Nhân viên quản lý")){
-                    object.put("ChucVu", "NVQL");
-                }
-                else
-                {
-                    object.put("ChucVu", "NVBH");
-                }
-                object.put("ThongTinKhac", more);
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 object.put("NgaySinh", format.format(format.parse(ngaySinh[2]+"-"+ngaySinh[1]+"-"+ngaySinh[0])));
+                String chucVuPost = "NVBH";
+                if (chucVu.equals("Nhân viên quản lý")){
+                    chucVuPost = "NVQL";
+                }
+                object.put("ChucVu", chucVuPost);
+                object.put("SoDienThoai", sDT);
+                object.put("ThongTinKhac", more);
+
                 object.put("_method", "PUT");
 
                 return API.POST_URL(url, object);
@@ -241,7 +313,8 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getApplicationContext(), "Đã sửa tài khoản có id = " + id, Toast.LENGTH_SHORT).show();
+            API.uploadFile(file);
+            Toast.makeText(getApplicationContext(), "Đã sửa tài khoản có id " + id, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -257,5 +330,20 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
                 ngayGioHienTai.get(Calendar.MONTH),
                 ngayGioHienTai.get(Calendar.DAY_OF_MONTH));
         date.show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (API.change) {
+                Intent i = new Intent(ChiTietTaiKhoan.this, MainActivity.class);
+                i.putExtra("key", "TaiKhoan");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">DemoBds</string>
+    <string name="app_name">Quản lý bất động sản</string>
     <string name="title_activity_menu">MenuActivity</string>
+    <integer name="btnplusview">1</integer>
+    <integer name="btnpluspos">2</integer>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

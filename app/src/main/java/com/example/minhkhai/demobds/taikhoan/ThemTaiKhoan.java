@@ -1,28 +1,52 @@
 package com.example.minhkhai.demobds.taikhoan;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.minhkhai.demobds.R;
+import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.hotro.upanh.ApiClient;
+import com.example.minhkhai.demobds.hotro.upanh.ApiService;
+import com.example.minhkhai.demobds.hotro.upanh.ServerResponse;
+import com.example.minhkhai.demobds.khachhang.CapNhatKhachHang;
+import com.example.minhkhai.demobds.khachhang.ThemKhachHang;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ThemTaiKhoan extends AppCompatActivity {
     ImageView imgAnh;
@@ -32,10 +56,17 @@ public class ThemTaiKhoan extends AppCompatActivity {
 
     Calendar ngayGioHienTai = Calendar.getInstance();
 
+    String mediaPath;
+    File file;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_tai_khoan);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         imgAnh = (ImageView) findViewById(R.id.imgAnhThemTK);
         edtTen = (EditText) findViewById(R.id.edtTenThemTK);
@@ -62,19 +93,58 @@ public class ThemTaiKhoan extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spnChucVu.setAdapter(adapter);
 
+        imgAnh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, 0);
+            }
+        });
+
         fab_SaveThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        file = new File(mediaPath);
                         new LuuThemTaiKhoan().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan");
-                        Intent i = new Intent(ThemTaiKhoan.this, DanhSachTaiKhoan.class);
-                        startActivity(i);
+                        API.change = true;
                     }
                 });
             }
         });
+
+    }
+
+    //Hiển thị ảnh khi chọn
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
+
+                // Get the Image from data
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                assert cursor != null;
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                mediaPath = cursor.getString(columnIndex);
+                // Set the Image in ImageView for Previewing the Media
+                imgAnh.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                cursor.close();
+
+            } else {
+                Toast.makeText(this, "Bạn chưa chọn ảnh", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Đã xảy ra lỗi!", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -100,7 +170,7 @@ public class ThemTaiKhoan extends AppCompatActivity {
         String diaChi = edtDiaChi.getText().toString();
         String chucVu = spnChucVu.getSelectedItem().toString();
         String thongTinThem = edtThongTinKhac.getText().toString();
-        String anh = "Hinh anh";
+        String anh = file.getName();
         @Override
         protected String doInBackground(String... params) {
             try {
@@ -135,6 +205,32 @@ public class ThemTaiKhoan extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
+            int idChiTiet = 0;
+            if (!s.equals("0"))
+            {
+                try {
+                    JSONObject object = new JSONObject(s);
+                    idChiTiet = object.getInt("MaTaiKhoan");
+                    API.uploadFile(file);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(ThemTaiKhoan.this, "Đã thêm tài khoản " + hoTen, Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(ThemTaiKhoan.this, ChiTietTaiKhoan.class);
+                i.putExtra("id", idChiTiet);
+                startActivity(i);
+            }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

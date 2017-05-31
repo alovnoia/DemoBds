@@ -8,13 +8,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.loaisp.CapNhatLoaiSP;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +40,7 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
     FloatingActionButton flEdit;
     TextView tvID;
     EditText edtTen, edtMoTa;
+    Button btnXoa;
     int id = 0;
 
     @Override
@@ -44,9 +48,12 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_loai_khach_hang);
 
-        Intent i = getIntent();
-        id = i.getIntExtra("maLoaiKH", 0);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
+        Bundle i = getIntent().getExtras();
+        id = i.getInt("maLoaiKH");
 
         flEdit = (FloatingActionButton) findViewById(R.id.fab_edit_LoaiSP_ChiTiet);
         tvID = (TextView) findViewById(R.id.tvmaLoaiKHChiTiet);
@@ -69,21 +76,21 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
                     @Override
                     public void run() {
                         new UpdateThongTin().execute();
-                        Intent i = new Intent(ChiTietLoaiKhachHang.this, DanhSachLoaiKhachHang.class);
-                        startActivity(i);
+                        API.change = true;
                     }
                 });
             }
         });
-        FloatingActionButton flDel = (FloatingActionButton) findViewById(R.id.fab_del_LoaiSP_ChiTiet);
-        flDel.setOnClickListener(new View.OnClickListener() {
+        btnXoa = (Button) findViewById(R.id.btnXoa);
+        btnXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         new XoaLoaiKH().execute();
-                        Intent i = new Intent(ChiTietLoaiKhachHang.this, DanhSachLoaiKhachHang.class);
+                        Intent i = new Intent(ChiTietLoaiKhachHang.this, MainActivity.class);
+                        i.putExtra("key", "LoaiKhachHang");
                         startActivity(i);
                     }
                 });
@@ -143,7 +150,7 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getApplicationContext(), "Đã sửa loại khách hàng có id = "+id, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Đã sửa loại khách hàng có id "+id, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -169,21 +176,28 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getApplicationContext(), "Đã xóa SP có id "+id, Toast.LENGTH_SHORT).show();
+            try {
+                JSONObject postDataParams = new JSONObject(s);
+                Toast.makeText(getApplicationContext(), "Đã xóa loại khách hàng id " + id, Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ChiTietLoaiKhachHang.this, AppMenu.class);
-        startActivity(intent);
-        return true;
+        if (item.getItemId() == android.R.id.home) {
+            if (API.change) {
+                Intent i = new Intent(ChiTietLoaiKhachHang.this, MainActivity.class);
+                i.putExtra("key", "LoaiKhachHang");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

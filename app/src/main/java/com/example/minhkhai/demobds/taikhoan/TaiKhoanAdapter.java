@@ -57,9 +57,12 @@ public class TaiKhoanAdapter extends BaseAdapter {
         tvChucVu.setText(arrayTaiKhoan.get(position).chucVu);
 
         ImageView imgAnh = (ImageView) convertView.findViewById(R.id.imgAnhTaiKhoanOnList);
-        /*Picasso.with(DanhSachTaiKhoan.this)
-                .load("http://10.0.3.2:2347/bds_project/img/Layout_4.png"+ arrayTaiKhoan.get(position).anh)
-                .into(imgAnh);*/
+
+        Picasso.with(myContext)
+                .load("http://10.0.3.2:2347/bds_project/data/"+ arrayTaiKhoan.get(position).anh)
+                .placeholder(R.drawable.ic_users)
+                .error(R.drawable.ic_error_img)
+                .into(imgAnh);
 
         return convertView;
     }

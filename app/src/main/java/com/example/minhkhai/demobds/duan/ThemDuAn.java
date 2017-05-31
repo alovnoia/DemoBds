@@ -13,11 +13,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.lo.ChiTietLo;
+import com.example.minhkhai.demobds.lo.ThemLo;
 import com.example.minhkhai.demobds.loaikhachhang.ThemLoaiKhachHang;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URL;
@@ -37,12 +41,16 @@ public class ThemDuAn extends AppCompatActivity {
         /*FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.flDanhSachLoaiKH, new NavigationDrawer()).commit();*/
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         fabThemDuAn = (FloatingActionButton) findViewById(R.id.fabThemDuAn);
         edtThemTenDuAn = (EditText) findViewById(R.id.edtThemTenDuAn);
         edtThemDiaChi = (EditText) findViewById(R.id.edtThemDiaChi);
         edtThemDienTich = (EditText) findViewById(R.id.edtThemDienTich);
         edtThemGiayPhep = (EditText) findViewById(R.id.edtThemGiayPhep);
-        edtThemSoLuongSP = (EditText) findViewById(R.id.edtThemSoLuongSP);
+        //edtThemSoLuongSP = (EditText) findViewById(R.id.edtThemSoLuongSP);
         edtThemMoTaDuAn = (EditText) findViewById(R.id.edtThemMoTaDuAn);
         edtThemNgayCap = (EditText) findViewById(R.id.edtThemNgayCap);
 
@@ -60,6 +68,7 @@ public class ThemDuAn extends AppCompatActivity {
                     @Override
                     public void run() {
                         new SaveDuAnMoi().execute("http://"+API.HOST+"/bds_project/public/DuAn");
+                        API.change = true;
                     }
                 });
             }
@@ -73,7 +82,7 @@ public class ThemDuAn extends AppCompatActivity {
         String moTa = edtThemMoTaDuAn.getText().toString();
         String[] ngayCap = edtThemNgayCap.getText().toString().split("/");
         float dienTich = Float.parseFloat(edtThemDienTich.getText().toString());
-        int soLuongSP = Integer.parseInt(edtThemSoLuongSP.getText().toString());
+        //int soLuongSP = Integer.parseInt(edtThemSoLuongSP.getText().toString());
         @Override
         protected String doInBackground(String... params) {
             try {
@@ -86,7 +95,7 @@ public class ThemDuAn extends AppCompatActivity {
                 postDataParams.put("GiayPhep", giayPhep);
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 postDataParams.put("NgayCap", format.format(format.parse(ngayCap[2]+"-"+ngayCap[1]+"-"+ngayCap[0])));
-                postDataParams.put("SoLuongSanPham", soLuongSP);
+                //postDataParams.put("SoLuongSanPham", soLuongSP);
                 postDataParams.put("MoTa", moTa);
 
                 return API.POST_URL(url, postDataParams);
@@ -99,9 +108,27 @@ public class ThemDuAn extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(ThemDuAn.this, s, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(ThemDuAn.this, DanhSachDuAn.class);
-            startActivity(intent);
+            int idChiTiet = 0;
+            String tenDA = "";
+            JSONObject object = null;
+
+            if (!s.equals("0"))
+            {
+                try {
+                    object = new JSONObject(s);
+                    idChiTiet = object.getInt("MaDuAn");
+                    tenDA = object.getString("TenDuAn");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(getApplicationContext(),
+                        "Đã thêm dự án "+tenDA, Toast.LENGTH_LONG).show();
+
+                Intent i = new Intent(ThemDuAn.this, CapNhatDuAn.class);
+                i.putExtra("id", idChiTiet);
+                startActivity(i);
+            }
         }
     }
 
@@ -121,16 +148,11 @@ public class ThemDuAn extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ThemDuAn.this, AppMenu.class);
-        startActivity(intent);
-        return true;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

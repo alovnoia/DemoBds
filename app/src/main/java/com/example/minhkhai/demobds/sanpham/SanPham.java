@@ -9,22 +9,39 @@ import android.graphics.Bitmap;
 public class SanPham {
     int maSP;
     String tenSP, loaiSP;
-    float giaSP;
-    String anhSP;
+    int giaSP, duAn;
+    String anhSP, tenDuAn;
 
-    public SanPham(int maSP, String tenSP, String loaiSP, float giaSP) {
+    public SanPham(int maSP, String tenSP, String loaiSP, int giaSP, int duAn, String tenDuAn) {
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.loaiSP = loaiSP;
+        this.giaSP = giaSP;
+        this.duAn = duAn;
+        this.tenDuAn = tenDuAn;
+    }
+
+    public SanPham(int maSP, String tenSP, String loaiSP, int giaSP) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.loaiSP = loaiSP;
         this.giaSP = giaSP;
     }
 
-    public SanPham(int maSP, String tenSP, String loaiSP, float giaSP, String anhSP) {
+    public SanPham(int maSP, String tenSP, String loaiSP, int giaSP, String anhSP) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.loaiSP = loaiSP;
         this.giaSP = giaSP;
         this.anhSP = anhSP;
+    }
+
+    public String getTenDuAn() {
+        return tenDuAn;
+    }
+
+    public void setTenDuAn(String tenDuAn) {
+        this.tenDuAn = tenDuAn;
     }
 
     public String getAnhSP() {
@@ -37,6 +54,14 @@ public class SanPham {
 
     public int getMaSP() {
         return maSP;
+    }
+
+    public int getDuAn() {
+        return duAn;
+    }
+
+    public void setDuAn(int duAn) {
+        this.duAn = duAn;
     }
 
     public void setMaSP(int maSP) {
@@ -59,11 +84,11 @@ public class SanPham {
         this.loaiSP = loaiSP;
     }
 
-    public float getGiaSP() {
+    public int getGiaSP() {
         return giaSP;
     }
 
-    public void setGiaSP(float giaSP) {
+    public void setGiaSP(int giaSP) {
         this.giaSP = giaSP;
     }
 }

@@ -86,7 +86,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_save_black_24dp"
         app:backgroundTint="@android:color/holo_green_dark"
         app:borderWidth="0dp"

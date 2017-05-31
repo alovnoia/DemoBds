@@ -1,13 +1,16 @@
 package com.example.minhkhai.demobds.khachhang;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -27,22 +30,22 @@ import java.io.IOException;
 import java.sql.Array;
 import java.util.ArrayList;
 
-public class DanhSachKhachHang extends AppCompatActivity {
+public class DanhSachKhachHang extends Fragment {
 
     ListView lvKhachHang;
     ArrayList<KhachHang> arrKhachHang;
     FloatingActionButton fabAddKhachHang;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_danh_sach_khach_hang);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_danh_sach_khach_hang,container,false);
 
         arrKhachHang = new ArrayList<KhachHang>();
-        lvKhachHang = (ListView) findViewById(R.id.lvKhachHang);
-        fabAddKhachHang = (FloatingActionButton) findViewById(R.id.fabThemKhachHang);
+        lvKhachHang = (ListView) view.findViewById(R.id.lvKhachHang);
+        fabAddKhachHang = (FloatingActionButton) view.findViewById(R.id.fabThemKhachHang);
 
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 new LoadDanhSachKH().execute("http://"+API.HOST+"/bds_project/public/KhachHang");
@@ -52,7 +55,7 @@ public class DanhSachKhachHang extends AppCompatActivity {
         fabAddKhachHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DanhSachKhachHang.this, ThemKhachHang.class);
+                Intent intent = new Intent(getActivity(), ThemKhachHang.class);
                 startActivity(intent);
             }
         });
@@ -60,11 +63,12 @@ public class DanhSachKhachHang extends AppCompatActivity {
         lvKhachHang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(DanhSachKhachHang.this, CapNhatKhachHang.class);
+                Intent intent = new Intent(getActivity(), CapNhatKhachHang.class);
                 intent.putExtra("id", arrKhachHang.get(position).getMaKhachHang());
                 startActivity(intent);
             }
         });
+        return view;
     }
 
     private class LoadDanhSachKH extends AsyncTask<String, String, String>{
@@ -96,7 +100,7 @@ public class DanhSachKhachHang extends AppCompatActivity {
                     ));
                 }
 
-                KhachHangAdapter adapter = new KhachHangAdapter(DanhSachKhachHang.this, R.layout.item_khach_hang, arrKhachHang);
+                KhachHangAdapter adapter = new KhachHangAdapter(getActivity(), R.layout.item_khach_hang, arrKhachHang);
 
                 lvKhachHang.setAdapter(adapter);
 
@@ -106,17 +110,13 @@ public class DanhSachKhachHang extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(DanhSachKhachHang.this, AppMenu.class);
-        startActivity(intent);
-        return true;
-    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        Intent intent = new Intent(getActivity(), AppMenu.class);
+//        startActivity(intent);
+//        return true;
+//    }
 
 }

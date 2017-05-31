@@ -34,7 +34,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class DanhSachDuAn extends AppCompatActivity{
+public class DanhSachDuAn extends Fragment{
 
     ListView lvDuAn;
     ArrayList<DuAn> mangDuAn;
@@ -42,15 +42,18 @@ public class DanhSachDuAn extends AppCompatActivity{
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_danh_sach_du_an);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_danh_sach_du_an,container,false);
         mangDuAn = new ArrayList<DuAn>();
-        lvDuAn = (ListView) findViewById(R.id.lvDuAn);
-        fabThemDuAn = (FloatingActionButton) findViewById(R.id.fabThemDuAn);
+        lvDuAn = (ListView) view.findViewById(R.id.lvDuAn);
+        fabThemDuAn = (FloatingActionButton) view.findViewById(R.id.fabThemDuAn);
 
-        runOnUiThread(new Runnable() {
+        if (API.quyen.equals("NVBH")) {
+            fabThemDuAn.setVisibility(View.GONE);
+        }
+
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 new LoadDanhSach().execute("http://"+API.HOST+"/bds_project/public/DuAn");
@@ -60,7 +63,7 @@ public class DanhSachDuAn extends AppCompatActivity{
         fabThemDuAn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DanhSachDuAn.this, ThemDuAn.class);
+                Intent intent = new Intent(getActivity(), ThemDuAn.class);
                 startActivity(intent);
             }
         });
@@ -68,17 +71,17 @@ public class DanhSachDuAn extends AppCompatActivity{
         lvDuAn.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(DanhSachDuAn.this, CapNhatDuAn.class);
+                Intent intent = new Intent(getActivity(), CapNhatDuAn.class);
                 intent.putExtra("id", mangDuAn.get(position).getMaDuAn());
                 startActivity(intent);
             }
         });
-
+        return view;
         /*FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.flDanhSachDuAn, new NavigationDrawer()).commit();*/
     }
 
-    private class LoadDanhSach extends AsyncTask<String, Integer, String> {
+    public class LoadDanhSach extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -106,7 +109,7 @@ public class DanhSachDuAn extends AppCompatActivity{
                     ));
                 }
 
-                DuAnAdapter adapter = new DuAnAdapter(DanhSachDuAn.this, R.layout.item_du_an, mangDuAn);
+                DuAnAdapter adapter = new DuAnAdapter(getActivity(), R.layout.item_du_an, mangDuAn);
 
                 lvDuAn.setAdapter(adapter);
 
@@ -117,15 +120,15 @@ public class DanhSachDuAn extends AppCompatActivity{
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getActivity().getMenuInflater().inflate(R.menu.menu, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(DanhSachDuAn.this, AppMenu.class);
+        Intent intent = new Intent(getActivity(), AppMenu.class);
         startActivity(intent);
         return true;
     }

@@ -12,11 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.khachhang.CapNhatKhachHang;
 import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
+import com.example.minhkhai.demobds.lo.ChiTietLo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +50,10 @@ public class CapNhatLoaiSP extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cap_nhat_loai_sp);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         edtCapNhatTenLoaiSP = (EditText) findViewById(R.id.edtCapNhatTenLoaiSP);
         edtCapNhatMoTaLoaiSP = (EditText) findViewById(R.id.edtCapNhatMoTaLoaiSP);
         btnXoaLoaiSP = (Button) findViewById(R.id.btnXoaLoaiSP);
@@ -55,6 +61,11 @@ public class CapNhatLoaiSP extends AppCompatActivity {
 
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
+
+        if (API.quyen.equals("NVBH")) {
+            btnXoaLoaiSP.setVisibility(View.GONE);
+            fabSaveLoaiSP.setVisibility(View.GONE);
+        }
 
         runOnUiThread(new Runnable() {
             @Override
@@ -72,6 +83,7 @@ public class CapNhatLoaiSP extends AppCompatActivity {
                         new CapNhatSuaLoaiSP().execute();
                     }
                 });
+                API.change = true;
             }
         });
 
@@ -165,30 +177,33 @@ public class CapNhatLoaiSP extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Toast.makeText(CapNhatLoaiSP.this, "Đã xóa SP có id "+id, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(CapNhatLoaiSP.this, DanhSachLoaiSP.class);
+            Intent intent = new Intent(CapNhatLoaiSP.this, MainActivity.class);
+            intent.putExtra("key", "LoaiSP");
             startActivity(intent);
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    /*@Override
+    *//*public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, AppMenu.class);
-        startActivity(intent);
-        return true;
+        if (item.getItemId() == android.R.id.home) {
+            if (API.change) {
+                Intent i = new Intent(CapNhatLoaiSP.this, MainActivity.class);
+                i.putExtra("key", "LoaiSP");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        Intent intent = new Intent(CapNhatLoaiSP.this, DanhSachLoaiSP.class);
-        startActivity(intent);
-    }
 
 }
 

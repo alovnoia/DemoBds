@@ -11,11 +11,26 @@ public class DuAn {
     private float tongDienTich;
     private Date ngayCap;
     private String tenDuAn, diaChi, giayPhep, moTa;
+    private Boolean check;
 
     public DuAn(int maDuAn, String tenDuAn, String diaChi) {
         this.maDuAn = maDuAn;
         this.tenDuAn = tenDuAn;
         this.diaChi = diaChi;
+    }
+
+    public DuAn(int maDuAn, String tenDuAn, Boolean check) {
+        this.maDuAn = maDuAn;
+        this.tenDuAn = tenDuAn;
+        this.check = check;
+    }
+
+    public Boolean getCheck() {
+        return check;
+    }
+
+    public void setCheck(Boolean check) {
+        this.check = check;
     }
 
     public int getMaDuAn() {
@@ -80,5 +95,9 @@ public class DuAn {
 
     public void setMoTa(String moTa) {
         this.moTa = moTa;
+    }
+
+    public String toString() {
+        return this.tenDuAn;            // What to display in the Spinner list.
     }
 }

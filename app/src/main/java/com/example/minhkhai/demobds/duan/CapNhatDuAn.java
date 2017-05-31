@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
@@ -43,6 +44,10 @@ public class CapNhatDuAn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cap_nhat_du_an);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
 
@@ -51,12 +56,16 @@ public class CapNhatDuAn extends AppCompatActivity {
         edtCapNhatDiaChi = (EditText) findViewById(R.id.edtCNDiaChi);
         edtCapNhatDienTich = (EditText) findViewById(R.id.edtCNDienTich);
         edtCapNhatGiayPhep = (EditText) findViewById(R.id.edtCNGiayPhep);
-        edtCapNhatSoLuongSP = (EditText) findViewById(R.id.edtCNSoLuongSP);
+        //edtCapNhatSoLuongSP = (EditText) findViewById(R.id.edtCNSoLuongSP);
         edtCapNhatMoTaDuAn = (EditText) findViewById(R.id.edtCNMoTaDuAn);
         edtCapNhatNgayCap = (EditText) findViewById(R.id.edtCNNgayCap);
         btnXoaDuAn = (Button) findViewById(R.id.btnXoaDuAn);
         tvCapNhatDuAn = (TextView) findViewById(R.id.tvCapNhatDuAn);
-        tvCapNhatDuAn.setText("Cập nhật dự án "+id);
+
+        if (API.quyen.equals("NVBH")) {
+            btnXoaDuAn.setVisibility(View.GONE);
+            fabCapNhatDuAn.setVisibility(View.GONE);
+        }
 
         runOnUiThread(new Runnable() {
             @Override
@@ -79,6 +88,7 @@ public class CapNhatDuAn extends AppCompatActivity {
                     @Override
                     public void run() {
                         new SaveEditDuAn().execute("http://"+API.HOST+"/bds_project/public/DuAn/"+id);
+                        API.change = true;
                     }
                 });
             }
@@ -130,7 +140,8 @@ public class CapNhatDuAn extends AppCompatActivity {
                 edtCapNhatGiayPhep.setText(obj.getString("GiayPhep"));
                 String[] ngay = obj.get("NgayCap").toString().split("-");
                 edtCapNhatNgayCap.setText(ngay[2]+"/"+ngay[1]+"/"+ngay[0]);
-                edtCapNhatSoLuongSP.setText(obj.getString("SoLuongSanPham"));
+                tvCapNhatDuAn.setText("Cập nhật dự án "+id+" - " + obj.getInt("SoLuongSanPham")+" sản phẩm");
+                //edtCapNhatSoLuongSP.setText(obj.getString("SoLuongSanPham"));
                 edtCapNhatMoTaDuAn.setText(obj.getString("MoTa"));
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -145,7 +156,7 @@ public class CapNhatDuAn extends AppCompatActivity {
         String moTa = edtCapNhatMoTaDuAn.getText().toString();
         String[] ngayCap = edtCapNhatNgayCap.getText().toString().split("/");
         float dienTich = Float.parseFloat(edtCapNhatDienTich.getText().toString());
-        int soLuongSP = Integer.parseInt(edtCapNhatSoLuongSP.getText().toString());
+        //int soLuongSP = Integer.parseInt(edtCapNhatSoLuongSP.getText().toString());
         @Override
         protected String doInBackground(String... params) {
             try {
@@ -158,7 +169,7 @@ public class CapNhatDuAn extends AppCompatActivity {
                 postDataParams.put("GiayPhep", giayPhep);
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 postDataParams.put("NgayCap", format.format(format.parse(ngayCap[2]+"-"+ngayCap[1]+"-"+ngayCap[0])));
-                postDataParams.put("SoLuongSanPham", soLuongSP);
+                //postDataParams.put("SoLuongSanPham", soLuongSP);
                 postDataParams.put("MoTa", moTa);
                 postDataParams.put("_method", "PUT");
 
@@ -198,7 +209,8 @@ public class CapNhatDuAn extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Toast.makeText(CapNhatDuAn.this, "Đã xóa dự án có id "+id, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(CapNhatDuAn.this, DanhSachDuAn.class);
+            Intent intent = new Intent(CapNhatDuAn.this, MainActivity.class);
+            intent.putExtra("key", "DuAn");
             startActivity(intent);
         }
     }
@@ -219,16 +231,18 @@ public class CapNhatDuAn extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(CapNhatDuAn.this, AppMenu.class);
-        startActivity(intent);
-        return true;
+        if (item.getItemId() == android.R.id.home) {
+            if (API.change) {
+                Intent i = new Intent(CapNhatDuAn.this, MainActivity.class);
+                i.putExtra("key", "DuAn");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
