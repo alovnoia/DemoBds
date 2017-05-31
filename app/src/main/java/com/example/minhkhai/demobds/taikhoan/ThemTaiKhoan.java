@@ -140,10 +140,10 @@ public class ThemTaiKhoan extends AppCompatActivity {
                 cursor.close();
 
             } else {
-                Toast.makeText(this, "You haven't picked Image/Video", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Bạn chưa chọn ảnh", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Đã xảy ra lỗi!", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -217,7 +217,7 @@ public class ThemTaiKhoan extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Toast.makeText(ThemTaiKhoan.this, "Đã thêm khách hàng " + hoTen, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ThemTaiKhoan.this, "Đã thêm tài khoản " + hoTen, Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(ThemTaiKhoan.this, ChiTietTaiKhoan.class);
                 i.putExtra("id", idChiTiet);

@@ -131,43 +131,11 @@ public class API {
 
         return content.toString();
     }
-<<<<<<< .mine
 
     public static String convertDate(String date){
         String[] ngay = date.split("-");
         return ngay[2] + "/" + ngay[1] + "/" + ngay[0];
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-
 
     public static void uploadFile(File file) {
         // Map is used to multipart the file using okhttp3.RequestBody
@@ -183,16 +151,6 @@ public class API {
             @Override
             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 ServerResponse serverResponse = response.body();
-                /*if (serverResponse != null) {
-                    if (serverResponse.getSuccess()) {
-                        Toast.makeText(getApplicationContext(), serverResponse.getMessage(),Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), serverResponse.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    assert serverResponse != null;
-                    Log.v("Response", serverResponse.toString());
-                }*/
             }
 
             @Override
@@ -201,5 +159,4 @@ public class API {
             }
         });
     }
->>>>>>> .theirs
 }

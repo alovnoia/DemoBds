@@ -179,10 +179,10 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
                 cursor.close();
 
             } else {
-                Toast.makeText(this, "You haven't picked Image/Video", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Bạn chưa chọn ảnh", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Đã xảy ra lỗi!", Toast.LENGTH_LONG).show();
         }
 
     }
