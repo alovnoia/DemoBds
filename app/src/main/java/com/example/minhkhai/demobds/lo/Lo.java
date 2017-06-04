@@ -10,11 +10,47 @@ public class Lo {
     public String tenDuAn;
     public int maDuAn;
 
+    public int getMaLo() {
+        return maLo;
+    }
+
+    public void setMaLo(int maLo) {
+        this.maLo = maLo;
+    }
+
+    public String getTenLo() {
+        return tenLo;
+    }
+
+    public void setTenLo(String tenLo) {
+        this.tenLo = tenLo;
+    }
+
+    public String getTenDuAn() {
+        return tenDuAn;
+    }
+
+    public void setTenDuAn(String tenDuAn) {
+        this.tenDuAn = tenDuAn;
+    }
+
+    public int getMaDuAn() {
+        return maDuAn;
+    }
+
+    public void setMaDuAn(int maDuAn) {
+        this.maDuAn = maDuAn;
+    }
+
     public Lo(int maLo, String tenLo, String tenDuAn, int maDuAn) {
         this.maLo = maLo;
         this.tenLo = tenLo;
         this.tenDuAn = tenDuAn;
         this.maDuAn = maDuAn;
+    }
+    public Lo(int ma, String ten){
+        this.maLo = ma;
+        this.tenLo = ten;
     }
 
     public Lo(int maLo, String tenLo, String tenDuAn) {

@@ -120,7 +120,7 @@ public class ThemKhachHang extends AppCompatActivity {
 
         String tenKH = edtThemKHTen.getText().toString();
         LoaiKhachHang loaiKH = (LoaiKhachHang) spThemKHLoai.getSelectedItem();
-        int maLoaiKH = loaiKH.getMaLoai();
+        int maLoaiKH = loaiKH.getMaLoaiKH();
         String nghe = edtThemKHNghe.getText().toString();
         String hoKhau = edtThemKHHoKhau.getText().toString();
         String sdt = edtThemKHDienThoai.getText().toString();
