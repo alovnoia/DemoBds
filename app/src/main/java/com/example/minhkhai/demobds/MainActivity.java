@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.minhkhai.demobds.dangnhap.DangNhap;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
+    TextView tvTenThat;
     private GoogleApiClient client;
     FragmentManager fragmentManager = getFragmentManager();
     ActionBarDrawerToggle toggle;
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /*tvTenThat = (TextView) findViewById(R.id.tvTenThat);
+        tvTenThat.setText("cs");*/
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Bundle extras = getIntent().getExtras();

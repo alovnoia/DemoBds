@@ -7,7 +7,7 @@
     tools:context="com.example.minhkhai.demobds.loaisp.CapNhatLoaiSP">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvTenThat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -27,7 +27,7 @@
         android:layout_marginTop="16dp"
         android:text="Tên loại"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tvTenThat"
         android:layout_marginStart="16dp" />
 
     <EditText

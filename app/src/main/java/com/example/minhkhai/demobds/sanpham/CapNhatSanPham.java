@@ -93,10 +93,10 @@ public class CapNhatSanPham extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                new LoadChiTietSP().execute("http://"+API.HOST+"/bds_project/public/SanPham/"+id);
                 new LoadLoaiSP().execute("http://"+API.HOST+"/bds_project/public/LoaiSP");
                 new LoadDuAn().execute("http://"+API.HOST+"/bds_project/public/DuAn");
                 new LoadLo().execute("http://"+API.HOST+"/bds_project/public/getlo/"+idDuAn);
-                new LoadChiTietSP().execute("http://"+API.HOST+"/bds_project/public/SanPham/"+id);
             }
         });
 
@@ -166,6 +166,13 @@ public class CapNhatSanPham extends AppCompatActivity {
                         android.R.layout.simple_spinner_item, arrLoaiKH);
                 adapterLoaiSP.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
                 spLoai.setAdapter(adapterLoaiSP);
+                for (int j = 0; j < adapterLoaiSP.getCount(); j++){
+                    if (sanPham.getInt("LoaiSP") == adapterLoaiSP.getItem(j).getMaLoaiSP()){
+                        spLoai.setSelection(j);
+                        break;
+                    }
+                }
+                adapterLoaiSP.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -197,11 +204,18 @@ public class CapNhatSanPham extends AppCompatActivity {
                             object.getString("TenDuAn"),
                             object.getString("DiaChi")
                     ));
-                    adapterDuAn = new ArrayAdapter(CapNhatSanPham.this,
-                            android.R.layout.simple_spinner_item, mangDuAn);
-                    adapterDuAn.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-                    spDuAn.setAdapter(adapterDuAn);
                 }
+                adapterDuAn = new ArrayAdapter(CapNhatSanPham.this,
+                        android.R.layout.simple_spinner_item, mangDuAn);
+                adapterDuAn.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                spDuAn.setAdapter(adapterDuAn);
+                for (int i = 0; i < adapterDuAn.getCount(); i++){
+                    if (sanPham.getInt("DuAn") == adapterDuAn.getItem(i).getMaDuAn()){
+                        spDuAn.setSelection(i);
+                        break;
+                    }
+                }
+                adapterLoaiSP.notifyDataSetChanged();
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -240,6 +254,13 @@ public class CapNhatSanPham extends AppCompatActivity {
                         android.R.layout.simple_spinner_item, arrLo);
                 adapterLo.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
                 spLo.setAdapter(adapterLo);
+                for (int k = 0; k < adapterLo.getCount(); k++){
+                    if (sanPham.getInt("Lo") == adapterLo.getItem(k).getMaLo()){
+                        spLo.setSelection(k);
+                        break;
+                    }
+                }
+                adapterLo.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -264,30 +285,13 @@ public class CapNhatSanPham extends AppCompatActivity {
             super.onPostExecute(s);
             try {
                 JSONObject obj = new JSONObject(s);
+                sanPham = obj;
                 try {
                     edtSo.setText(obj.getString("SoNha"));
                     edtDienTich.setText(obj.getInt("DienTich") + "");
                     edtGiaBan.setText(obj.getInt("GiaBan") + "");
                     edtMoTa.setText(obj.getString("MoTa"));
                     tvMaSP.setText("Sản phẩm mã " + obj.getInt("MaSP"));
-                    for (int i = 0; i < adapterDuAn.getCount(); i++){
-                        if (obj.getInt("DuAn") == adapterDuAn.getItem(i).getMaDuAn()){
-                            spDuAn.setSelection(i);
-                            break;
-                        }
-                    }
-                    for (int i = 0; i < adapterLoaiSP.getCount(); i++){
-                        if (obj.getInt("LoaiSP") == adapterLoaiSP.getItem(i).getMaLoaiSP()){
-                            spLoai.setSelection(i);
-                            break;
-                        }
-                    }
-                    for (int i = 0; i < adapterLo.getCount(); i++){
-                        if (obj.getInt("Lo") == adapterLo.getItem(i).maLo){
-                            spLo.setSelection(i);
-                            break;
-                        }
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

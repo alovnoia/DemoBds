@@ -59,7 +59,7 @@ public class CapNhatDuAn extends AppCompatActivity {
         //edtCapNhatSoLuongSP = (EditText) findViewById(R.id.edtCNSoLuongSP);
         edtCapNhatMoTaDuAn = (EditText) findViewById(R.id.edtCNMoTaDuAn);
         edtCapNhatNgayCap = (EditText) findViewById(R.id.edtCNNgayCap);
-        btnXoaDuAn = (Button) findViewById(R.id.btnXoaDuAn);
+        //btnXoaDuAn = (Button) findViewById(R.id.btnXoaDuAn);
         tvCapNhatDuAn = (TextView) findViewById(R.id.tvCapNhatDuAn);
 
         if (API.quyen.equals("NVBH")) {
@@ -94,7 +94,7 @@ public class CapNhatDuAn extends AppCompatActivity {
             }
         });
 
-        btnXoaDuAn.setOnClickListener(new View.OnClickListener() {
+        /*btnXoaDuAn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runOnUiThread(new Runnable() {
@@ -104,7 +104,7 @@ public class CapNhatDuAn extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });*/
 
     }
 
@@ -241,8 +241,21 @@ public class CapNhatDuAn extends AppCompatActivity {
             } else {
                 finish();
             }
+        } else if (item.getItemId() == R.id.delete) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    new XoaDuAn().execute("http://"+API.HOST+"/bds_project/public/DuAn/"+id);
+                }
+            });
         }
         return super.onOptionsItemSelected(item);
+    }
+
+        @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        CapNhatDuAn.this.getMenuInflater().inflate(R.menu.menu, menu);
+            return true;
     }
 
 }
