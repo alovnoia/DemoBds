@@ -17,6 +17,11 @@ public class KhachHang {
         this.tenLoaiKhachHang = tenLoaiKhachHang;
     }
 
+    public KhachHang (int ma, String ten){
+        this.maKhachHang = ma;
+        this.tenKhachHang = ten;
+    }
+
     public int getMaKhachHang() {
         return maKhachHang;
     }
@@ -47,5 +52,9 @@ public class KhachHang {
 
     public void setTenLoaiKhachHang(String tenLoaiKhachHang) {
         this.tenLoaiKhachHang = tenLoaiKhachHang;
+    }
+
+    public String toString(){
+        return this.tenKhachHang;
     }
 }

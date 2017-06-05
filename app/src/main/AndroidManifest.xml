@@ -8,8 +8,10 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -77,7 +79,12 @@
         </activity>
         <activity android:name=".uudai.ThemUuDai" />
         <activity android:name=".uudai.CapNhatUuDai" />
+<<<<<<< HEAD
         <activity android:name=".no.DanhSachNo"></activity>
+=======
+        <activity android:name=".hopdong.ChiTietHopDong" />
+        <activity android:name=".hopdong.ThemHopDong"></activity>
+>>>>>>> eca3732489f01b9672371bb73a8ef2c800edbb71
     </application>
 
 </manifest>

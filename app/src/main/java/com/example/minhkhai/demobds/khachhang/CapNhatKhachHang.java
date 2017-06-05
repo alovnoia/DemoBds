@@ -181,7 +181,7 @@ public class CapNhatKhachHang extends AppCompatActivity {
                 edtCNKHThongTinKhac.setText(obj.getString("ThongTinKhac"));
                 // tim va gan gia tri mac dinh cho spinner = voi gia tri lay tu db
                 for (int i = 0; i < adapter.getCount(); i++){
-                    if (obj.getInt("LoaiKhachHang") == adapter.getItem(i).maLoai){
+                    if (obj.getInt("LoaiKhachHang") == adapter.getItem(i).maLoaiKH){
                         spCNKHLoai.setSelection(i);
                         break;
                     }
@@ -197,7 +197,7 @@ public class CapNhatKhachHang extends AppCompatActivity {
 
         String tenKH = edtCNKHTen.getText().toString();
         LoaiKhachHang loaiKH = (LoaiKhachHang) spCNKHLoai.getSelectedItem();
-        int maLoaiKH = loaiKH.getMaLoai();
+        int maLoaiKH = loaiKH.getMaLoaiKH();
         String nghe = edtCNKHNghe.getText().toString();
         String hoKhau = edtCNKHHoKhau.getText().toString();
         String sdt = edtCNKHDienThoai.getText().toString();

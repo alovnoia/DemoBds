@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.minhkhai.demobds.dangnhap.DangNhap;
 import com.example.minhkhai.demobds.duan.DanhSachDuAn;
 import com.example.minhkhai.demobds.duan.DuAn;
+import com.example.minhkhai.demobds.hopdong.DanhSachHopDong;
 import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
 import com.example.minhkhai.demobds.lo.DanhSachLo;
@@ -119,6 +120,12 @@ public class MainActivity extends AppCompatActivity
                 break;
             case "uuDai":
                 fragment = new DanhSachUuDai();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.framelayout, fragment).commit();
+                toggle.setDrawerIndicatorEnabled(true);
+                break;
+            case "HopDong":
+                fragment = new DanhSachHopDong();
                 fragmentManager.beginTransaction()
                         .replace(R.id.framelayout, fragment).commit();
                 toggle.setDrawerIndicatorEnabled(true);
@@ -234,6 +241,13 @@ public class MainActivity extends AppCompatActivity
 
             toggle.setDrawerIndicatorEnabled(true);
 
+        }else if (id == R.id.hopDong) {
+
+            Fragment fragment = new DanhSachHopDong();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.framelayout, fragment).commit();
+
+            toggle.setDrawerIndicatorEnabled(true);
         } else if (id == R.id.tkCaNhan) {
             Fragment fragment = new ThongTinCaNhan();
             fragmentManager.beginTransaction()

@@ -91,4 +91,8 @@ public class SanPham {
     public void setGiaSP(int giaSP) {
         this.giaSP = giaSP;
     }
+
+    public String toString(){
+        return this.loaiSP +" - " +this.tenSP;
+    }
 }

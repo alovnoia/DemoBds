@@ -61,7 +61,7 @@ public class DanhSachLoaiKhachHang extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i =new Intent(getActivity(), ChiTietLoaiKhachHang.class);
-                i.putExtra("maLoaiKH", mangLoaiKH.get(position).maLoai);
+                i.putExtra("maLoaiKH", mangLoaiKH.get(position).maLoaiKH);
                 startActivity(i);
             }
         });

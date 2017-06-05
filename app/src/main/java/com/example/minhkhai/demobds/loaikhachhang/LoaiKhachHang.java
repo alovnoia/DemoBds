@@ -42,16 +42,6 @@ public class LoaiKhachHang {
         this.moTa = moTa;
     }
 
-    public int getMaLoai() {
-        return maLoai;
-    }
-
-    public void setMaLoai(int maLoai) {
-        this.maLoai = maLoai;
-    }
-
-    public int maLoai;
-
     public LoaiKhachHang(int maLoaiKH, String ten, boolean check) {
         this.maLoaiKH = maLoaiKH;
         this.ten = ten;
@@ -61,7 +51,12 @@ public class LoaiKhachHang {
     public LoaiKhachHang(String ten, String moTa, int maLoai) {
         this.ten = ten;
         this.moTa = moTa;
-        this.maLoai = maLoai;
+        this.maLoaiKH = maLoai;
+    }
+
+    public LoaiKhachHang(int ma, String tenLoai){
+        this.ten = tenLoai;
+        this.maLoaiKH = ma;
     }
 
     public String toString() {
