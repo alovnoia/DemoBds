@@ -255,7 +255,7 @@ public class CapNhatSanPham extends AppCompatActivity {
                 adapterLo.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
                 spLo.setAdapter(adapterLo);
                 for (int k = 0; k < adapterLo.getCount(); k++){
-                    if (sanPham.getInt("Lo") == adapterLo.getItem(k).getMaLo()){
+                    if (sanPham.getInt("Lo") == adapterLo.getItem(k).maLo){
                         spLo.setSelection(k);
                         break;
                     }

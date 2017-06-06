@@ -28,6 +28,7 @@ import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
 import com.example.minhkhai.demobds.lo.DanhSachLo;
 import com.example.minhkhai.demobds.loaikhachhang.DanhSachLoaiKhachHang;
 import com.example.minhkhai.demobds.loaisp.DanhSachLoaiSP;
+import com.example.minhkhai.demobds.no.DanhSachNo;
 import com.example.minhkhai.demobds.sanpham.DanhSachSanPham;
 import com.example.minhkhai.demobds.taikhoan.ChiTietTaiKhoan;
 import com.example.minhkhai.demobds.taikhoan.DanhSachTaiKhoan;
@@ -126,6 +127,12 @@ public class MainActivity extends AppCompatActivity
                 break;
             case "HopDong":
                 fragment = new DanhSachHopDong();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.framelayout, fragment).commit();
+                toggle.setDrawerIndicatorEnabled(true);
+                break;
+            case "No":
+                fragment = new DanhSachNo();
                 fragmentManager.beginTransaction()
                         .replace(R.id.framelayout, fragment).commit();
                 toggle.setDrawerIndicatorEnabled(true);
@@ -241,9 +248,16 @@ public class MainActivity extends AppCompatActivity
 
             toggle.setDrawerIndicatorEnabled(true);
 
-        }else if (id == R.id.hopDong) {
+        }   else if (id == R.id.hopDong) {
 
             Fragment fragment = new DanhSachHopDong();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.framelayout, fragment).commit();
+
+            toggle.setDrawerIndicatorEnabled(true);
+        }   else if (id == R.id.no) {
+
+            Fragment fragment = new DanhSachNo();
             fragmentManager.beginTransaction()
                     .replace(R.id.framelayout, fragment).commit();
 

@@ -79,12 +79,10 @@
         </activity>
         <activity android:name=".uudai.ThemUuDai" />
         <activity android:name=".uudai.CapNhatUuDai" />
-<<<<<<< HEAD
-        <activity android:name=".no.DanhSachNo"></activity>
-=======
+        <activity android:name=".no.DanhSachNo" />
         <activity android:name=".hopdong.ChiTietHopDong" />
-        <activity android:name=".hopdong.ThemHopDong"></activity>
->>>>>>> eca3732489f01b9672371bb73a8ef2c800edbb71
+        <activity android:name=".hopdong.ThemHopDong" />
+        <activity android:name=".no.ChiTietNo"></activity>
     </application>
 
 </manifest>

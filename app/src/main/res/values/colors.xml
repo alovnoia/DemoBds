@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
+    <color name="btnDangNhapbg">#7ff449</color>
+    <color name="btnDuyetOnclick">#a4ff92</color>
+    <color name="btnHutOnclick">#f7b5b3</color>
 </resources>

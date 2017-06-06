@@ -65,14 +65,6 @@ public class Lo {
         this.maDuAn = maDuAn;
     }
 
-    public int getMaLo() {
-        return maLo;
-    }
-
-    public void setMaLo(int maLo) {
-        this.maLo = maLo;
-    }
-
     public String toString() {
         return this.tenLo;            // What to display in the Spinner list.
     }

@@ -1,36 +1,24 @@
 package com.example.minhkhai.demobds.sanpham;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.minhkhai.demobds.R;
-import com.example.minhkhai.demobds.appmenu.AppMenu;
-import com.example.minhkhai.demobds.duan.DanhSachDuAn;
 import com.example.minhkhai.demobds.hotro.API;
-import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
-import com.example.minhkhai.demobds.khachhang.KhachHang;
-import com.example.minhkhai.demobds.khachhang.KhachHangAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class DanhSachSanPham extends Fragment {

@@ -46,7 +46,7 @@
         android:layout_width="280dp"
         android:layout_height="53dp"
         android:layout_marginTop="48dp"
-        android:background="@drawable/btn_dang_nhap"
+        android:background="#7ff449"
         android:text="Đăng nhập"
         android:textColor="#fff"
         android:alpha="0.9"
