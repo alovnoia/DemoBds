@@ -46,6 +46,8 @@ public class API {
 
     public static boolean change = false;
 
+    public static String username = "";
+
     public static String POST_URL(URL url, JSONObject object) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setReadTimeout(15000 /* milliseconds */);

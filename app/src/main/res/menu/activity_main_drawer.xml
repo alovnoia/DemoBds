@@ -37,7 +37,7 @@
                 android:title="Ưu đãi" />
             <item
                 android:id="@+id/hopDong"
-                android:title="Họp đồng" />
+                android:title="Hợp đồng" />
             <item
                 android:id="@+id/no"
                 android:title="Nợ" />

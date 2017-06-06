@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    TextView tvTenThat;
+    TextView tvTenThat, tvChucVu;
     private GoogleApiClient client;
     FragmentManager fragmentManager = getFragmentManager();
     ActionBarDrawerToggle toggle;
@@ -57,8 +58,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*tvTenThat = (TextView) findViewById(R.id.tvTenThat);
-        tvTenThat.setText("cs");*/
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Bundle extras = getIntent().getExtras();
@@ -145,10 +144,20 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerLayout = navigationView.getHeaderView(0);
         navigationView.setNavigationItemSelectedListener(this);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        //View view = LayoutInflater.from(getApplication()).inflate(R.layout.nav_header_main, null);
+        tvTenThat = (TextView) headerLayout.findViewById(R.id.tvTenThat);
+        tvTenThat.setText(API.username);
+        tvChucVu = (TextView) headerLayout.findViewById(R.id.tvChucVu);
+        if (API.quyen.equals("NVQL")) {
+            tvChucVu.setText("Nhân viên quản lý");
+        } else {
+            tvChucVu.setText("Nhân viên bán hàng");
+        }
     }
 
 
@@ -160,28 +169,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
