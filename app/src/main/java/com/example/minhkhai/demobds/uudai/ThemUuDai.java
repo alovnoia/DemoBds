@@ -66,11 +66,11 @@ public class ThemUuDai extends AppCompatActivity {
         edtKetThuc = (EditText) findViewById(R.id.edtKetThucUuDai);
         edtTienTru = (EditText) findViewById(R.id.edtTruTien);
         fabSave = (FloatingActionButton) findViewById(R.id.fabThemUuDai);
-        btnXoaUuDai = (Button) findViewById(R.id.btnXoaUuDai);
+        //btnXoaUuDai = (Button) findViewById(R.id.btnXoaUuDai);
         lvChonDuAn = (ListView) findViewById(R.id.lvChonDuAn);
         lvChonLoaiKH = (ListView) findViewById(R.id.lvChonLoaiKH);
 
-        btnXoaUuDai.setVisibility(View.GONE);
+        //btnXoaUuDai.setVisibility(View.GONE);
 
         edtBatDau.setOnClickListener(new View.OnClickListener() {
             @Override

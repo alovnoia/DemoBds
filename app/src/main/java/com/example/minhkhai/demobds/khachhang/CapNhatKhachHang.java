@@ -1,8 +1,10 @@
 package com.example.minhkhai.demobds.khachhang;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -41,7 +43,6 @@ public class CapNhatKhachHang extends AppCompatActivity {
     EditText edtCNKHTen, edtCNKHNghe, edtCNKHHoKhau, edtCNKHDienThoai, edtCNKHEmail, edtCNKHThanhPho,
             edtCNKHCMT, edtCNKHLienHe, edtCNKHDienThoaiLienHe, edtCNKHThongTinKhac;
     Spinner spCNKHLoai;
-    Button btnXoaKH;
     FloatingActionButton fabLuuCapNhat;
     TextView tvMaKhachHang;
     int id;
@@ -74,7 +75,6 @@ public class CapNhatKhachHang extends AppCompatActivity {
         edtCNKHThongTinKhac = (EditText) findViewById(R.id.edtCNKHThongTinKhac);
         fabLuuCapNhat = (FloatingActionButton) findViewById(R.id.fabLuuCapNhat);
         spCNKHLoai = (Spinner) findViewById(R.id.spCNKHLoaiKH);
-        btnXoaKH = (Button) findViewById(R.id.btnXoaKhachHang);
         tvMaKhachHang = (TextView) findViewById(R.id.tvCNMaKhachHang);
         tvMaKhachHang.setText("Thông tin khách hàng mã "+id);
 
@@ -94,18 +94,6 @@ public class CapNhatKhachHang extends AppCompatActivity {
                     public void run() {
                         new SaveCapNhat().execute("http://"+API.HOST+"/bds_project/public/KhachHang/"+id);
                         API.change = true;
-                    }
-                });
-            }
-        });
-
-        btnXoaKH.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new XoaKhachHang().execute("http://"+API.HOST+"/bds_project/public/KhachHang/"+id);
                     }
                 });
             }
@@ -278,8 +266,38 @@ public class CapNhatKhachHang extends AppCompatActivity {
             } else {
                 finish();
             }
+        } else if (item.getItemId() == R.id.delete) {
+            // Show dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(CapNhatKhachHang.this);
+            builder.setTitle("Thông báo");
+            builder.setMessage("Bạn có chắc chắn muốn xóa loại khách hàng này?");
+            builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new XoaKhachHang().execute("http://"+API.HOST+"/bds_project/public/KhachHang/"+id);
+                        }
+                    });
+                }
+            });
+            builder.setNegativeButton("Hủy bỏ", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        CapNhatKhachHang.this.getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
     }
 
 }

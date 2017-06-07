@@ -1,11 +1,14 @@
 package com.example.minhkhai.demobds.uudai;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
+import com.example.minhkhai.demobds.duan.CapNhatDuAn;
 import com.example.minhkhai.demobds.duan.DuAn;
 import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.khachhang.CapNhatKhachHang;
@@ -64,7 +68,7 @@ public class CapNhatUuDai extends AppCompatActivity {
         edtKetThuc = (EditText) findViewById(R.id.edtKetThucUuDai);
         edtTienTru = (EditText) findViewById(R.id.edtTruTien);
         fabSave = (FloatingActionButton) findViewById(R.id.fabThemUuDai);
-        btnXoaUuDai = (Button) findViewById(R.id.btnXoaUuDai);
+        //btnXoaUuDai = (Button) findViewById(R.id.btnXoaUuDai);
         lvChonDuAn = (ListView) findViewById(R.id.lvChonDuAn);
         lvChonLoaiKH = (ListView) findViewById(R.id.lvChonLoaiKH);
 
@@ -144,7 +148,7 @@ public class CapNhatUuDai extends AppCompatActivity {
             }
         });
 
-        btnXoaUuDai.setOnClickListener(new View.OnClickListener() {
+        /*btnXoaUuDai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runOnUiThread(new Runnable() {
@@ -154,7 +158,7 @@ public class CapNhatUuDai extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });*/
     }
     private class LoadChiTietUuDai extends AsyncTask<String, String, String> {
 
@@ -396,7 +400,55 @@ public class CapNhatUuDai extends AppCompatActivity {
             } else {
                 finish();
             }
+        } else if (item.getItemId() == R.id.delete) {
+            // Show dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(CapNhatUuDai.this);
+            builder.setTitle("Thông báo");
+            builder.setMessage("Bạn có chắc chắn muốn xóa dự án này?");
+            builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new XoaUuDai().execute("http://"+ API.HOST+"/bds_project/public/UuDai/"+id);
+                        }
+                    });
+                }
+            });
+            builder.setNegativeButton("Hủy bỏ", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.show();
+
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (API.quyen.equals("NVQL")) {
+            CapNhatUuDai.this.getMenuInflater().inflate(R.menu.menu, menu);
+        }
+        return true;
+    }
+
+    /*@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (API.change) {
+                Intent i = new Intent(CapNhatUuDai.this, MainActivity.class);
+                i.putExtra("key", "uuDai");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }*/
 }

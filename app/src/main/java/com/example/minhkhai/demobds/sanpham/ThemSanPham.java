@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -29,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -170,7 +172,7 @@ public class ThemSanPham extends AppCompatActivity {
         int maLo = lo.maLo;
         String soNha = edtSo.getText().toString();
         Float dienTich = Float.parseFloat(edtDienTich.getText().toString());
-        int giaBan = Integer.parseInt(edtGiaBan.getText().toString());
+        String giaBan = edtGiaBan.getText().toString();
         String moTa = edtMoTa.getText().toString();
 
         @Override
@@ -180,7 +182,7 @@ public class ThemSanPham extends AppCompatActivity {
 
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("SoNha", soNha);
-                postDataParams.put("Anh", "s");
+                postDataParams.put("Anh", "IMG_20170428_205524.jpg");
                 postDataParams.put("LoaiSP", maLoai);
                 postDataParams.put("DuAn", idDuAn);
                 postDataParams.put("Lo", maLo);
@@ -199,6 +201,7 @@ public class ThemSanPham extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Log.e("sex", s.toString());
             JSONObject object = null;
             int idChiTiet = 0;
             if (!s.equals("0"))

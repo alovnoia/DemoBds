@@ -1,8 +1,10 @@
 package com.example.minhkhai.demobds.loaisp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
+import com.example.minhkhai.demobds.duan.CapNhatDuAn;
 import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.khachhang.CapNhatKhachHang;
 import com.example.minhkhai.demobds.khachhang.DanhSachKhachHang;
@@ -41,7 +44,6 @@ public class CapNhatLoaiSP extends AppCompatActivity {
 
     EditText edtCapNhatTenLoaiSP, edtCapNhatMoTaLoaiSP;
     FloatingActionButton fabSaveLoaiSP;
-    Button btnXoaLoaiSP;
 
     int id = 0;
 
@@ -56,14 +58,12 @@ public class CapNhatLoaiSP extends AppCompatActivity {
 
         edtCapNhatTenLoaiSP = (EditText) findViewById(R.id.edtCapNhatTenLoaiSP);
         edtCapNhatMoTaLoaiSP = (EditText) findViewById(R.id.edtCapNhatMoTaLoaiSP);
-        btnXoaLoaiSP = (Button) findViewById(R.id.btnXoaLoaiSP);
         fabSaveLoaiSP = (FloatingActionButton) findViewById(R.id.fab_save_LoaiSP);
 
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
 
         if (API.quyen.equals("NVBH")) {
-            btnXoaLoaiSP.setVisibility(View.GONE);
             fabSaveLoaiSP.setVisibility(View.GONE);
         }
 
@@ -84,18 +84,6 @@ public class CapNhatLoaiSP extends AppCompatActivity {
                     }
                 });
                 API.change = true;
-            }
-        });
-
-        btnXoaLoaiSP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new XoaLoaiSP().execute("http://"+API.HOST+"/bds_project/public/LoaiSP/"+id);
-                    }
-                });
             }
         });
     }
@@ -183,12 +171,6 @@ public class CapNhatLoaiSP extends AppCompatActivity {
         }
     }
 
-    /*@Override
-    *//*public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }*/
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -200,10 +182,41 @@ public class CapNhatLoaiSP extends AppCompatActivity {
             } else {
                 finish();
             }
+        } else if (item.getItemId() == R.id.delete) {
+            // Show dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(CapNhatLoaiSP.this);
+            builder.setTitle("Thông báo");
+            builder.setMessage("Bạn có chắc chắn muốn xóa loại sản phẩm này?");
+            builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new XoaLoaiSP().execute("http://"+API.HOST+"/bds_project/public/LoaiSP/"+id);
+                        }
+                    });
+                }
+            });
+            builder.setNegativeButton("Hủy bỏ", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.show();
+
         }
         return super.onOptionsItemSelected(item);
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (API.quyen.equals("NVQL")) {
+            CapNhatLoaiSP.this.getMenuInflater().inflate(R.menu.menu, menu);
+        }
+        return true;
+    }
 }
 

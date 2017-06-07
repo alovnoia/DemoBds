@@ -1,12 +1,15 @@
 package com.example.minhkhai.demobds.sanpham;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -82,11 +85,11 @@ public class CapNhatSanPham extends AppCompatActivity {
         spDuAn = (Spinner) findViewById(R.id.spCNDuAn);
         spLo = (Spinner) findViewById(R.id.spCNLo);
         fabSave = (FloatingActionButton) findViewById(R.id.fabCNSave);
-        btnXoa = (Button) findViewById(R.id.btnXoaSP);
+        //btnXoa = (Button) findViewById(R.id.btnXoaSP);
         tvMaSP = (TextView) findViewById(R.id.tvCNMaSP);
 
         if (API.quyen.equals("NVBH")) {
-            btnXoa.setVisibility(View.GONE);
+            //btnXoa.setVisibility(View.GONE);
             fabSave.setVisibility(View.GONE);
         }
 
@@ -123,7 +126,7 @@ public class CapNhatSanPham extends AppCompatActivity {
             }
         });
 
-        btnXoa.setOnClickListener(new View.OnClickListener() {
+        /*btnXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runOnUiThread(new Runnable() {
@@ -133,7 +136,7 @@ public class CapNhatSanPham extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });*/
     }
 
     private class LoadLoaiSP extends AsyncTask<String, String, String> {
@@ -312,7 +315,7 @@ public class CapNhatSanPham extends AppCompatActivity {
         int maLo = lo.maLo;
         String soNha = edtSo.getText().toString();
         Float dienTich = Float.parseFloat(edtDienTich.getText().toString());
-        int giaBan = Integer.parseInt(edtGiaBan.getText().toString());
+        String giaBan = Integer.parseInt(edtGiaBan.getText().toString()) + "";
         String moTa = edtMoTa.getText().toString();
         @Override
         protected String doInBackground(String... params) {
@@ -372,7 +375,55 @@ public class CapNhatSanPham extends AppCompatActivity {
         }
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (API.change) {
+                Intent i = new Intent(CapNhatSanPham.this, MainActivity.class);
+                i.putExtra("key", "SanPham");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
+        } else if (item.getItemId() == R.id.delete) {
+            // Show dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(CapNhatSanPham.this);
+            builder.setTitle("Thông báo");
+            builder.setMessage("Bạn có chắc chắn muốn xóa sản phẩm này?");
+            builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new XoaSP().execute("http://"+API.HOST+"/bds_project/public/SanPham/"+id);
+                        }
+                    });
+                }
+            });
+            builder.setNegativeButton("Hủy bỏ", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.show();
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (API.quyen.equals("NVQL")) {
+            CapNhatSanPham.this.getMenuInflater().inflate(R.menu.menu, menu);
+        }
+        return true;
+    }
+
+    /*public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             if (API.change) {
                 Intent i = new Intent(CapNhatSanPham.this, MainActivity.class);
@@ -384,5 +435,5 @@ public class CapNhatSanPham extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

@@ -1,10 +1,13 @@
 package com.example.minhkhai.demobds.lo;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -34,7 +37,6 @@ public class ChiTietLo extends AppCompatActivity {
     TextView tvMa;
     EditText edtTen;
     Spinner spnDuAn;
-    Button btnXoa;
     FloatingActionButton fab_Save;
     int id;
     String tenChiTietLo, tenDuAnChiTietLo;
@@ -53,7 +55,6 @@ public class ChiTietLo extends AppCompatActivity {
         tvMa = (TextView) findViewById(R.id.tvMaLoChiTiet);
         edtTen = (EditText) findViewById(R.id.edtTenChiTietLo);
         spnDuAn = (Spinner) findViewById(R.id.spnDuAnChiTietLo);
-        btnXoa = (Button) findViewById(R.id.btnXoaLo);
         fab_Save = (FloatingActionButton) findViewById(R.id.fab_SaveChiTietLo);
 
         Bundle extras = getIntent().getExtras();
@@ -62,7 +63,6 @@ public class ChiTietLo extends AppCompatActivity {
         tenDuAnChiTietLo = extras.getString("TenDuAn");
 
         if (API.quyen.equals("NVBH")) {
-            btnXoa.setVisibility(View.GONE);
             fab_Save.setVisibility(View.GONE);
         }
 
@@ -72,18 +72,6 @@ public class ChiTietLo extends AppCompatActivity {
                 tvMa.setText(id+"");
                 edtTen.setText(tenChiTietLo);
                 new LoadDuAn().execute("http://"+API.HOST+"/bds_project/public/DuAn");
-            }
-        });
-
-        btnXoa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new Xoa().execute("http://"+API.HOST+"/bds_project/public/Lo/"+id);
-                    }
-                });
             }
         });
 
@@ -208,7 +196,40 @@ public class ChiTietLo extends AppCompatActivity {
             } else {
                 finish();
             }
+        } else if (item.getItemId() == R.id.delete) {
+            // Show dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(ChiTietLo.this);
+            builder.setTitle("Thông báo");
+            builder.setMessage("Bạn có chắc chắn muốn xóa lô này?");
+            builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new Xoa().execute("http://"+API.HOST+"/bds_project/public/Lo/"+id);
+                        }
+                    });
+                }
+            });
+            builder.setNegativeButton("Hủy bỏ", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.show();
+
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (API.quyen.equals("NVQL")) {
+            ChiTietLo.this.getMenuInflater().inflate(R.menu.menu, menu);
+        }
+        return true;
     }
 }

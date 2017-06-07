@@ -1,9 +1,11 @@
 package com.example.minhkhai.demobds.duan;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -63,7 +65,7 @@ public class CapNhatDuAn extends AppCompatActivity {
         tvCapNhatDuAn = (TextView) findViewById(R.id.tvCapNhatDuAn);
 
         if (API.quyen.equals("NVBH")) {
-            btnXoaDuAn.setVisibility(View.GONE);
+            //btnXoaDuAn.setVisibility(View.GONE);
             fabCapNhatDuAn.setVisibility(View.GONE);
         }
 
@@ -93,18 +95,6 @@ public class CapNhatDuAn extends AppCompatActivity {
                 });
             }
         });
-
-        /*btnXoaDuAn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new XoaDuAn().execute("http://"+API.HOST+"/bds_project/public/DuAn/"+id);
-                    }
-                });
-            }
-        });*/
 
     }
 
@@ -242,20 +232,40 @@ public class CapNhatDuAn extends AppCompatActivity {
                 finish();
             }
         } else if (item.getItemId() == R.id.delete) {
-            runOnUiThread(new Runnable() {
+            // Show dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(CapNhatDuAn.this);
+            builder.setTitle("Thông báo");
+            builder.setMessage("Bạn có chắc chắn muốn xóa dự án này?");
+            builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                 @Override
-                public void run() {
-                    new XoaDuAn().execute("http://"+API.HOST+"/bds_project/public/DuAn/"+id);
+                public void onClick(DialogInterface dialog, int which) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new XoaDuAn().execute("http://"+API.HOST+"/bds_project/public/DuAn/"+id);
+                        }
+                    });
                 }
             });
+            builder.setNegativeButton("Hủy bỏ", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.show();
+
         }
         return super.onOptionsItemSelected(item);
     }
 
-        @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        CapNhatDuAn.this.getMenuInflater().inflate(R.menu.menu, menu);
-            return true;
+        if (API.quyen.equals("NVQL")) {
+            CapNhatDuAn.this.getMenuInflater().inflate(R.menu.menu, menu);
+        }
+        return true;
     }
 
 }

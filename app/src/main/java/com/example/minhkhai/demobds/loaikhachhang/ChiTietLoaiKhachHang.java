@@ -1,8 +1,10 @@
 package com.example.minhkhai.demobds.loaikhachhang;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
+import com.example.minhkhai.demobds.duan.CapNhatDuAn;
 import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.loaisp.CapNhatLoaiSP;
 
@@ -40,7 +43,6 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
     FloatingActionButton flEdit;
     TextView tvID;
     EditText edtTen, edtMoTa;
-    Button btnXoa;
     int id = 0;
 
     @Override
@@ -77,21 +79,6 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
                     public void run() {
                         new UpdateThongTin().execute();
                         API.change = true;
-                    }
-                });
-            }
-        });
-        btnXoa = (Button) findViewById(R.id.btnXoa);
-        btnXoa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new XoaLoaiKH().execute();
-                        Intent i = new Intent(ChiTietLoaiKhachHang.this, MainActivity.class);
-                        i.putExtra("key", "LoaiKhachHang");
-                        startActivity(i);
                     }
                 });
             }
@@ -179,6 +166,9 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
             try {
                 JSONObject postDataParams = new JSONObject(s);
                 Toast.makeText(getApplicationContext(), "Đã xóa loại khách hàng id " + id, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(ChiTietLoaiKhachHang.this, MainActivity.class);
+                i.putExtra("key", "LoaiKhachHang");
+                startActivity(i);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -196,8 +186,37 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
             } else {
                 finish();
             }
+        } else if (item.getItemId() == R.id.delete) {
+            // Show dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(ChiTietLoaiKhachHang.this);
+            builder.setTitle("Thông báo");
+            builder.setMessage("Bạn có chắc chắn muốn xóa loại khách hàng này?");
+            builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new XoaLoaiKH().execute();
+                        }
+                    });
+                }
+            });
+            builder.setNegativeButton("Hủy bỏ", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.show();
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        ChiTietLoaiKhachHang.this.getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
 }
