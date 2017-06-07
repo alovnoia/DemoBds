@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_app"
     tools:context="com.example.minhkhai.demobds.lo.ChiTietLo">
 
     <TextView
@@ -90,6 +91,7 @@
 
     <Spinner
         android:id="@+id/spnDuAnChiTietLo"
+        android:background="@drawable/spinner_bg"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginLeft="8dp"

@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_app"
     tools:context="com.example.minhkhai.demobds.khachhang.ThemKhachHang">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="70dp">
+        android:scrollbars="none">
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="70dp">
             <TextView
                 android:id="@+id/tvCNMaKhachHang"
                 android:layout_width="wrap_content"
@@ -63,6 +65,7 @@
 
             <Spinner
                 android:id="@+id/spThemKHLoaiKH"
+                android:background="@drawable/spinner_bg"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_marginLeft="16dp"

@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_app"
     tools:context="com.example.minhkhai.demobds.taikhoan.ThemTaiKhoan">
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="495dp"
+        android:scrollbars="none"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
@@ -160,6 +162,7 @@
 
             <Spinner
                 android:id="@+id/spnChucVuThemTK"
+                android:background="@drawable/spinner_bg"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"

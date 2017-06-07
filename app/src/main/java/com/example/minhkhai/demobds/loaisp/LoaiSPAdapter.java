@@ -49,7 +49,7 @@ public class LoaiSPAdapter extends BaseAdapter {
         convertView = inflater.inflate(myLayout, null);
 
         TextView tvTenLoaiSP = (TextView) convertView.findViewById(R.id.tvTenKH);
-        tvTenLoaiSP.setText(String.valueOf(arrayLoaiSP.get(position).getMaLoaiSP())+". "+
+        tvTenLoaiSP.setText("Mã " + arrayLoaiSP.get(position).getMaLoaiSP()+" - "+
                 arrayLoaiSP.get(position).getTenLoaiSP());
 
         TextView tvMoTaLoaiSP = (TextView) convertView.findViewById(R.id.tvMoTaLoaiSP);

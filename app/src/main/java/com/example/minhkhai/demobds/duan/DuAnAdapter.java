@@ -49,8 +49,8 @@ public class DuAnAdapter extends BaseAdapter {
         convertView = inflater.inflate(myLayout, null);
 
         TextView tvDanhSachTenDuAn = (TextView) convertView.findViewById(R.id.tvTenKH);
-        tvDanhSachTenDuAn.setText(String.valueOf(arrayDuAn.get(position).getMaDuAn()+". "+
-        arrayDuAn.get(position).getTenDuAn()));
+        tvDanhSachTenDuAn.setText("Mã " + arrayDuAn.get(position).getMaDuAn()+" - "+
+        arrayDuAn.get(position).getTenDuAn());
 
         TextView tvDanhSachDiaChi = (TextView) convertView.findViewById(R.id.tvDanhSachDiaChi);
         tvDanhSachDiaChi.setText(arrayDuAn.get(position).getDiaChi());

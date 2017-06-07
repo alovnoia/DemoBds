@@ -49,7 +49,7 @@ public class KhachHangAdapter extends BaseAdapter {
         convertView = inflater.inflate(myLayout, null);
 
         TextView tenKhachHang = (TextView) convertView.findViewById(R.id.tvTenKH);
-        tenKhachHang.setText(String.valueOf(arrKhachHang.get(position).getMaKhachHang())+". "+
+        tenKhachHang.setText(String.valueOf("Mã " + arrKhachHang.get(position).getMaKhachHang())+" - "+
         arrKhachHang.get(position).getTenKhachHang());
 
         TextView tenLoaiKH = (TextView) convertView.findViewById(R.id.tvTenLoaiKH);

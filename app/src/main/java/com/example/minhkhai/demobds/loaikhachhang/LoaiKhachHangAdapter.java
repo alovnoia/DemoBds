@@ -51,7 +51,7 @@ public class LoaiKhachHangAdapter extends BaseAdapter {
 
         //Ánh xạ gán giá trị
         TextView tvTen = (TextView) convertView.findViewById(R.id.tvTen);
-        tvTen.setText(arrayKhachHang.get(position).ten);
+        tvTen.setText("Mã " + arrayKhachHang.get(position).getMaLoaiKH() + " - " + arrayKhachHang.get(position).ten);
 
         TextView tvMoTa= (TextView) convertView.findViewById(R.id.tvND);
         tvMoTa.setText(Html.fromHtml(arrayKhachHang.get(position).moTa));
