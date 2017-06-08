@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.minhkhai.demobds.MainActivity;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.duan.DuAn;
 import com.example.minhkhai.demobds.hotro.API;
@@ -56,6 +58,10 @@ public class ThemHopDong extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_hop_dong);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         mangLoaiKH = new ArrayList<LoaiKhachHang>();
         mangKhachHang = new ArrayList<KhachHang>();
@@ -428,5 +434,20 @@ public class ThemHopDong extends AppCompatActivity {
                 ngayGioHienTai.get(Calendar.MONTH),
                 ngayGioHienTai.get(Calendar.DAY_OF_MONTH));
         date.show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (API.change) {
+                Intent i = new Intent(ThemHopDong.this, MainActivity.class);
+                i.putExtra("key", "HopDong");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

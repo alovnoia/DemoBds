@@ -1,18 +1,26 @@
 package com.example.minhkhai.demobds.hopdong;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +35,7 @@ import com.example.minhkhai.demobds.lo.ChiTietLo;
 import com.example.minhkhai.demobds.lo.Lo;
 import com.example.minhkhai.demobds.loaikhachhang.LoaiKhachHang;
 import com.example.minhkhai.demobds.sanpham.SanPham;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +44,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,7 +52,13 @@ import java.util.List;
 
 public class ChiTietHopDong extends AppCompatActivity {
 
-    TextView tvChiTiet;
+    TabHost tabHost;
+    TabHost.TabSpec spec1, spec2;
+
+    TextView tvNgayKy, tvNgayBanGiao, tvKhachHang, tvNhanVien, tvKieuThanhToan, tvLai1, tvLai, tvDatCoc,
+            tvGhiChu, tvUuDai, tvSanPham, tvGiaSp, tvGiaHD;
+    ImageView imgAnhSP;
+
     Spinner spnLoaiKH, spnKhachHang, spnDuAn, spnLo, spnSanPham, spnKieuThanhToan;
     EditText edtNgayKy, edtNgayBanGiao, edtTienCoc, edtGhiChu;
     Button btnXoa, btnDuyet;
@@ -74,6 +90,10 @@ public class ChiTietHopDong extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_hop_dong);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         AnhXa();
 
         edtNgayKy.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +120,6 @@ public class ChiTietHopDong extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         id = extras.getInt("id");
-        tvChiTiet.setText("Chi tiết hợp đồng: "+id);
         tThai = extras.getString("trangThai");
 
         runOnUiThread(new Runnable() {
@@ -111,13 +130,15 @@ public class ChiTietHopDong extends AppCompatActivity {
                 new LoadDuAn().execute("http://"+ API.HOST+"/bds_project/public/DuAn");
             }
         });
-
+        TaoTab();
         if (API.quyen.equals("NVBH")) {
             btnDuyet.setVisibility(View.GONE);
         }
 
         if (tThai.equals("DaDuyet")){
-            fab_Save.setVisibility(View.GONE);
+            //fab_Save.setVisibility(View.GONE);
+            tabHost.clearAllTabs();
+            tabHost.addTab(spec1);
         }
         spnLoaiKH.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -158,13 +179,6 @@ public class ChiTietHopDong extends AppCompatActivity {
             }
         });
 
-        btnXoa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Xoa().execute("http://"+API.HOST+"/bds_project/public/HopDong/"+id);
-            }
-        });
-
         fab_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,7 +203,21 @@ public class ChiTietHopDong extends AppCompatActivity {
     }
 
     private void    AnhXa(){
-        tvChiTiet = (TextView) findViewById(R.id.tvChiTietHopDong);
+        tvNgayKy = (TextView) findViewById(R.id.tvNgayKyChiTietHopDong);
+        tvNgayBanGiao = (TextView) findViewById(R.id.tvNgayBanGiaoChiTietHopDong);
+        tvKhachHang = (TextView) findViewById(R.id.tvKhachChiTietHopDong);
+        tvNhanVien = (TextView) findViewById(R.id.tvNhanVienChiTietHopDong);
+        tvKieuThanhToan = (TextView) findViewById(R.id.tvKieuThanhToanChiTietHopDong);
+        tvLai1 = (TextView) findViewById(R.id.tvLai1);
+        tvLai = (TextView) findViewById(R.id.tvLaiSuatChiTietHopDong);
+        tvDatCoc = (TextView) findViewById(R.id.tvDatCocChiTietHopDong);
+        tvUuDai = (TextView) findViewById(R.id.tvUuDaiChiTietHopDong);
+        tvGhiChu = (TextView) findViewById(R.id.tvGhiChuChiTietHopDong);
+        imgAnhSP = (ImageView) findViewById(R.id.imgSanPhamChiTietHopDong);
+        tvSanPham = (TextView) findViewById(R.id.tvSanPhamChiTietHopDong);
+        tvGiaSp = (TextView) findViewById(R.id.tvGiaSanPhamChiTietHopDong);
+        tvGiaHD = (TextView) findViewById(R.id.tvGiaTriChiTietHopDong);
+        //--------------------------------------------------------------------------
         spnLoaiKH = (Spinner) findViewById(R.id.spnLoaiKHChiTietHopDong);
         spnKhachHang = (Spinner) findViewById(R.id.spnKhachHangChiTietHopDong);
         spnDuAn = (Spinner) findViewById(R.id.spnDuAnChiTietHopDong);
@@ -201,9 +229,26 @@ public class ChiTietHopDong extends AppCompatActivity {
         edtTienCoc = (EditText) findViewById(R.id.edtCocChiTietHopDong);
         edtGhiChu = (EditText) findViewById(R.id.edtGhiChuChiTietHopDong);
         btnDuyet = (Button) findViewById(R.id.btnDuyetHopDong);
-        btnXoa = (Button) findViewById(R.id.btnXoaHopDong);
+        //btnXoa = (Button) findViewById(R.id.btnXoaHopDong);
         fab_Save = (FloatingActionButton) findViewById(R.id.fab_SaveChiTietHopDong);
+        tabHost = (TabHost) findViewById(R.id.tabHostHopDong);
     }
+    //Tạo Tab
+    private void TaoTab(){
+        tabHost.setup();
+        //tao tab 1
+        spec1 = tabHost.newTabSpec("tab1");
+        spec1.setContent(R.id.tabChiTietHopDong);
+        spec1.setIndicator("Hợp đồng "+id);
+        tabHost.addTab(spec1);
+        //tao tab 2
+        spec2 = tabHost.newTabSpec("tab2");
+        spec2.setContent(R.id.tabSuaHopDong);
+        spec2.setIndicator("Sửa");
+        tabHost.addTab(spec2);
+    }
+
+    //chọn ngày
     public void datePicker(final EditText editText){
         DatePickerDialog date = new DatePickerDialog(ChiTietHopDong.this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -481,25 +526,68 @@ public class ChiTietHopDong extends AppCompatActivity {
                 try {
                     objHopDong = new JSONObject(s);
 
+                    tvKhachHang.setText(objHopDong.getString("TenKhachHang"));
+                    tvNhanVien.setText(objHopDong.getString("TenTaiKhoan"));
+
+                    //màn sửa
                     String kieu = objHopDong.getString("KieuThanhToan");
                     for (int i = 0; i<mangKieuThanhToan.getCount(); i++){
                         if (kieu.equals("TraGop") && mangKieuThanhToan.getItem(i).equals("Trả góp")){
+                            tvKieuThanhToan.setText("Trả góp");
+                            tvLai.setText(objHopDong.getString("LaiSuat"));
                             spnKieuThanhToan.setSelection(i);
                             break;
                         } else if (kieu.equals("MotLan") && mangKieuThanhToan.getItem(i).equals("Một lần")){
+                            tvKieuThanhToan.setText("Một lần");
+                            tvLai.setVisibility(View.GONE);
+                            tvLai1.setVisibility(View.GONE);
                             spnKieuThanhToan.setSelection(i);
                             break;
                         }
                     }
-
                     String[] ngayK = objHopDong.get("NgayKy").toString().split("-");
                     edtNgayKy.setText(ngayK[2]+"/"+ngayK[1]+"/"+ngayK[0]);
+                    tvNgayKy.setText(ngayK[2]+"/"+ngayK[1]+"/"+ngayK[0]);
 
                     String[] ngayBG = objHopDong.get("NgayKy").toString().split("-");
                     edtNgayBanGiao.setText(ngayBG[2]+"/"+ngayBG[1]+"/"+ngayBG[0]);
+                    tvNgayBanGiao.setText(ngayBG[2]+"/"+ngayBG[1]+"/"+ngayBG[0]);
 
                     edtTienCoc.setText(objHopDong.getString("DatCoc"));
+                    tvDatCoc.setText(objHopDong.getString("DatCoc"));
+
                     edtGhiChu.setText(objHopDong.getString("GhiChu"));
+                    tvGhiChu.setText(objHopDong.getString("GhiChu"));
+
+                    tvUuDai.setText(objHopDong.getString("UuDai"));
+
+                    Picasso.with(ChiTietHopDong.this)
+                            .load("http://"+API.HOST+"/bds_project/data/"+ objHopDong.getString("AnhSP"))
+                            .placeholder(R.drawable.ic_house)
+                            .error(R.drawable.ic_house)
+                            .into(imgAnhSP);
+                    tvSanPham.setText(objHopDong.getString("LoaiSP")+" - "
+                            +objHopDong.getString("SoNha")+", "
+                            +objHopDong.getString("TenLo")+", Dự án "
+                            +objHopDong.getString("TenDuAn"));
+
+                    DecimalFormat format = new DecimalFormat("###,###,###");
+                    tvGiaSp.setText(format.format(objHopDong.getInt("GiaSanPham"))+" VNĐ");
+                    if (objHopDong.getString("TrangThai").equals("ChuaDuyet")&&
+                            objHopDong.getString("TinhTrangSP").equals("DaBan")){
+                        tvSanPham.setTextColor(Color.RED);
+                        Toast.makeText(ChiTietHopDong.this, "Sản phẩm đã được bán!\n Vui lòng sửa lại thông tin hợp đồng", Toast.LENGTH_SHORT).show();
+                    }
+                    tvGiaHD.setText(format.format(objHopDong.getInt("GiaTri"))+" VNĐ");
+
+                    if (objHopDong.getString("TrangThai").equals("ChuaDuyet")){
+                        btnDuyet.setText("Duyệt hợp đồng");
+                        btnDuyet.setBackgroundColor(Color.GREEN);
+                    }
+                    else{
+                        btnDuyet.setText("Hủy duyệt hợp dồng");
+                        btnDuyet.setBackgroundColor(Color.RED);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -508,7 +596,7 @@ public class ChiTietHopDong extends AppCompatActivity {
         }
     }
 
-    //Sửa chưa làm
+    //Sửa ok
     public class Save extends AsyncTask<String, Integer, String>{
         KhachHang khachHang = (KhachHang) spnKhachHang.getSelectedItem();
         int maKhachHang = khachHang.getMaKhachHang();
@@ -621,6 +709,54 @@ public class ChiTietHopDong extends AppCompatActivity {
             super.onPostExecute(s);
             Toast.makeText(getApplicationContext(), "Đã hủy duyệt hợp đồng" +id, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (API.change) {
+                Intent i = new Intent(ChiTietHopDong.this, MainActivity.class);
+                i.putExtra("key", "HopDong");
+                API.change = false;
+                startActivity(i);
+            } else {
+                finish();
+            }
+        } else if (item.getItemId() == R.id.delete) {
+            // Show dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(ChiTietHopDong.this);
+            builder.setTitle("Thông báo");
+            builder.setMessage("Bạn có chắc chắn muốn xóa hợp đồng này?");
+            builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new Xoa().execute("http://"+API.HOST+"/bds_project/public/HopDong/"+id);
+                        }
+                    });
+                }
+            });
+            builder.setNegativeButton("Hủy bỏ", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.show();
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (API.quyen.equals("NVQL")) {
+            ChiTietHopDong.this.getMenuInflater().inflate(R.menu.menu, menu);
+        }
+        return true;
     }
 
 

@@ -86,7 +86,7 @@ public class DanhSachHopDong extends Fragment {
                     for (int i=0; i<array.length(); i++){
                         JSONObject object = array.getJSONObject(i);
                         if (API.quyen.equals("NVBH")){
-                            if  (API.idUser.equals(object.getInt("TaiKhoan")))
+                            if  (API.idUser.equals(object.getString("TaiKhoan")))
                             {
                                 mangHopDong.add(new HopDong(
                                         object.getInt("MaHopDong"),
