@@ -336,7 +336,7 @@ public class ThemHopDong extends AppCompatActivity {
                                     object.getInt("MaSP"),
                                     object.getString("SoNha"),
                                     object.getString("TenLoaiSP"),
-                                    object.getInt("GiaBan")
+                                    object.getString("GiaBan")
                             ));
                         }
                     }

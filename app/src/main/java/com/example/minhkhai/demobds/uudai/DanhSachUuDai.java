@@ -7,7 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,6 +21,7 @@ import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.hotro.API;
 import com.example.minhkhai.demobds.khachhang.KhachHang;
 import com.example.minhkhai.demobds.khachhang.KhachHangAdapter;
+import com.example.minhkhai.demobds.loaisp.LoaiSP;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,17 +29,21 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DanhSachUuDai extends Fragment {
 
     ListView lvUuDai;
     ArrayList<UuDai> arrUuDai;
+    ArrayList<UuDai> arrUuDaiGoc = new ArrayList<>();
     FloatingActionButton fabThemUuDai;
+    UuDaiAdapter adapter = null;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_danh_sach_uu_dai,container,false);
+        setHasOptionsMenu(true);
 
         fabThemUuDai = (FloatingActionButton) view.findViewById(R.id.fabThemUuDai);
 
@@ -92,15 +101,15 @@ public class DanhSachUuDai extends Fragment {
                 for (int i = 0; i < array.length(); i++){
                     JSONObject object = array.getJSONObject(i);
 
-                    arrUuDai.add(new UuDai(
+                    arrUuDaiGoc.add(new UuDai(
                             object.getInt("MaUuDai"),
                             object.getString("TenUuDai"),
                             object.getString("NgayBatDau"),
                             object.getString("NgayKetThuc")
                     ));
                 }
-
-                UuDaiAdapter adapter = new UuDaiAdapter(getActivity(), R.layout.item_uudai, arrUuDai);
+                arrUuDai = new ArrayList<>(arrUuDaiGoc);
+                adapter = new UuDaiAdapter(getActivity(), R.layout.item_uudai, arrUuDai);
 
                 lvUuDai.setAdapter(adapter);
 
@@ -108,5 +117,47 @@ public class DanhSachUuDai extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        MenuItem item = menu.findItem(R.id.search_action);
+        SearchView searchView = (SearchView) item.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                TimKiem(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                TimKiem(newText);
+                return false;
+            }
+        });
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    public void TimKiem (String newText) {
+        if (!newText.isEmpty() && newText.length() > 0) {
+            arrUuDai.clear();
+
+            List<UuDai> lstUuDaiAll = new ArrayList<UuDai>(arrUuDaiGoc);
+
+            for (UuDai hh : lstUuDaiAll) {
+                if ((hh.getTenUuDai().toLowerCase()).contains(newText.toLowerCase())) {
+                    arrUuDai.add(hh);
+                }
+            }
+        } else {
+            arrUuDai.clear();
+            for (UuDai hh : arrUuDaiGoc) {
+                arrUuDai.add(hh);
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 }

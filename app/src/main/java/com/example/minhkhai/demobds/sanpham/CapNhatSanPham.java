@@ -292,7 +292,7 @@ public class CapNhatSanPham extends AppCompatActivity {
                 try {
                     edtSo.setText(obj.getString("SoNha"));
                     edtDienTich.setText(obj.getInt("DienTich") + "");
-                    edtGiaBan.setText(obj.getInt("GiaBan") + "");
+                    edtGiaBan.setText(obj.getString("GiaBan") + "");
                     edtMoTa.setText(obj.getString("MoTa"));
                     tvMaSP.setText("Sản phẩm mã " + obj.getInt("MaSP"));
                 } catch (JSONException e) {

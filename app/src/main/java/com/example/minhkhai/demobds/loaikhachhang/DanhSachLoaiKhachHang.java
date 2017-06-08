@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import android.widget.ListView;
 
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
+import com.example.minhkhai.demobds.duan.DuAn;
 import com.example.minhkhai.demobds.hotro.API;
 
 import org.json.JSONArray;
@@ -22,21 +26,22 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DanhSachLoaiKhachHang extends Fragment {
 
     FloatingActionButton flAdd;
     ListView lvDanhSachLoaiKH;
     ArrayList<LoaiKhachHang> mangLoaiKH;
+    ArrayList<LoaiKhachHang> mangLoaiKHGoc = new ArrayList<>();
+    LoaiKhachHangAdapter adapter = null;
 
     //TextView test;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_danh_sach_loai_khach_hang,container,false);
-        //test = (TextView) findViewById(R.id.TestTV);
-       /* FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().add(R.id.flDanhSachLoaiKH, new NavigationDrawer()).commit();*/
+        setHasOptionsMenu(true);
 
         lvDanhSachLoaiKH= (ListView) view.findViewById(R.id.lvDanhSachLoaiKH);
         mangLoaiKH = new ArrayList<LoaiKhachHang>();
@@ -68,14 +73,6 @@ public class DanhSachLoaiKhachHang extends Fragment {
         return view;
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(getActivity(), AppMenu.class);
-        startActivity(intent);
-        return true;
-    }
-
     private class LoadDanhSach extends AsyncTask<String, Integer, String> {
 
         @Override
@@ -96,14 +93,15 @@ public class DanhSachLoaiKhachHang extends Fragment {
                 JSONArray array= new JSONArray(s);
                 for (int i = 0; i < array.length(); i++){
                     JSONObject object = array.getJSONObject(i);
-                    mangLoaiKH.add(new LoaiKhachHang(
+                    mangLoaiKHGoc.add(new LoaiKhachHang(
                             object.getString("TenLoaiKH"),
                             object.getString("MoTa"),
                             object.getInt("MaLoaiKH")
 
                     ));
                 }
-                LoaiKhachHangAdapter adapter= new LoaiKhachHangAdapter(getActivity(),
+                mangLoaiKH = new ArrayList<>(mangLoaiKHGoc);
+                adapter= new LoaiKhachHangAdapter(getActivity(),
                         R.layout.item_loai_khach_hang, mangLoaiKH);
                 lvDanhSachLoaiKH.setAdapter(adapter);
             } catch (JSONException e) {
@@ -112,6 +110,46 @@ public class DanhSachLoaiKhachHang extends Fragment {
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        MenuItem item = menu.findItem(R.id.search_action);
+        SearchView searchView = (SearchView) item.getActionView();
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                TimKiem(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                TimKiem(newText);
+                return false;
+            }
+        });
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    public void TimKiem (String newText) {
+        if (!newText.isEmpty() && newText.length() > 0) {
+            mangLoaiKH.clear();
+
+            List<LoaiKhachHang> lstLoaiKHAll = new ArrayList<LoaiKhachHang>(mangLoaiKHGoc);
+
+            for (LoaiKhachHang hh : lstLoaiKHAll) {
+                if ((hh.getTen().toLowerCase()).contains(newText.toLowerCase())) {
+                    mangLoaiKH.add(hh);
+                }
+            }
+        } else {
+            mangLoaiKH.clear();
+            for (LoaiKhachHang hh : mangLoaiKHGoc) {
+                mangLoaiKH.add(hh);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
 
 }

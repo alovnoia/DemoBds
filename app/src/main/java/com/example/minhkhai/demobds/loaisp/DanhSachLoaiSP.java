@@ -8,8 +8,10 @@ import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,8 @@ import android.widget.ListView;
 import com.example.minhkhai.demobds.R;
 import com.example.minhkhai.demobds.appmenu.AppMenu;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.khachhang.KhachHang;
+import com.example.minhkhai.demobds.lo.Lo;
 import com.example.minhkhai.demobds.loaikhachhang.ThemLoaiKhachHang;
 
 import org.json.JSONArray;
@@ -32,17 +36,21 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DanhSachLoaiSP extends Fragment {
 
     ListView lvLoaiSP;
     ArrayList<LoaiSP> mangLoaiSanPham;
+    ArrayList<LoaiSP> mangLoaiSanPhamGoc = new ArrayList<>();
     FloatingActionButton fab_add;
+    LoaiSPAdapter adapter = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_danh_sach_loai_sp,container,false);
+        setHasOptionsMenu(true);
 
         fab_add = (FloatingActionButton) view.findViewById(R.id.fab_add);
         lvLoaiSP = (ListView) view.findViewById(R.id.lvDanhSachLoaiSP);
@@ -76,27 +84,6 @@ public class DanhSachLoaiSP extends Fragment {
             }
         });
 
-        /*lvLoaiSP.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DanhSachLoaiSP.this);
-                alertDialogBuilder.setMessage("Bán có muốn xóa loại sản phẩm này?");
-                alertDialogBuilder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        runOnUiThread();
-                    }
-                });
-                alertDialogBuilder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //không làm gì
-                    }
-                });
-                alertDialogBuilder.show();
-                return true;
-            }
-        });*/
         return view;
 
     }
@@ -122,14 +109,14 @@ public class DanhSachLoaiSP extends Fragment {
                 for (int i = 0; i < array.length(); i++){
                     JSONObject object = array.getJSONObject(i);
 
-                    mangLoaiSanPham.add(new LoaiSP(
+                    mangLoaiSanPhamGoc.add(new LoaiSP(
                             object.getInt("MaLoaiSP"),
                             object.getString("TenLoaiSP"),
                             object.getString("MoTa")
                     ));
                 }
-
-                LoaiSPAdapter adapter = new LoaiSPAdapter(getActivity(), R.layout.item_loai_sp, mangLoaiSanPham);
+                mangLoaiSanPham = new ArrayList<>(mangLoaiSanPhamGoc);
+                adapter = new LoaiSPAdapter(getActivity(), R.layout.item_loai_sp, mangLoaiSanPham);
 
                 lvLoaiSP.setAdapter(adapter);
 
@@ -140,17 +127,46 @@ public class DanhSachLoaiSP extends Fragment {
         }
     }
 
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        MenuItem item = menu.findItem(R.id.search_action);
+        SearchView searchView = (SearchView) item.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                TimKiem(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                TimKiem(newText);
+                return false;
+            }
+        });
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
-*/
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, AppMenu.class);
-        startActivity(intent);
-        return true;
-    }*/
+
+    public void TimKiem (String newText) {
+        if (!newText.isEmpty() && newText.length() > 0) {
+            mangLoaiSanPham.clear();
+
+            List<LoaiSP> lstLoaiSPAll = new ArrayList<LoaiSP>(mangLoaiSanPhamGoc);
+
+            for (LoaiSP hh : lstLoaiSPAll) {
+                if ((hh.getTenLoaiSP().toLowerCase()).contains(newText.toLowerCase())) {
+                    mangLoaiSanPham.add(hh);
+                }
+            }
+        } else {
+            mangLoaiSanPham.clear();
+            for (LoaiSP hh : mangLoaiSanPhamGoc) {
+                mangLoaiSanPham.add(hh);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
 
 }

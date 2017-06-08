@@ -6,8 +6,10 @@ import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.example.minhkhai.demobds.duan.DanhSachDuAn;
 import com.example.minhkhai.demobds.duan.DuAn;
 import com.example.minhkhai.demobds.duan.DuAnAdapter;
 import com.example.minhkhai.demobds.hotro.API;
+import com.example.minhkhai.demobds.loaikhachhang.LoaiKhachHang;
 import com.example.minhkhai.demobds.loaikhachhang.ThemLoaiKhachHang;
 
 import org.json.JSONArray;
@@ -29,17 +32,21 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DanhSachKhachHang extends Fragment {
 
     ListView lvKhachHang;
     ArrayList<KhachHang> arrKhachHang;
+    ArrayList<KhachHang> arrKhachHangGoc = new ArrayList<>();
     FloatingActionButton fabAddKhachHang;
+    KhachHangAdapter adapter = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_danh_sach_khach_hang,container,false);
+        setHasOptionsMenu(true);
 
         arrKhachHang = new ArrayList<KhachHang>();
         lvKhachHang = (ListView) view.findViewById(R.id.lvKhachHang);
@@ -92,15 +99,15 @@ public class DanhSachKhachHang extends Fragment {
                 for (int i = 0; i < array.length(); i++){
                     JSONObject object = array.getJSONObject(i);
 
-                    arrKhachHang.add(new KhachHang(
+                    arrKhachHangGoc.add(new KhachHang(
                             object.getInt("MaKhachHang"),
                             object.getInt("LoaiKhachHang"),
                             object.getString("TenKhachHang"),
                             object.getString("TenLoaiKH")
                     ));
                 }
-
-                KhachHangAdapter adapter = new KhachHangAdapter(getActivity(), R.layout.item_khach_hang, arrKhachHang);
+                arrKhachHang = new ArrayList<>(arrKhachHangGoc);
+                adapter = new KhachHangAdapter(getActivity(), R.layout.item_khach_hang, arrKhachHang);
 
                 lvKhachHang.setAdapter(adapter);
 
@@ -110,13 +117,47 @@ public class DanhSachKhachHang extends Fragment {
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        MenuItem item = menu.findItem(R.id.search_action);
+        SearchView searchView = (SearchView) item.getActionView();
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                TimKiem(query);
+                return false;
+            }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        Intent intent = new Intent(getActivity(), AppMenu.class);
-//        startActivity(intent);
-//        return true;
-//    }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                TimKiem(newText);
+                return false;
+            }
+        });
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    public void TimKiem (String newText) {
+        if (!newText.isEmpty() && newText.length() > 0) {
+            arrKhachHang.clear();
+
+            List<KhachHang> lstKHAll = new ArrayList<KhachHang>(arrKhachHangGoc);
+
+            for (KhachHang hh : lstKHAll) {
+                if ((hh.getTenKhachHang().toLowerCase()).contains(newText.toLowerCase()) ||
+                        hh.getTenLoaiKhachHang().toLowerCase().contains(newText.toLowerCase())) {
+                    arrKhachHang.add(hh);
+                }
+            }
+        } else {
+            arrKhachHang.clear();
+            for (KhachHang hh : arrKhachHangGoc) {
+                arrKhachHang.add(hh);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
 
 }

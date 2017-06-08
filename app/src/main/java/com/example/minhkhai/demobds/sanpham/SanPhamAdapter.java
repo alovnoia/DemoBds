@@ -76,13 +76,14 @@ public class SanPhamAdapter extends BaseAdapter{
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-        tvTenSP.setText(arrSanPham.get(position).getTenDuAn() + " - Mã " +
-                String.valueOf(arrSanPham.get(position).getMaSP()));
-        tvLoaiSP.setText(arrSanPham.get(position).getLoaiSP());
+        SanPham sanPham = arrSanPham.get(position);
+        tvTenSP.setText(sanPham.getTenDuAn() + " - Mã " +
+                String.valueOf(sanPham.getMaSP()));
+        tvLoaiSP.setText(sanPham.getLoaiSP());
         DecimalFormat formatter = new DecimalFormat("###,###,###");
 
         System.out.println(formatter.format(1000000)+" VNĐ");
-        tvGiaSP.setText(String.valueOf(formatter.format(arrSanPham.get(position).getGiaSP()))+" VNĐ");
+        tvGiaSP.setText(formatter.format(Long.parseLong(sanPham.getGiaSP()))+" VNĐ");
 
         return convertView;
     }
