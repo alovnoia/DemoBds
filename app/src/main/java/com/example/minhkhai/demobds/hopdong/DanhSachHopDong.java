@@ -90,10 +90,8 @@ public class DanhSachHopDong extends Fragment {
                             {
                                 mangHopDong.add(new HopDong(
                                         object.getInt("MaHopDong"),
-                                        object.getInt("MaLoaiKH"),
                                         object.getInt("KhachHang"),
                                         object.getInt("MaDuAn"),
-                                        object.getInt("MaLo"),
                                         object.getInt("SanPham"),
                                         object.getString("TenKhachHang"),
                                         object.getString("NgayKy"),
@@ -103,10 +101,8 @@ public class DanhSachHopDong extends Fragment {
                         }else {
                             mangHopDong.add(new HopDong(
                                     object.getInt("MaHopDong"),
-                                    object.getInt("MaLoaiKH"),
                                     object.getInt("KhachHang"),
                                     object.getInt("MaDuAn"),
-                                    object.getInt("MaLo"),
                                     object.getInt("SanPham"),
                                     object.getString("TenKhachHang"),
                                     object.getString("NgayKy"),

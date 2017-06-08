@@ -539,8 +539,8 @@ public class ChiTietHopDong extends AppCompatActivity {
                             break;
                         } else if (kieu.equals("MotLan") && mangKieuThanhToan.getItem(i).equals("Một lần")){
                             tvKieuThanhToan.setText("Một lần");
-                            tvLai.setVisibility(View.GONE);
-                            tvLai1.setVisibility(View.GONE);
+                            //tvLai.setVisibility(View.GONE);
+                            tvLai.setText("0");
                             spnKieuThanhToan.setSelection(i);
                             break;
                         }

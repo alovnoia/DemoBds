@@ -24,12 +24,12 @@ public class HopDong {
         TrangThai = trangThai;
     }
 
-    public HopDong(int maHopDong, int maLoaiKhachHang, int maKhachHang, int maDuAn, int maLo, int maSanPham, String tenKhachHang, String ngayKy, String trangThai) {
+    public HopDong(int maHopDong,  int maKhachHang, int maDuAn, int maSanPham, String tenKhachHang, String ngayKy, String trangThai) {
         this.maHopDong = maHopDong;
-        this.maLoaiKhachHang = maLoaiKhachHang;
+        //this.maLoaiKhachHang = maLoaiKhachHang;
         this.maKhachHang = maKhachHang;
         this.maDuAn = maDuAn;
-        this.maLo = maLo;
+        //this.maLo = maLo;
         this.maSanPham = maSanPham;
         TenKhachHang = tenKhachHang;
         NgayKy = ngayKy;
