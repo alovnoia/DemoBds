@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/dialog">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -55,8 +56,6 @@
         android:id="@+id/btnHuy"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
         android:text="Hủy duyệt"
         android:background="#f74d47"
@@ -72,8 +71,6 @@
         android:id="@+id/btnDuyet"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
         android:background="#4af747"
         android:textColor="#fff"

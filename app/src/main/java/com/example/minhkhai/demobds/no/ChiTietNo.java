@@ -3,6 +3,7 @@ package com.example.minhkhai.demobds.no;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -74,6 +75,8 @@ public class ChiTietNo extends AppCompatActivity {
 
                 TextView tvNgayTraNo = (TextView) dialog.findViewById(R.id.tvNgayTraNo);
                 TextView tvSoTienTraNo = (TextView) dialog.findViewById(R.id.tvSoTienTraNo);
+                ConstraintLayout cslLayout = (ConstraintLayout) dialog.findViewById(R.id.dialog);
+
                 final Button btnDuyet = (Button) dialog.findViewById(R.id.btnDuyet);
                 Button btnHuy = (Button) dialog.findViewById(R.id.btnHuy);
 
@@ -83,11 +86,19 @@ public class ChiTietNo extends AppCompatActivity {
 
                 if (no.getTrangThai().equals("DaTra")){
                     btnDuyet.setVisibility(View.GONE);
+                    if (API.quyen.equals("NVBH")) {
+                        btnHuy.setVisibility(View.GONE);
+                        cslLayout.setPadding(0, 0, 0, 30);
+                    }
                     lvChiTietNo.setItemChecked(position, true);
                     adapter.notifyDataSetChanged();
 
                 } else {
                     btnHuy.setVisibility(View.GONE);
+                    if (API.quyen.equals("NVBH")) {
+                        btnDuyet.setVisibility(View.GONE);
+                        cslLayout.setPadding(0, 0, 0, 30);
+                    }
                     lvChiTietNo.setItemChecked(position, false);
                     adapter.notifyDataSetChanged();
                 }

@@ -7,11 +7,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +47,7 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
     FloatingActionButton flEdit;
     TextView tvID;
     EditText edtTen, edtMoTa;
+    String lstUuDai;
     int id = 0;
 
     @Override
@@ -105,6 +110,7 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
                 JSONObject object = new JSONObject(s);
                 edtTen.setText(object.getString("TenLoaiKH"));
                 edtMoTa.setText(object.getString("MoTa"));
+                lstUuDai = object.getString("UuDai");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -177,7 +183,8 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        int idItem = item.getItemId();
+        if (idItem == android.R.id.home) {
             if (API.change) {
                 Intent i = new Intent(ChiTietLoaiKhachHang.this, MainActivity.class);
                 i.putExtra("key", "LoaiKhachHang");
@@ -186,7 +193,7 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
             } else {
                 finish();
             }
-        } else if (item.getItemId() == R.id.delete) {
+        } else if (idItem == R.id.delete1) {
             // Show dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(ChiTietLoaiKhachHang.this);
             builder.setTitle("Thông báo");
@@ -210,13 +217,43 @@ public class ChiTietLoaiKhachHang extends AppCompatActivity {
             });
 
             builder.show();
+        } else if (idItem == R.id.xemuudai || idItem == R.id.xemUuDaiNVBH) {
+            // Show dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(ChiTietLoaiKhachHang.this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_xem_uudai, null);
+            builder.setView(dialogView);
+            if (!lstUuDai.equals("")) {
+                builder.setTitle("Ưu đãi đang áp dụng");
+                ListView lvXemUuDai = (ListView) dialogView.findViewById(R.id.lvXemUuDai);
+
+                String[] arrUuDai = lstUuDai.substring(0, lstUuDai.length()-2).split(", ");
+                Log.i("xemuudai", arrUuDai[0] + arrUuDai[1]);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ChiTietLoaiKhachHang.this, android.R.layout.simple_list_item_1, arrUuDai);
+                lvXemUuDai.setAdapter(adapter);
+            } else {
+                builder.setMessage("Chưa có ưu đãi nào!");
+            }
+
+            builder.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        ChiTietLoaiKhachHang.this.getMenuInflater().inflate(R.menu.menu, menu);
+        if (API.quyen.equals("NVQL")) {
+            ChiTietLoaiKhachHang.this.getMenuInflater().inflate(R.menu.menu_xem_uudai, menu);
+        } else {
+            ChiTietLoaiKhachHang.this.getMenuInflater().inflate(R.menu.xem_uudai_nvbh, menu);
+        }
         return true;
     }
 }

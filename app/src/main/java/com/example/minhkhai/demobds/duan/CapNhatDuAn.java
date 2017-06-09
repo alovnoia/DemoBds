@@ -8,12 +8,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,13 +35,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 public class CapNhatDuAn extends AppCompatActivity {
 
     EditText edtCapNhatTenDuAn, edtCapNhatDiaChi, edtCapNhatDienTich, edtCapNhatGiayPhep,
             edtCapNhatNgayCap, edtCapNhatSoLuongSP, edtCapNhatMoTaDuAn;
     TextView tvCapNhatDuAn;
-    Button btnXoaDuAn;
+    String lstUuDai = null;
     int id = 0;
     Calendar ngayGioHienTai = Calendar.getInstance();
     FloatingActionButton fabCapNhatDuAn;
@@ -131,6 +136,7 @@ public class CapNhatDuAn extends AppCompatActivity {
                 String[] ngay = obj.get("NgayCap").toString().split("-");
                 edtCapNhatNgayCap.setText(ngay[2]+"/"+ngay[1]+"/"+ngay[0]);
                 tvCapNhatDuAn.setText("Cập nhật dự án "+id+" - " + obj.getInt("SoLuongSanPham")+" sản phẩm");
+                lstUuDai = obj.getString("UuDai");
                 //edtCapNhatSoLuongSP.setText(obj.getString("SoLuongSanPham"));
                 edtCapNhatMoTaDuAn.setText(obj.getString("MoTa"));
             } catch (JSONException e) {
@@ -222,7 +228,8 @@ public class CapNhatDuAn extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        int idItem = item.getItemId();
+        if (idItem == android.R.id.home) {
             if (API.change) {
                 Intent i = new Intent(CapNhatDuAn.this, MainActivity.class);
                 i.putExtra("key", "DuAn");
@@ -231,7 +238,7 @@ public class CapNhatDuAn extends AppCompatActivity {
             } else {
                 finish();
             }
-        } else if (item.getItemId() == R.id.delete) {
+        } else if (item.getItemId() == R.id.delete1) {
             // Show dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(CapNhatDuAn.this);
             builder.setTitle("Thông báo");
@@ -256,6 +263,32 @@ public class CapNhatDuAn extends AppCompatActivity {
 
             builder.show();
 
+        } else if (idItem == R.id.xemuudai || idItem == R.id.xemUuDaiNVBH) {
+            // Show dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(CapNhatDuAn.this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_xem_uudai, null);
+            builder.setView(dialogView);
+            if (!lstUuDai.equals("")) {
+                builder.setTitle("Ưu đãi đang áp dụng");
+                ListView lvXemUuDai = (ListView) dialogView.findViewById(R.id.lvXemUuDai);
+
+                String[] arrUuDai = lstUuDai.substring(0, lstUuDai.length()-2).split(", ");
+                Log.i("xemuudai", arrUuDai[0] + arrUuDai[1]);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(CapNhatDuAn.this, android.R.layout.simple_list_item_1, arrUuDai);
+                lvXemUuDai.setAdapter(adapter);
+            } else {
+                builder.setMessage("Chưa có ưu đãi nào!");
+            }
+
+            builder.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -263,7 +296,9 @@ public class CapNhatDuAn extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (API.quyen.equals("NVQL")) {
-            CapNhatDuAn.this.getMenuInflater().inflate(R.menu.menu, menu);
+            CapNhatDuAn.this.getMenuInflater().inflate(R.menu.menu_xem_uudai, menu);
+        } else {
+            CapNhatDuAn.this.getMenuInflater().inflate(R.menu.xem_uudai_nvbh, menu);
         }
         return true;
     }
