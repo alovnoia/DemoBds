@@ -36,7 +36,11 @@ public class DangNhap extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dang_nhap);
-
+        View decorView = getWindow().getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+        getSupportActionBar().hide();
         edtTaiKhoan = (EditText) findViewById(R.id.edtTaiKhoan);
         edtMatKhau = (EditText) findViewById(R.id.edtMatKhau);
         btnDangNhap = (Button) findViewById(R.id.btnDangNhap);

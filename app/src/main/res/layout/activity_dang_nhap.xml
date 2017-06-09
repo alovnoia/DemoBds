@@ -22,7 +22,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="180dp" />
+        android:layout_marginTop="233dp" />
 
     <EditText
         android:id="@+id/edtMatKhau"

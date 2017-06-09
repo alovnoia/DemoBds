@@ -55,6 +55,10 @@ public class CapNhatUuDai extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_uu_dai);
+        View decorView = getWindow().getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -404,7 +408,7 @@ public class CapNhatUuDai extends AppCompatActivity {
             // Show dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(CapNhatUuDai.this);
             builder.setTitle("Thông báo");
-            builder.setMessage("Bạn có chắc chắn muốn xóa dự án này?");
+            builder.setMessage("Bạn có chắc chắn muốn xóa ưu đãi này?");
             builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
