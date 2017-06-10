@@ -80,7 +80,7 @@ public class ChiTietHopDong extends AppCompatActivity {
     Lo lo;
     JSONObject objHopDong=null;
     String tThai = "";
-    String maTaiKhoan="";
+    int maTaiKhoan;
 
     int id;
 
@@ -122,7 +122,7 @@ public class ChiTietHopDong extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         id = extras.getInt("id");
-        maTaiKhoan = extras.getString("TaiKhoan");
+        maTaiKhoan = extras.getInt("TaiKhoan");
         tThai = extras.getString("trangThai");
 
         runOnUiThread(new Runnable() {
@@ -138,7 +138,7 @@ public class ChiTietHopDong extends AppCompatActivity {
             btnDuyet.setVisibility(View.GONE);
         }
 
-        if (tThai.equals("DaDuyet") || !API.idUser.equals(maTaiKhoan)){
+        if (tThai.equals("DaDuyet") || !API.idUser.equals(maTaiKhoan+"")){
             tabHost.clearAllTabs();
             tabHost.addTab(spec1);
         }
