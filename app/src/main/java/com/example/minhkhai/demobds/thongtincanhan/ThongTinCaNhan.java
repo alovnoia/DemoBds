@@ -1,7 +1,13 @@
 package com.example.minhkhai.demobds.thongtincanhan;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -21,6 +27,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -33,6 +40,12 @@ public class ThongTinCaNhan extends Fragment {
     FloatingActionButton fab_Save;
     Calendar ngayGioHienTai = Calendar.getInstance();
     String id;
+
+    String mediaPath = "";
+    File file;
+    String tenHinh = "";
+    JSONObject taiKhoan;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,12 +81,33 @@ public class ThongTinCaNhan extends Fragment {
             }
         });
 
+        imgAnh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, 0);
+                //onActivityResult(0, 1 ,i);
+            }
+        });
+
         fab_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        if (mediaPath != "")
+                        {
+                            file = new File(mediaPath);
+                            tenHinh = file.getName();
+                            API.uploadFile(file);
+                        }else{
+                            try {
+                                tenHinh = taiKhoan.getString("Anh");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         new CapNhatTTCN().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
                     }
                 });
@@ -82,11 +116,41 @@ public class ThongTinCaNhan extends Fragment {
         return view;
     }
 
+    //Hiển thị ảnh khi chọn
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == 0 && resultCode == Activity.RESULT_OK && null != data) {
+
+                // Get the Image from data
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                assert cursor != null;
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                mediaPath = cursor.getString(columnIndex);
+                // Set the Image in ImageView for Previewing the Media
+                imgAnh.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                cursor.close();
+
+            } else {
+                Toast.makeText(getActivity(), "Bạn chưa chọn ảnh", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Đã xảy ra lỗi!", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
     private class CapNhatTTCN extends AsyncTask<String, Integer, String> {
 
         String hoTen = edtTen.getText().toString();
         String chucVu = txtChucVu.getText().toString();
-        String anh = "Layout_4.png";
         String pass = edtPass.getText().toString();
         String[] ngaySinh = edtNgay.getText().toString().split("/");
         String sDT = edtDienThoai.getText().toString();
@@ -101,7 +165,7 @@ public class ThongTinCaNhan extends Fragment {
                 URL url = new URL(params[0]);
 
                 JSONObject object = new JSONObject();
-                object.put("Anh", anh);
+                object.put("Anh", tenHinh);
                 object.put("ChucVu", chucVu);
                 object.put("HoTen", hoTen);
                 object.put("MatKhau", pass);
@@ -142,9 +206,13 @@ public class ThongTinCaNhan extends Fragment {
 
             try {
                 JSONObject object = new JSONObject(s);
-
+                taiKhoan = object;
                 String tenHinh = object.getString("Anh");
-                Picasso.with(getActivity()).load("http://"+API.HOST+"/bds_project/img/"+ tenHinh).into(imgAnh);
+                Picasso.with(getActivity())
+                        .load("http://"+API.HOST+"/bds_project/data/"+ tenHinh)
+                        .placeholder(R.drawable.ic_users)
+                        .error(R.drawable.ic_error_img)
+                        .into(imgAnh);
 
                 txtTaiKhoan.setText(object.getString("TenTaiKhoan"));
                 txtChucVu.setText(object.getString("ChucVu"));

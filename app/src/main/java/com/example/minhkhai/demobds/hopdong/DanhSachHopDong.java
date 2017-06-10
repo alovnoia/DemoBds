@@ -58,6 +58,7 @@ public class DanhSachHopDong extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getActivity(), ChiTietHopDong.class);
                 i.putExtra("id", mangHopDong.get(position).maHopDong);
+                i.putExtra("TaiKhoan", mangHopDong.get(position).maTaiKhoan);
                 i.putExtra("trangThai", mangHopDong.get(position).TrangThai);
                 startActivity(i);
             }
@@ -90,6 +91,7 @@ public class DanhSachHopDong extends Fragment {
                             {
                                 mangHopDong.add(new HopDong(
                                         object.getInt("MaHopDong"),
+                                        object.getInt("TaiKhoan"),
                                         object.getInt("KhachHang"),
                                         object.getInt("MaDuAn"),
                                         object.getInt("SanPham"),
@@ -101,6 +103,7 @@ public class DanhSachHopDong extends Fragment {
                         }else {
                             mangHopDong.add(new HopDong(
                                     object.getInt("MaHopDong"),
+                                    object.getInt("TaiKhoan"),
                                     object.getInt("KhachHang"),
                                     object.getInt("MaDuAn"),
                                     object.getInt("SanPham"),

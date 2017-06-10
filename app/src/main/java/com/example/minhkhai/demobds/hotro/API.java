@@ -50,6 +50,8 @@ public class API {
 
     public static boolean change = false;
 
+    public static String anhUser = "";
+
     public static String username = "";
 
     public static String POST_URL(URL url, JSONObject object) throws IOException {

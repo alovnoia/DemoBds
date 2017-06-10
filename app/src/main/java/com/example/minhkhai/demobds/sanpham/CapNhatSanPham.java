@@ -2,7 +2,11 @@ package com.example.minhkhai.demobds.sanpham;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -32,11 +36,13 @@ import com.example.minhkhai.demobds.lo.DanhSachLo;
 import com.example.minhkhai.demobds.lo.Lo;
 import com.example.minhkhai.demobds.loaikhachhang.LoaiKhachHang;
 import com.example.minhkhai.demobds.loaisp.LoaiSP;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -58,6 +64,10 @@ public class CapNhatSanPham extends AppCompatActivity {
     ArrayList<Lo> arrLo = new ArrayList<>();
     ArrayAdapter<Lo> adapterLo;
     public JSONObject sanPham = null;
+
+    String mediaPath = "";
+    File file;
+    String tenHinh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +113,14 @@ public class CapNhatSanPham extends AppCompatActivity {
             }
         });
 
+        ivAnh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, 0);
+            }
+        });
+
         spDuAn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -121,6 +139,18 @@ public class CapNhatSanPham extends AppCompatActivity {
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mediaPath != "")
+                {
+                    file = new File(mediaPath);
+                    tenHinh = file.getName();
+                    API.uploadFile(file);
+                }else{
+                    try {
+                        tenHinh = sanPham.getString("Anh");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 new SaveCapNhat().execute("http://"+ API.HOST+"/bds_project/public/SanPham/"+id);
                 API.change = true;
             }
@@ -138,6 +168,37 @@ public class CapNhatSanPham extends AppCompatActivity {
             }
         });*/
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
+
+                // Get the Image from data
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                assert cursor != null;
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                mediaPath = cursor.getString(columnIndex);
+                // Set the Image in ImageView for Previewing the Media
+                ivAnh.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                cursor.close();
+
+            } else {
+                Toast.makeText(this, "Bạn chưa chọn ảnh", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Đã xảy ra lỗi!", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
 
     private class LoadLoaiSP extends AsyncTask<String, String, String> {
         @Override
@@ -290,6 +351,13 @@ public class CapNhatSanPham extends AppCompatActivity {
                 JSONObject obj = new JSONObject(s);
                 sanPham = obj;
                 try {
+                    tenHinh = obj.getString("Anh");
+                    Picasso.with(CapNhatSanPham.this)
+                            .load("http://"+API.HOST+"/bds_project/data/"+ tenHinh)
+                            .placeholder(R.drawable.ic_house)
+                            .error(R.drawable.ic_house)
+                            .into(ivAnh);
+
                     edtSo.setText(obj.getString("SoNha"));
                     edtDienTich.setText(obj.getInt("DienTich") + "");
                     edtGiaBan.setText(obj.getString("GiaBan") + "");
@@ -324,7 +392,7 @@ public class CapNhatSanPham extends AppCompatActivity {
 
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("SoNha", soNha);
-                postDataParams.put("Anh", "s");
+                postDataParams.put("Anh", tenHinh);
                 postDataParams.put("LoaiSP", maLoai);
                 postDataParams.put("DuAn", maDA);
                 postDataParams.put("Lo", maLo);

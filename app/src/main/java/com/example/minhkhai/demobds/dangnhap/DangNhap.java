@@ -91,6 +91,7 @@ public class DangNhap extends AppCompatActivity {
 
                     Intent intent = new Intent(DangNhap.this, MainActivity.class);
                     API.idUser = obj.getString("MaTaiKhoan");
+                    API.anhUser = obj.getString("Anh");
                     API.quyen = obj.getString("ChucVu");
                     API.username = obj.getString("TenTaiKhoan");
                     intent.putExtra("key", "TaiKhoanCaNhan");

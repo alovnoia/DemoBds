@@ -55,7 +55,7 @@ public class ChiTietHopDong extends AppCompatActivity {
     TabHost tabHost;
     TabHost.TabSpec spec1, spec2;
 
-    TextView tvNgayKy, tvNgayBanGiao, tvKhachHang, tvNhanVien, tvKieuThanhToan, tvLai1, tvLai, tvDatCoc,
+    TextView tvNgayKy, tvMaTK,tvNgayBanGiao, tvKhachHang, tvNhanVien, tvKieuThanhToan, tvLai1, tvLai, tvDatCoc,
             tvGhiChu, tvUuDai, tvSanPham, tvGiaSp, tvGiaHD;
     ImageView imgAnhSP;
 
@@ -80,6 +80,7 @@ public class ChiTietHopDong extends AppCompatActivity {
     Lo lo;
     JSONObject objHopDong=null;
     String tThai = "";
+    String maTaiKhoan="";
 
     int id;
 
@@ -96,6 +97,7 @@ public class ChiTietHopDong extends AppCompatActivity {
 
         AnhXa();
 
+        //tvMaTK.setVisibility(View.GONE);
         edtNgayKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +122,7 @@ public class ChiTietHopDong extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         id = extras.getInt("id");
+        maTaiKhoan = extras.getString("TaiKhoan");
         tThai = extras.getString("trangThai");
 
         runOnUiThread(new Runnable() {
@@ -135,8 +138,7 @@ public class ChiTietHopDong extends AppCompatActivity {
             btnDuyet.setVisibility(View.GONE);
         }
 
-        if (tThai.equals("DaDuyet")){
-            //fab_Save.setVisibility(View.GONE);
+        if (tThai.equals("DaDuyet") || !API.idUser.equals(maTaiKhoan)){
             tabHost.clearAllTabs();
             tabHost.addTab(spec1);
         }
@@ -203,6 +205,7 @@ public class ChiTietHopDong extends AppCompatActivity {
     }
 
     private void    AnhXa(){
+        tvMaTK = (TextView) findViewById(R.id.tvMaTaiKhoanChiTietHD);
         tvNgayKy = (TextView) findViewById(R.id.tvNgayKyChiTietHopDong);
         tvNgayBanGiao = (TextView) findViewById(R.id.tvNgayBanGiaoChiTietHopDong);
         tvKhachHang = (TextView) findViewById(R.id.tvKhachChiTietHopDong);
@@ -524,8 +527,9 @@ public class ChiTietHopDong extends AppCompatActivity {
 
             if (s!=null){
                 try {
-                    objHopDong = new JSONObject(s);
-
+                    JSONObject obj = new JSONObject(s);
+                    objHopDong = obj;
+                    //tvMaTK.setText(objHopDong.getString("TaiKhoan"));
                     tvKhachHang.setText(objHopDong.getString("TenKhachHang"));
                     tvNhanVien.setText(objHopDong.getString("TenTaiKhoan"));
 
@@ -758,6 +762,5 @@ public class ChiTietHopDong extends AppCompatActivity {
         }
         return true;
     }
-
 
 }

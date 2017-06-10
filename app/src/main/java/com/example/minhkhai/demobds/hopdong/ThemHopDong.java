@@ -410,6 +410,7 @@ public class ThemHopDong extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Thêm hợp đồng thành công", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(ThemHopDong.this, ChiTietHopDong.class);
                     i.putExtra("id", obj.getInt("MaHopDong"));
+                    i.putExtra("TaiKhoan", obj.getString("TaiKhoan"));
                     i.putExtra("trangThai", obj.getString("TrangThai"));
                     startActivity(i);
 

@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.squareup.picasso.Picasso;
 
 import static android.R.attr.fragment;
 
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     TextView tvTenThat, tvChucVu;
+    ImageView ivAnhDaiDien;
     private GoogleApiClient client;
     FragmentManager fragmentManager = getFragmentManager();
     ActionBarDrawerToggle toggle;
@@ -151,6 +154,13 @@ public class MainActivity extends AppCompatActivity
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         //View view = LayoutInflater.from(getApplication()).inflate(R.layout.nav_header_main, null);
+        ivAnhDaiDien = (ImageView) headerLayout.findViewById(R.id.ivAnhDaiDien);
+
+        Picasso.with(MainActivity.this)
+                .load("http://10.0.3.2:2347/bds_project/data/"+ API.anhUser)
+                .placeholder(R.drawable.ic_users)
+                .error(R.drawable.ic_users)
+                .into(ivAnhDaiDien);
         tvTenThat = (TextView) headerLayout.findViewById(R.id.tvTenThat);
         tvTenThat.setText(API.username);
         tvChucVu = (TextView) headerLayout.findViewById(R.id.tvChucVu);

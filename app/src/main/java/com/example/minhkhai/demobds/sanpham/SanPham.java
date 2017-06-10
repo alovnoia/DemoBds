@@ -12,8 +12,9 @@ public class SanPham {
     int duAn;
     String giaSP, anhSP, tenDuAn;
 
-    public SanPham(int maSP, String tenSP, String loaiSP, String giaSP, int duAn, String tenDuAn) {
+    public SanPham(int maSP, String anh, String tenSP, String loaiSP, String giaSP, int duAn, String tenDuAn) {
         this.maSP = maSP;
+        this.anhSP = anh;
         this.tenSP = tenSP;
         this.loaiSP = loaiSP;
         this.giaSP = giaSP;

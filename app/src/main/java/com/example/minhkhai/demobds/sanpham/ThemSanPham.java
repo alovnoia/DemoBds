@@ -1,7 +1,11 @@
 package com.example.minhkhai.demobds.sanpham;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
@@ -43,6 +48,9 @@ public class ThemSanPham extends AppCompatActivity {
     private TextView tvDuAn;
     String tenDuAn;
     int idDuAn;
+
+    String mediaPath;
+    File file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,18 +88,58 @@ public class ThemSanPham extends AppCompatActivity {
             }
         });
 
+        ivAnh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, 0);
+            }
+        });
+
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        file = new File(mediaPath);
                         new SaveSanPham().execute("http://"+API.HOST+"/bds_project/public/SanPham");
                         API.change = true;
                     }
                 });
             }
         });
+    }
+
+    //Hiển thị ảnh khi chọn
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
+
+                // Get the Image from data
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                assert cursor != null;
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                mediaPath = cursor.getString(columnIndex);
+                // Set the Image in ImageView for Previewing the Media
+                ivAnh.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                cursor.close();
+
+            } else {
+                Toast.makeText(this, "Bạn chưa chọn ảnh", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Đã xảy ra lỗi!", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private class LoadLoaiSP extends AsyncTask<String, String, String> {
@@ -178,6 +226,7 @@ public class ThemSanPham extends AppCompatActivity {
         Float dienTich = Float.parseFloat(edtDienTich.getText().toString());
         String giaBan = edtGiaBan.getText().toString();
         String moTa = edtMoTa.getText().toString();
+        String anh = file.getName();
 
         @Override
         protected String doInBackground(String... params) {
@@ -186,7 +235,7 @@ public class ThemSanPham extends AppCompatActivity {
 
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("SoNha", soNha);
-                postDataParams.put("Anh", "IMG_20170428_205524.jpg");
+                postDataParams.put("Anh", anh);
                 postDataParams.put("LoaiSP", maLoai);
                 postDataParams.put("DuAn", idDuAn);
                 postDataParams.put("Lo", maLo);
@@ -213,6 +262,7 @@ public class ThemSanPham extends AppCompatActivity {
                 try {
                     object = new JSONObject(s);
                     idChiTiet = object.getInt("MaSP");
+                    API.uploadFile(file);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

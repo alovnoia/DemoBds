@@ -98,7 +98,7 @@ public class DanhSachSanPham extends Fragment {
 
                     arrSanPhamGoc.add(new SanPham(
                             object.getInt("MaSP"),
-                            //object.getString("TenSP"),
+                            object.getString("Anh"),
                             "Sản phẩm",
                             object.getString("TenLoaiSP"),
                             object.getString("GiaBan"),

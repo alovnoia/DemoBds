@@ -64,6 +64,8 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
     String tenHinh;
     String pass;
 
+    JSONObject taiKhoan;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,10 +132,17 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        file = new File(mediaPath);
-                        if (file != null)
+                        if (mediaPath != "")
                         {
+                            file = new File(mediaPath);
                             tenHinh = file.getName();
+                            API.uploadFile(file);
+                        }else{
+                            try {
+                                tenHinh = taiKhoan.getString("Anh");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                         new SaveUpdate().execute("http://"+API.HOST+"/bds_project/public/TaiKhoan/"+id);
                         API.change = true;
@@ -232,6 +241,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
             super.onPostExecute(s);
 
             JSONObject object = null;
+            taiKhoan = object;
             try {
                 object = new JSONObject(s);
 
@@ -317,7 +327,6 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            API.uploadFile(file);
             Toast.makeText(getApplicationContext(), "Đã sửa tài khoản có id " + id, Toast.LENGTH_SHORT).show();
         }
     }

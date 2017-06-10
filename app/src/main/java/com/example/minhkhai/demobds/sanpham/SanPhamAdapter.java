@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.minhkhai.demobds.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -76,6 +77,12 @@ public class SanPhamAdapter extends BaseAdapter{
         } catch (IOException e) {
             e.printStackTrace();
         }*/
+        Picasso.with(myContext)
+                .load("http://10.0.3.2:2347/bds_project/data/"+ arrSanPham.get(position).getAnhSP())
+                .placeholder(R.drawable.ic_house)
+                .error(R.drawable.ic_house)
+                .into(ivAnh);
+
         SanPham sanPham = arrSanPham.get(position);
         tvTenSP.setText(sanPham.getTenDuAn() + " - Mã " +
                 String.valueOf(sanPham.getMaSP()));
