@@ -4,7 +4,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.minhkhai.demobds.hopdong.ThemHopDong">
+        tools:context="com.example.minhkhai.demobds.hopdong.ThemHopDong"
+        android:background="@drawable/bg_app">
 
         <ScrollView
             android:layout_width="0dp"
@@ -62,6 +63,7 @@
 
                 <Spinner
                     android:id="@+id/spnLoaiKHThemHopDong"
+                    android:background="@drawable/spinner_bg"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"
@@ -87,6 +89,7 @@
 
                 <Spinner
                     android:id="@+id/spnKhachHangThemHopDong"
+                    android:background="@drawable/spinner_bg"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"
@@ -115,6 +118,7 @@
 
                 <Spinner
                     android:id="@+id/spnDuAnThemHopDong"
+                    android:background="@drawable/spinner_bg"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"
@@ -140,6 +144,7 @@
 
                 <Spinner
                     android:id="@+id/spnLoThemHopDong"
+                    android:background="@drawable/spinner_bg"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"
@@ -164,6 +169,7 @@
 
                 <Spinner
                     android:id="@+id/spnSanPhamThemHopDong"
+                    android:background="@drawable/spinner_bg"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"
@@ -243,6 +249,7 @@
 
                 <Spinner
                     android:id="@+id/spnKieuThanhToanThemHopDong"
+                    android:background="@drawable/spinner_bg"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"

@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity
     TextView tvTenThat, tvChucVu;
     ImageView ivAnhDaiDien;
     private GoogleApiClient client;
+    View navHeader;
     FragmentManager fragmentManager = getFragmentManager();
     ActionBarDrawerToggle toggle;
     String loadInterface ="";
@@ -73,8 +75,7 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment;
 
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -155,6 +156,19 @@ public class MainActivity extends AppCompatActivity
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         //View view = LayoutInflater.from(getApplication()).inflate(R.layout.nav_header_main, null);
         ivAnhDaiDien = (ImageView) headerLayout.findViewById(R.id.ivAnhDaiDien);
+        navHeader = headerLayout.findViewById(R.id.navHeader);
+
+        navHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new ThongTinCaNhan();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.framelayout, fragment).commit();
+
+                toggle.setDrawerIndicatorEnabled(true);
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
 
         Picasso.with(MainActivity.this)
                 .load("http://10.0.3.2:2347/bds_project/data/"+ API.anhUser)
@@ -260,13 +274,6 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.framelayout, fragment).commit();
 
             toggle.setDrawerIndicatorEnabled(true);
-        } else if (id == R.id.tkCaNhan) {
-            Fragment fragment = new ThongTinCaNhan();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.framelayout, fragment).commit();
-
-            toggle.setDrawerIndicatorEnabled(true);
-
         } else if (id == R.id.dangXuat) {
             API.quyen = null;
             API.idUser = null;

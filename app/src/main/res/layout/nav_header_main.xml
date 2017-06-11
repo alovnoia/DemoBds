@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navHeader"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
@@ -15,21 +16,21 @@
 
     <ImageView
         android:id="@+id/ivAnhDaiDien"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="97dp"
+        android:layout_height="113dp"
         android:layout_marginLeft="16dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:layout_constraintLeft_toLeftOf="parent"
         app:srcCompat="@android:drawable/sym_def_app_icon"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:id="@+id/tvTenThat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="55dp"
         android:text="afcc"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -43,6 +44,7 @@
         android:layout_marginLeft="0dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="@+id/tvTenThat"
         app:layout_constraintTop_toBottomOf="@+id/tvTenThat" />
 

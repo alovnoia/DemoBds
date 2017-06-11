@@ -161,9 +161,7 @@ public class DanhSachDuAn extends Fragment{
         } else {
             mangDuAn.clear();
             for (DuAn hh : mangDuAnGoc) {
-                if ((hh.getTenDuAn().toLowerCase()).contains(newText.toLowerCase())) {
                     mangDuAn.add(hh);
-                }
             }
         }
         adapter.notifyDataSetChanged();

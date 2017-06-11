@@ -48,7 +48,7 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 public class ChiTietTaiKhoan extends AppCompatActivity {
-    TextView tvID, tvUsername;
+    TextView tvUsername;
     ImageView imgAnh;
     EditText edtTen, edtNgaySinh, edtDienThoai, edtDiaChi, edtThongtin;
     Spinner spnChucVu;
@@ -79,8 +79,8 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        tvID = (TextView) findViewById(R.id.tvIDTaiKhoan);
-        tvUsername = (TextView) findViewById(R.id.tvTenDangNhapChiTietTK);
+        //tvID = (TextView) findViewById(R.id.tvIDTaiKhoan);
+        tvUsername = (TextView) findViewById(R.id.tvChiTietTKTenDangNhap);
         imgAnh = (ImageView) findViewById(R.id.imgAnhChiTietTK);
         edtTen = (EditText) findViewById(R.id.edtTenChiTietTK);
         edtNgaySinh = (EditText) findViewById(R.id.edtNgaySinhChiTietTK);
@@ -93,8 +93,6 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
 
         Intent myIntent = getIntent();
         id = myIntent.getIntExtra("id", 0);
-
-        tvID.setText(id+"");
 
         edtNgaySinh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,7 +251,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
                         .into(imgAnh);
 
                 edtTen.setText(object.getString("HoTen"));
-                tvUsername.setText(object.getString("TenTaiKhoan"));
+                tvUsername.setText(object.getString("TenTaiKhoan") + " - id: " + id);
                 pass = object.getString("MatKhau");
 
                 String[] ngay = object.get("NgaySinh").toString().split("-");

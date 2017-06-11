@@ -34,6 +34,7 @@ import com.example.minhkhai.demobds.khachhang.KhachHang;
 import com.example.minhkhai.demobds.lo.ChiTietLo;
 import com.example.minhkhai.demobds.lo.Lo;
 import com.example.minhkhai.demobds.loaikhachhang.LoaiKhachHang;
+import com.example.minhkhai.demobds.no.ChiTietNo;
 import com.example.minhkhai.demobds.sanpham.SanPham;
 import com.squareup.picasso.Picasso;
 
@@ -97,7 +98,7 @@ public class ChiTietHopDong extends AppCompatActivity {
 
         AnhXa();
 
-        //tvMaTK.setVisibility(View.GONE);
+        tvMaTK.setVisibility(View.GONE);
         edtNgayKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,20 +186,26 @@ public class ChiTietHopDong extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new Save().execute("http://"+API.HOST+"/bds_project/public/HopDong/"+id);
+                API.change = true;
             }
         });
 
         btnDuyet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String trangThaiDuyet = null;
                 if (tThai.equals("ChuaDuyet") ){
                     new Duyet().execute("http://"+API.HOST+"/bds_project/public/duyet/"+id);
+                    trangThaiDuyet = "DaDuyet";
                 }
                 else {
                     new HuyDuyet().execute("http://"+API.HOST+"/bds_project/public/huyduyet/"+id);
+                    trangThaiDuyet = "ChuaDuyet";
                 }
-                Intent i =  new Intent(ChiTietHopDong.this, MainActivity.class);
-                i.putExtra("key", "HopDong");
+                Intent i =  new Intent(ChiTietHopDong.this, ChiTietHopDong.class);
+                i.putExtra("id", id);
+                i.putExtra("TaiKhoan", maTaiKhoan);
+                i.putExtra("trangThai", trangThaiDuyet);
                 startActivity(i);
             }
         });
@@ -717,7 +724,8 @@ public class ChiTietHopDong extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        int itemid = item.getItemId();
+        if (itemid == android.R.id.home) {
             if (API.change) {
                 Intent i = new Intent(ChiTietHopDong.this, MainActivity.class);
                 i.putExtra("key", "HopDong");
@@ -726,7 +734,7 @@ public class ChiTietHopDong extends AppCompatActivity {
             } else {
                 finish();
             }
-        } else if (item.getItemId() == R.id.delete) {
+        } else if (itemid == R.id.delete2) {
             // Show dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(ChiTietHopDong.this);
             builder.setTitle("Thông báo");
@@ -751,6 +759,10 @@ public class ChiTietHopDong extends AppCompatActivity {
 
             builder.show();
 
+        } else if (itemid == R.id.xemNo || itemid == R.id.xemNo1) {
+            Intent intent = new Intent(ChiTietHopDong.this, ChiTietNo.class);
+            intent.putExtra("MaHopDong", id);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -758,7 +770,9 @@ public class ChiTietHopDong extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (API.quyen.equals("NVQL")) {
-            ChiTietHopDong.this.getMenuInflater().inflate(R.menu.menu, menu);
+            ChiTietHopDong.this.getMenuInflater().inflate(R.menu.chitietno_hopdong, menu);
+        } else {
+            ChiTietHopDong.this.getMenuInflater().inflate(R.menu.chitietno_hopdong_nvbh, menu);
         }
         return true;
     }

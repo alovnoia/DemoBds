@@ -35,6 +35,86 @@ public class HopDong {
         TrangThai = trangThai;
     }
 
+    public int getMaHopDong() {
+        return maHopDong;
+    }
+
+    public void setMaHopDong(int maHopDong) {
+        this.maHopDong = maHopDong;
+    }
+
+    public int getMaTaiKhoan() {
+        return maTaiKhoan;
+    }
+
+    public void setMaTaiKhoan(int maTaiKhoan) {
+        this.maTaiKhoan = maTaiKhoan;
+    }
+
+    public int getMaLoaiKhachHang() {
+        return maLoaiKhachHang;
+    }
+
+    public void setMaLoaiKhachHang(int maLoaiKhachHang) {
+        this.maLoaiKhachHang = maLoaiKhachHang;
+    }
+
+    public int getMaKhachHang() {
+        return maKhachHang;
+    }
+
+    public void setMaKhachHang(int maKhachHang) {
+        this.maKhachHang = maKhachHang;
+    }
+
+    public int getMaDuAn() {
+        return maDuAn;
+    }
+
+    public void setMaDuAn(int maDuAn) {
+        this.maDuAn = maDuAn;
+    }
+
+    public int getMaLo() {
+        return maLo;
+    }
+
+    public void setMaLo(int maLo) {
+        this.maLo = maLo;
+    }
+
+    public int getMaSanPham() {
+        return maSanPham;
+    }
+
+    public void setMaSanPham(int maSanPham) {
+        this.maSanPham = maSanPham;
+    }
+
+    public String getTenKhachHang() {
+        return TenKhachHang;
+    }
+
+    public void setTenKhachHang(String tenKhachHang) {
+        TenKhachHang = tenKhachHang;
+    }
+
+    public String getNgayKy() {
+        return NgayKy;
+    }
+
+    public void setNgayKy(String ngayKy) {
+        NgayKy = ngayKy;
+    }
+
+    public String getTrangThai() {
+        return TrangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        TrangThai = trangThai;
+    }
+
     public HopDong(){}
 
     /*public HopDong(int maHopDong, int khachHang, int duAn, String tenKhachHang, String ngayKy, String trangThai) {

@@ -154,6 +154,7 @@ public class ThemHopDong extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new Save().execute("http://"+API.HOST+"/bds_project/public/HopDong");
+                API.change = true;
             }
         });
     }

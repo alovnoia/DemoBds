@@ -50,9 +50,6 @@
                 android:id="@+id/danhSachTaiKhoan"
                 android:title="Danh sách tài khoản" />
             <item
-                android:id="@+id/tkCaNhan"
-                android:title="Tài khoản cá nhân" />
-            <item
                 android:id="@+id/dangXuat"
                 android:title="Đăng xuất" />
         </menu>
