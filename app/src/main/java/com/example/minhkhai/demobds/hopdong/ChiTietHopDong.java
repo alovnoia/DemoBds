@@ -207,6 +207,7 @@ public class ChiTietHopDong extends AppCompatActivity {
                 i.putExtra("TaiKhoan", maTaiKhoan);
                 i.putExtra("trangThai", trangThaiDuyet);
                 startActivity(i);
+                API.change = true;
             }
         });
     }
@@ -769,7 +770,7 @@ public class ChiTietHopDong extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (API.quyen.equals("NVQL")) {
+        if (API.quyen.equals("NVQL") && tThai.equals("ChuaDuyet")) {
             ChiTietHopDong.this.getMenuInflater().inflate(R.menu.chitietno_hopdong, menu);
         } else {
             ChiTietHopDong.this.getMenuInflater().inflate(R.menu.chitietno_hopdong_nvbh, menu);
